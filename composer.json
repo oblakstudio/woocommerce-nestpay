@@ -1,0 +1,16 @@
+{
+  "name": "oblak/woocommerce-nestpay-payment-gateway",
+  "description": "NestPay Payment Gateway for WooCommerce",
+  "version": "1.0.0",
+  "autoload": {
+      "psr-4": {
+          "Oblak\\NPG\\": "lib/"
+      },
+      "files": [
+        "lib/Utils.php"
+      ]
+  },
+  "require": {
+    "oblak/asset-loader": "^1.0"
+  }
+}

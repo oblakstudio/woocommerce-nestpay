@@ -1,0 +1,37 @@
+name: Release
+on:
+  push:
+    branches:
+      - master
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: Install composer dependencies
+        uses: php-actions/composer@v5
+        with:
+          php_version: 7.4
+          version: 2
+          dev: no
+      - name: Cache yarn dependencies
+        uses: c-hive/gha-yarn-cache@v1
+      - name: Install Yarn dependencies
+        run: yarn install
+      - name: Lint
+        run: yarn lint
+      -name: Build
+        run: yarn build:production
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
+
