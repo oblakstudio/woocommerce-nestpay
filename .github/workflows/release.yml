@@ -22,13 +22,14 @@ jobs:
           php_version: 7.4
           version: 2
           dev: no
+          args: --optimize-autoloader --classmap-authoritative
       - name: Cache yarn dependencies
         uses: c-hive/gha-yarn-cache@v1
       - name: Install Yarn dependencies
         run: yarn install
       - name: Lint
         run: yarn lint
-      -name: Build
+      - name: Build
         run: yarn build:production
       - name: Release
         env:
