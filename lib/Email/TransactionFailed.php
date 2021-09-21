@@ -9,6 +9,8 @@ class TransactionFailed extends BaseTransactionEmail {
         $this->title          = __('Transaction Failed', 'woocommerce-nestpay') . ' (' . __('NestPay', 'woocommerce-nestpay') . ')';
         $this->description    = __('Transaction failure e-mail is sent to the buyer upon unsuccesful payment card transaction', 'woocommerce-nestpay');
 
+        add_action( 'woocommerce_order_status_pending_to_failed_notification', [$this, 'trigger'], 10, 2 );
+
         parent::__construct();
 
     }

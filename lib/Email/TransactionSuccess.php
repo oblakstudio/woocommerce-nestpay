@@ -9,6 +9,15 @@ class TransactionSuccess extends BaseTransactionEmail {
         $this->title          = __('Transaction Success', 'woocommerce-nestpay') . ' (' . __('NestPay', 'woocommerce-nestpay') . ')';
         $this->description    = __('Transaction Success e-mail is sent to the buyer upon succesful payment card transaction', 'woocommerce-nestpay');
 
+        add_action( 'woocommerce_order_status_pending_to_on-hold_notification', [$this, 'trigger'], 10, 2 );
+        add_action( 'woocommerce_order_status_pending_to_processing_notification', [$this, 'trigger'], 10, 2 );
+
+        add_action( 'woocommerce_order_status_failed_to_processing_notification', [$this, 'trigger'], 10, 2 );
+        add_action( 'woocommerce_order_status_failed_to_on-hold_notification', [$this, 'trigger'], 10, 2 );
+        
+        add_action( 'woocommerce_order_status_cancelled_to_on-hold_notification', [$this, 'trigger'], 10, 2 );
+        add_action( 'woocommerce_order_status_cancelled_to_processing_notification', [$this, 'trigger'], 10, 2 );
+
         parent::__construct();
 
     }

@@ -66,8 +66,22 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
                 <td style="text-align: <?php echo $text_align; ?>; vertical-align: top; padding-right: 10px;"><?php echo $label; ?></td>
                 <td style="text-align: <?php echo $text_align; ?>; vertical-align: top;"><?= $response->$key; ?></td>
         <?php endforeach; ?>
+
         </tbody>
+
     </table>
+
+    <?php
+    /**
+     * Add custom content after transaction details table
+     * 
+     * @since 1.0.0
+     * @param WC_Order $order  Order object
+     * @param array    $fields Transaction field key-value pairs
+     */
+    do_action('woocommerce_nestpay_transaction_email', $order, $fields);
+    ?>
+
 </div>
 
 <?php

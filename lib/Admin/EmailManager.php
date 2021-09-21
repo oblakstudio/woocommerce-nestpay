@@ -40,7 +40,6 @@ class EmailManager {
         $classes['WC_Email_NestPay_Success'] = new TransactionSuccess();
         $classes['WC_Email_NestPay_Failed'] = new TransactionFailed();
 
-
         return $classes;
 
     }
