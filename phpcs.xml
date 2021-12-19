@@ -11,7 +11,9 @@
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
         <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
     </rule>
-    <rule ref="WordPress-Docs" />
+    <rule ref="WordPress-Docs">
+        <type>warning</type>
+    </rule>
     <rule ref="WordPress-Extra" />
     <!-- <rule ref="VariableAnalysis" /> -->
     <rule ref="WordPress.WP.I18n">
