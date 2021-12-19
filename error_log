@@ -1,0 +1,4 @@
+[19-Dec-2021 19:24:18 Europe/Belgrade] PHP Warning:  The use statement with non-compound name 'Exception' has no effect in H:\Projects\Oblak-Solutions\NestPay\woocommerce-nestpay-payment-gateway\woocommerce-nestpay.php on line 23
+[19-Dec-2021 19:24:31 Europe/Belgrade] PHP Warning:  The use statement with non-compound name 'Exception' has no effect in H:\Projects\Oblak-Solutions\NestPay\woocommerce-nestpay-payment-gateway\woocommerce-nestpay.php on line 23
+[19-Dec-2021 22:40:43 Europe/Belgrade] PHP Parse error:  syntax error, unexpected '}' in H:\Projects\Oblak-Solutions\NestPay\woocommerce-nestpay-payment-gateway\lib\Utils\Installer.php on line 103
+[19-Dec-2021 22:41:00 Europe/Belgrade] PHP Parse error:  syntax error, unexpected '}' in H:\Projects\Oblak-Solutions\NestPay\woocommerce-nestpay-payment-gateway\lib\Utils\Installer.php on line 103
