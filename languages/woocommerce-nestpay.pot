@@ -1,392 +1,406 @@
-# Copyright (C) 2021 woocommerce-nestpay
-# This file is distributed under the same license as the woocommerce-nestpay package.
+# Copyright (C) 2022 Oblak Studio
+# This file is distributed under the same license as the WooCommerce NestPay Payment Gateway plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: woocommerce-nestpay\n"
+"Project-Id-Version: WooCommerce NestPay Payment Gateway 1.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woocommerce-nestpay-payment-gateway\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language-Team: Oblak Studio <info@oblak.studio>\n"
-"Last-Translator: Sibin Grasic <sibin.grasic@oblak.studio>\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"POT-Creation-Date: 2022-02-15T17:51:12+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: woocommerce-nestpay\n"
 
-#: ../woocommerce-nestpay.php:41
-msgid "WSPay payment gateway requires PHP 7.4 or greater"
+#. Plugin Name of the plugin
+#: lib/Admin/Admin_Tools.php:36
+#: lib/Utils/Installer.php:110
+msgid "WooCommerce NestPay Payment Gateway"
 msgstr ""
 
-#: ../woocommerce-nestpay.php:45
-msgid "WSPay payment gateway requires WP 5.5 or greater"
+#. Plugin URI of the plugin
+msgid "https://oblak.studio/"
 msgstr ""
 
-#: ../config/settings.php:9
+#. Description of the plugin
+msgid "Payment Gateway for WooCommerce allowing you to process card payments from all banks using NestPay system"
+msgstr ""
+
+#. Author of the plugin
+msgid "Oblak Studio"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://oblak.studio"
+msgstr ""
+
+#: config/settings.php:17
 msgid "Enable/Disable"
 msgstr ""
 
-#: ../config/settings.php:10
+#: config/settings.php:18
 msgid "Enable NestPay"
 msgstr ""
 
-#: ../config/settings.php:15
+#: config/settings.php:23
 msgid "Title"
 msgstr ""
 
-#: ../config/settings.php:17
+#: config/settings.php:25
 msgid "This controls the title which the user sees during checkout."
 msgstr ""
 
-#: ../config/settings.php:22
+#: config/settings.php:30
 msgid "Description"
 msgstr ""
 
-#: ../config/settings.php:24
+#: config/settings.php:32
 msgid "This controls the description which the user sees during checkout."
 msgstr ""
 
-#: ../config/settings.php:25
+#: config/settings.php:33
 msgid "Pay with your credit-card using NestPay"
 msgstr ""
 
-#: ../config/settings.php:29
+#: config/settings.php:37
 msgid "Advanced Settings"
 msgstr ""
 
-#: ../config/settings.php:34
+#: config/settings.php:42
 msgid "NestPay Sandbox"
 msgstr ""
 
-#: ../config/settings.php:35
+#: config/settings.php:43
 msgid "Enable NestPay Sandbox"
 msgstr ""
 
-#: ../config/settings.php:37
+#: config/settings.php:45
 msgid "NestPay sandbox can be used to test payments"
 msgstr ""
 
-#: ../config/settings.php:41
+#: config/settings.php:49
 msgid "Debug log"
 msgstr ""
 
-#: ../config/settings.php:43
+#: config/settings.php:51
 msgid "Enable logging"
 msgstr ""
 
-#: ../config/settings.php:46
+#. translators: %s log file path.
+#: config/settings.php:55
 msgid "Log NestPay events, inside %s Note: this may log personal information. We recommend using this for debugging purposes only and deleting the logs when finished."
 msgstr ""
 
-#: ../config/settings.php:51
+#: config/settings.php:63
 msgid "Payment process"
 msgstr ""
 
-#: ../config/settings.php:52
+#: config/settings.php:64
 msgid "Enable automatic redirect to NestPay payment form"
 msgstr ""
 
-#: ../config/settings.php:58
+#: config/settings.php:70
 msgid "API Settings"
 msgstr ""
 
-#: ../config/settings.php:60
+#: config/settings.php:72
 msgid "Enter your NestPay API credentials in order to process payments"
 msgstr ""
 
-#: ../config/settings.php:64, ../config/settings.php:104
+#: config/settings.php:76
+#: config/settings.php:116
 msgid "Merchant ID"
 msgstr ""
 
-#: ../config/settings.php:66
+#: config/settings.php:78
 msgid "Please enter your Merchant ID. This is needed in order to process payments"
 msgstr ""
 
-#: ../config/settings.php:70, ../config/settings.php:114
+#: config/settings.php:82
+#: config/settings.php:126
 msgid "Username"
 msgstr ""
 
-#: ../config/settings.php:72, ../config/settings.php:84
+#: config/settings.php:84
+#: config/settings.php:96
 msgid "Please enter your Username. This is needed in order to process payments"
 msgstr ""
 
-#: ../config/settings.php:76, ../config/settings.php:124
+#: config/settings.php:88
+#: config/settings.php:136
 msgid "Password"
 msgstr ""
 
-#: ../config/settings.php:78
+#: config/settings.php:90
 msgid "Please enter your Password. This is needed in order to process payments"
 msgstr ""
 
-#: ../config/settings.php:82, ../config/settings.php:134
+#: config/settings.php:94
+#: config/settings.php:146
 msgid "Payment URL"
 msgstr ""
 
-#: ../config/settings.php:88, ../config/settings.php:144
+#: config/settings.php:100
+#: config/settings.php:156
 msgid "API URL"
 msgstr ""
 
-#: ../config/settings.php:90, ../config/settings.php:117, ../config/settings.php:137, ../config/settings.php:147
+#: config/settings.php:102
+#: config/settings.php:129
+#: config/settings.php:149
+#: config/settings.php:159
 msgid "Please enter your Username. This is needed in order to take payments"
 msgstr ""
 
-#: ../config/settings.php:94
+#: config/settings.php:106
 msgid "Store key"
 msgstr ""
 
-#: ../config/settings.php:96, ../config/settings.php:127, ../config/settings.php:153
+#: config/settings.php:108
+#: config/settings.php:139
+#: config/settings.php:165
 msgid "Please enter your Password. This is needed in order to take payments"
 msgstr ""
 
-#: ../config/settings.php:103, ../config/settings.php:113, ../config/settings.php:123, ../config/settings.php:133, ../config/settings.php:143
+#: config/settings.php:115
+#: config/settings.php:125
+#: config/settings.php:135
+#: config/settings.php:145
+#: config/settings.php:155
 msgid "Sandbox"
 msgstr ""
 
-#: ../config/settings.php:107
+#: config/settings.php:119
 msgid "Please enter your Merchant ID. This is needed in order to take payments"
 msgstr ""
 
-#: ../config/settings.php:151
+#: config/settings.php:163
 msgid "Sandbox Store key"
 msgstr ""
 
-#: ../config/settings.php:158
+#: config/settings.php:170
 msgid "Store Settings"
 msgstr ""
 
-#: ../config/settings.php:160
+#: config/settings.php:172
 msgid "Store settings define how payments are handled"
 msgstr ""
 
-#: ../config/settings.php:163
+#: config/settings.php:175
 msgid "Store Currency"
 msgstr ""
 
-#: ../config/settings.php:167
+#: config/settings.php:179
 msgid "Select a currency to use - defaults to WooCommerce currency"
 msgstr ""
 
-#: ../config/settings.php:171
+#: config/settings.php:183
 msgid "Store type"
 msgstr ""
 
-#: ../config/settings.php:174
+#: config/settings.php:186
 msgid "Hosted page"
 msgstr ""
 
-#: ../config/settings.php:177, ../config/settings.php:187
-msgid "Store page defines how the gateway works. hosted page will redirect to a bank portal, inline form will display the CC form on your website"
+#: config/settings.php:189
+msgid ""
+"Store page defines how the gateway works.\n"
+"            Hosted page will redirect to a bank portal, inline form will display the CC form on your website"
 msgstr ""
 
-#: ../config/settings.php:180
+#: config/settings.php:196
 msgid "Transaction type"
 msgstr ""
 
-#: ../config/settings.php:183
+#: config/settings.php:199
+msgid "Automatic"
+msgstr ""
+
+#: config/settings.php:200
 msgid "Reserve funds (authorize)"
 msgstr ""
 
-#: ../config/settings.php:184
+#: config/settings.php:201
 msgid "Debit funds (Capture)"
 msgstr ""
 
-#: ../lib/Scripts.php:52
-msgid "Enter amount to authorize, leave blank for full amount"
+#: config/settings.php:206
+msgid "PreAuth reserves the funds on the cardholder's account, Auth debits the funds from the cardholder's account."
 msgstr ""
 
-#: ../lib/Scripts.php:53
-msgid "Transaction code"
+#: config/settings.php:207
+msgid "Setting this to automatic will use PreAuth for physical goods and Auth for digital goods"
 msgstr ""
 
-#: ../lib/Scripts.php:54, ../lib/Gateway/NestPayResponse.php:258
-msgid "Transaction ID"
+#: config/settings.php:212
+msgid "hCaptcha"
 msgstr ""
 
-#: ../lib/Scripts.php:55
-msgid "Order ID"
+#: config/settings.php:214
+msgid "hCaptcha settings are used to prevent automated payment form submissions"
 msgstr ""
 
-#: ../lib/Scripts.php:56, ../lib/Gateway/NestPayGateway.php:278, ../lib/Gateway/NestPayResponse.php:368
-msgid "Transaction date"
+#: config/settings.php:217
+msgid "hCaptcha site key"
 msgstr ""
 
-#: ../lib/Scripts.php:57, ../lib/Gateway/NestPayResponse.php:257, ../lib/Gateway/NestPayResponse.php:370
+#: config/settings.php:223
+msgid "hCaptcha secret"
+msgstr ""
+
+#: lib/Utils.php:23
+msgid "WooCommerce currency"
+msgstr ""
+
+#: lib/Utils/core.php:59
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:356
 msgid "Transaction status"
 msgstr ""
 
-#: ../lib/Scripts.php:58
-msgid "Transaction response"
+#: lib/Utils/core.php:60
+msgid "Transaction ID"
 msgstr ""
 
-#: ../lib/Admin/OrderActions.php:24
-msgid "Get payment status"
-msgstr ""
-
-#: ../lib/Admin/OrderActions.php:25
-msgid "Capture payment"
-msgstr ""
-
-#: ../lib/Admin/OrderActions.php:26
-msgid "Void the payment"
-msgstr ""
-
-#: ../lib/Ajax/ApiActions.php:43
-msgid "You are not authorized to perform this operation"
-msgstr ""
-
-#: ../lib/Ajax/ApiActions.php:51
-msgid "Invalid Order ID"
-msgstr ""
-
-#: ../lib/Ajax/ApiActions.php:56
-msgid "Order not paid with payment card"
-msgstr ""
-
-#: ../lib/Ajax/ApiActions.php:85
-msgid "Action performed successfully"
-msgstr ""
-
-#: ../lib/Ajax/ApiActions.php:93
-msgid "Error in communication with Bank"
-msgstr ""
-
-#: ../lib/Ajax/ApiActions.php:138
-msgid "Unknown"
-msgstr ""
-
-#: ../lib/Gateway/ApiResponseDTO.php:85
-msgid "Not succesful"
-msgstr ""
-
-#: ../lib/Gateway/ApiResponseDTO.php:89
-msgid "Preauthorization, not settled"
-msgstr ""
-
-#: ../lib/Gateway/ApiResponseDTO.php:93
-msgid "Capture, not Settled"
-msgstr ""
-
-#: ../lib/Gateway/ApiResponseDTO.php:97
-msgid "Deposited"
-msgstr ""
-
-#: ../lib/Gateway/ApiResponseDTO.php:101
-msgid "Reversal Required"
-msgstr ""
-
-#: ../lib/Gateway/ApiResponseDTO.php:105
-msgid "Voided"
-msgstr ""
-
-#: ../lib/Gateway/ApiResponseDTO.php:109
-msgid "Pending"
-msgstr ""
-
-#: ../lib/Gateway/ApiResponseDTO.php:113
-msgid "First Commit"
-msgstr ""
-
-#: ../lib/Gateway/ApiResponseDTO.php:117
-msgid "Unknown status"
-msgstr ""
-
-#: ../lib/Gateway/NestPayGateway.php:43
-msgid "NestPay"
-msgstr ""
-
-#: ../lib/Gateway/NestPayGateway.php:44
-msgid "NestPay Payment Gateway handles card payments by redirecting users to your bank portal"
-msgstr ""
-
-#: ../lib/Gateway/NestPayGateway.php:205, ../lib/Gateway/NestPayGateway.php:217
-msgid "Capture"
-msgstr ""
-
-#: ../lib/Gateway/NestPayGateway.php:224
-msgid "NestPay Capture not successful"
-msgstr ""
-
-#: ../lib/Gateway/NestPayGateway.php:248
-msgid "Void"
-msgstr ""
-
-#: ../lib/Gateway/NestPayGateway.php:275, ../lib/Gateway/NestPayResponse.php:367
-msgid "NestPay payment status"
-msgstr ""
-
-#: ../lib/Gateway/NestPayGateway.php:276
-msgid "Action"
-msgstr ""
-
-#: ../lib/Gateway/NestPayGateway.php:280, ../lib/Gateway/NestPayResponse.php:259, ../lib/Gateway/NestPayResponse.php:374
+#: lib/Utils/core.php:61
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:360
 msgid "Status code"
 msgstr ""
 
-#: ../lib/Gateway/NestPayGateway.php:282, ../lib/Gateway/NestPayResponse.php:260, ../lib/Gateway/NestPayResponse.php:378
+#: lib/Utils/core.php:62
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:362
 msgid "Authorization code"
 msgstr ""
 
-#: ../lib/Gateway/NestPayGateway.php:311
-msgid "Payment cannot be refunded because it has not been captured."
-msgstr ""
-
-#: ../lib/Gateway/NestPayGateway.php:319
-msgid "An error occurred while refunding the transaction."
-msgstr ""
-
-#: ../lib/Gateway/NestPayGateway.php:323
-msgid "Refund"
-msgstr ""
-
-#: ../lib/Gateway/NestPayGateway.php:406
-msgid "Continue to payment"
-msgstr ""
-
-#: ../lib/Gateway/NestPayResponse.php:218
-msgid "Payment failed"
-msgstr ""
-
-#: ../lib/Gateway/NestPayResponse.php:261
+#: lib/Utils/core.php:63
 msgid "3D Status"
 msgstr ""
 
-#: ../lib/Gateway/NestPayResponse.php:262
+#: lib/Utils/core.php:64
 msgid "Payment card number"
 msgstr ""
 
-#: ../lib/Gateway/NestPayResponse.php:268
-msgid "Transaction details"
+#: lib/Utils/Installer.php:111
+msgid "The following tables are missing: "
 msgstr ""
 
-#: ../lib/Gateway/NestPayResponse.php:307
+#: lib/Utils/Installer.php:256
+#: lib/Utils/Installer.php:257
+msgid "Plugin Settings"
+msgstr ""
+
+#: lib/WooCommerce/Email/Transaction_Failure_Email.php:35
+msgid "Payment Failed"
+msgstr ""
+
+#: lib/WooCommerce/Email/Transaction_Failure_Email.php:35
+#: lib/WooCommerce/Email/Transaction_Success_Email.php:35
+#: lib/WooCommerce/Gateway/Nestpay_Gateway.php:49
+msgid "NestPay"
+msgstr ""
+
+#: lib/WooCommerce/Email/Transaction_Failure_Email.php:36
+msgid "Payment failure e-mail is sent to the buyer upon unsuccesful payment card transaction"
+msgstr ""
+
+#: lib/WooCommerce/Email/Transaction_Failure_Email.php:54
+#: lib/WooCommerce/Email/Transaction_Success_Email.php:64
+msgid "Your card payment on {site_title} was succesful!"
+msgstr ""
+
+#: lib/WooCommerce/Email/Transaction_Failure_Email.php:63
+#: lib/WooCommerce/Email/Transaction_Success_Email.php:73
+msgid "Payment confirmation"
+msgstr ""
+
+#: lib/WooCommerce/Email/Transaction_Success_Email.php:35
+msgid "Payment Success"
+msgstr ""
+
+#: lib/WooCommerce/Email/Transaction_Success_Email.php:36
+msgid "Payment Success e-mail is sent to the buyer upon succesful payment card transaction"
+msgstr ""
+
+#: lib/WooCommerce/Gateway/Nestpay_Gateway.php:50
+msgid "NestPay Payment Gateway handles card payments by redirecting users to the bank portal"
+msgstr ""
+
+#: lib/WooCommerce/Gateway/Nestpay_Gateway.php:269
+msgid "Payment cannot be refunded."
+msgstr ""
+
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:201
+msgid "Payment failed"
+msgstr ""
+
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:237
+#: woocommerce/emails/customer-nestpay-status.php:35
+msgid "Transaction failed. Your payment card is not charged."
+msgstr ""
+
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:257
 msgid "NestPay response unknown"
 msgstr ""
 
-#: ../lib/Gateway/NestPayResponse.php:316
-msgid "The order amount has been successfully reserved on your payment card."
-msgstr ""
-
-#: ../lib/Gateway/NestPayResponse.php:317
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:260
 msgid "Your payment card has been successfully charged"
 msgstr ""
 
-#: ../lib/Gateway/NestPayResponse.php:346
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:282
+msgid "Transaction details"
+msgstr ""
+
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:332
 msgid "Declined"
 msgstr ""
 
-#: ../lib/Gateway/NestPayResponse.php:350
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:336
 msgid "Approved"
 msgstr ""
 
-#: ../lib/Gateway/NestPayResponse.php:353
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:339
+#: lib/WooCommerce/Order/Admin_Order_Columns.php:45
 msgid "Funds reserved"
 msgstr ""
 
-#: ../lib/Gateway/NestPayResponse.php:354
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:340
+#: lib/WooCommerce/Order/Admin_Order_Columns.php:48
 msgid "Funds deposited"
 msgstr ""
 
-#: ../lib/Gateway/NestPayResponse.php:372
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:353
+msgid "NestPay payment status"
+msgstr ""
+
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:354
+msgid "Transaction date"
+msgstr ""
+
+#: lib/WooCommerce/Gateway/Nestpay_Response.php:358
 msgid "Transaction amount"
+msgstr ""
+
+#: lib/WooCommerce/Order/Admin_Order_Columns.php:41
+msgid "Unknown"
+msgstr ""
+
+#: lib/WooCommerce/Order/Admin_Order_Columns.php:51
+msgid "Transaction voided"
+msgstr ""
+
+#: lib/WooCommerce/Order/Admin_Order_Columns.php:54
+msgid "Transaction refunded"
+msgstr ""
+
+#: woocommerce/checkout/form-nestpay.php:29
+msgid "Continue to payment"
+msgstr ""
+
+#: woocommerce/emails/customer-nestpay-status.php:32
+msgid "The order amount has been successfully reserved on your payment card."
+msgstr ""
+
+#: woocommerce/emails/email-nestpay-transaction-details.php:37
+msgid "Order ID"
 msgstr ""

@@ -1,23 +1,41 @@
 <?php
 /**
- * ApiResponse
- *
- * DTO class which extends WC_Data to be used in the DataStore
+ * Nestpay_Transaction class file
  *
  * @package WooCommerce NestPay Payment Gateway
- * @since 2.0.0
+ * @subpackage Data
  */
 
-namespace Oblak\NPG\Gateway;
+namespace Oblak\NPG\WooCommerce\Data;
 
 use WC_Data;
+use WC_Data_Store;
 
 /**
- * Undocumented class
+ * NestPay Transaction class.
  *
+ * Represents one row in the transaction table.
+ *
+ * @since 2.0.0
  * @uses WC_Data
+ *
+ * @todo Add short descriptions for setters
  */
-class ApiResponse extends WC_Data {
+class Nestpay_Transaction extends WC_Data {
+
+    /**
+     * Object type
+     *
+     * @var string
+     */
+    protected $object_type = 'nestpay-transaction';
+
+    /**
+     * Cache group
+     *
+     * @var string
+     */
+    protected $cache_group = 'nestpay-transaction';
 
     /**
      * Unique Object ID
@@ -31,16 +49,14 @@ class ApiResponse extends WC_Data {
      *
      * @var array
      */
-    protected $data = [
+    protected $data = array(
         'order_id'                        => '',
         'oid'                             => '',
         'ReturnOid'                       => '',
-        'TRANID'                          => '',
         'PAResSyntaxOK'                   => '',
         'refreshtime'                     => '',
         'lang'                            => '',
         'merchantID'                      => '',
-        'maskedCreditCard'                => '',
         'amount'                          => '',
         'sID'                             => '',
         'ACQBIN'                          => '',
@@ -55,7 +71,6 @@ class ApiResponse extends WC_Data {
         'trantype'                        => '',
         'protocol'                        => '',
         'iReqDetail'                      => '',
-        'okUrl'                           => '',
         'md'                              => '',
         'ProcReturnCode'                  => '',
         'instalment'                      => '',
@@ -79,7 +94,6 @@ class ApiResponse extends WC_Data {
         'HostRefNum'                      => '',
         'callbackCall'                    => '',
         'AuthCode'                        => '',
-        'failUrl'                         => '',
         'cavvAlgorithm'                   => '',
         'xid'                             => '',
         'encoding'                        => '',
@@ -92,14 +106,47 @@ class ApiResponse extends WC_Data {
         'EXTRA_CARDISSUER'                => '',
         'clientid'                        => '',
         'txstatus'                        => '',
-        '_charset_'                       => '',
         'HASH'                            => '',
         'rnd'                             => '',
         'HASHPARAMS'                      => '',
         'HASHPARAMSVAL'                   => '',
         'hashAlgorithm'                   => '',
         'hc_active'                       => '',
-    ];
+    );
+
+    /**
+     * Class constructor
+     *
+     * @param int|object|array $data Item ID to load from the Database or a Nestpay_Transaction object.
+     */
+    public function __construct( $data = 0 ) {
+        parent::__construct( $data );
+
+        if ( $data instanceof Nestpay_Transaction ) {
+            $this->set_id( absint( $data->get_id() ) );
+        } elseif ( is_numeric( $data ) ) {
+            $this->set_id( $data );
+        } elseif ( is_object( $data ) && ! empty( $data->ID ) ) {
+            $this->set_id( $data->ID );
+            $this->set_props( (array) $data, 'set' );
+            $this->set_object_read();
+        } elseif ( is_array( $data ) && empty( $data['ID'] ) ) {
+            $this->set_props( $data, 'set' );
+            $this->set_object_read();
+        } else {
+            $this->set_object_read();
+        }
+
+        $this->data_store = WC_Data_Store::load( 'nestpay-transaction' );
+
+        if ( $this->get_id() > 0 ) {
+            $this->data_store->read( $this );
+        }
+    }
+
+    //phpcs:disable
+    #region Getters 
+    //phpcs:enable
 
     /**
      * Order ID getter
@@ -135,18 +182,6 @@ class ApiResponse extends WC_Data {
      */
     public function get_ReturnOid( $context = 'view' ) {
         return $this->get_prop( 'ReturnOid', $context );
-    }
-
-    /**
-     * Transaction ID getter
-     *
-     * TRANID is the NestPay transaction ID
-     *
-     * @param  string $context What the value is for. Valid values are view and edit.
-     * @return mixed
-     */
-    public function get_TRANID( $context = 'view' ) {
-        return $this->get_prop( 'TRANID', $context );
     }
 
     /**
@@ -383,16 +418,6 @@ class ApiResponse extends WC_Data {
      */
     public function get_iReqDetail( $context = 'view' ) {
         return $this->get_prop( 'iReqDetail', $context );
-    }
-
-    /**
-     * OkUrl Getter
-     *
-     * @param  string $context What the value is for. Valid values are view and edit.
-     * @return mixed
-     */
-    public function get_okUrl( $context = 'view' ) {
-        return $this->get_prop( 'okUrl', $context );
     }
 
     /**
@@ -682,16 +707,6 @@ class ApiResponse extends WC_Data {
     }
 
     /**
-     * FailUrl Getter
-     *
-     * @param  string $context What the value is for. Valid values are view and edit.
-     * @return mixed
-     */
-    public function get_failUrl( $context = 'view' ) {
-        return $this->get_prop( 'failUrl', $context );
-    }
-
-    /**
      * CavvAlgorithm Getter
      *
      * CAVV algorithm.
@@ -818,8 +833,8 @@ class ApiResponse extends WC_Data {
      * @param  string $context What the value is for. Valid values are view and edit.
      * @return mixed
      */
-    public function get_clientId( $context = 'view' ) {
-        return $this->get_prop( 'clientId', $context );
+    public function get_clientid( $context = 'view' ) {
+        return $this->get_prop( 'clientid', $context );
     }
 
     /**
@@ -833,18 +848,6 @@ class ApiResponse extends WC_Data {
      */
     public function get_txstatus( $context = 'view' ) {
         return $this->get_prop( 'txstatus', $context );
-    }
-
-    /**
-     * Charset Getter
-     *
-     * Returns UTF-8
-     *
-     * @param  string $context What the value is for. Valid values are view and edit.
-     * @return mixed
-     */
-    public function get__charset_( $context = 'view' ) {
-        return $this->get_prop( '_charset_', $context );
     }
 
     /**
@@ -918,7 +921,16 @@ class ApiResponse extends WC_Data {
         return $this->get_prop( 'hc_active', $context );
     }
 
+    //phpcs:disable
+    #endregion Getters
+    //phpcs:enable
+
+    //phpcs:disable
+    #region Setters
+    //phpcs:enable
+
     /**
+     * Order ID Setter
      *
      * @param mixed $value Value to set.
      */
@@ -927,6 +939,7 @@ class ApiResponse extends WC_Data {
     }
 
     /**
+     * Oid Setter
      *
      * @param mixed $value Value to set.
      */
@@ -935,6 +948,7 @@ class ApiResponse extends WC_Data {
     }
 
     /**
+     * ReturnOid Setter
      *
      * @param mixed $value Value to set.
      */
@@ -943,14 +957,7 @@ class ApiResponse extends WC_Data {
     }
 
     /**
-     *
-     * @param mixed $value Value to set.
-     */
-    public function set_TRANID( $value ) {
-        $this->set_prop( 'TRANID', $value );
-    }
-
-    /**
+     * PAResSytnaxOk Setter
      *
      * @param mixed $value Value to set.
      */
@@ -1100,14 +1107,6 @@ class ApiResponse extends WC_Data {
      */
     public function set_iReqDetail( $value ) {
         $this->set_prop( 'iReqDetail', $value );
-    }
-
-    /**
-     *
-     * @param mixed $value Value to set.
-     */
-    public function set_okUrl( $value ) {
-        $this->set_prop( 'okUrl', $value );
     }
 
     /**
@@ -1279,8 +1278,10 @@ class ApiResponse extends WC_Data {
     }
 
     /**
+     * CallbackCall setter
      *
      * @param mixed $value Value to set.
+     * @todo Set proper wc_string_to_bool handling
      */
     public function set_callbackCall( $value ) {
         $this->set_prop( 'callbackCall', $value );
@@ -1292,14 +1293,6 @@ class ApiResponse extends WC_Data {
      */
     public function set_AuthCode( $value ) {
         $this->set_prop( 'AuthCode', $value );
-    }
-
-    /**
-     *
-     * @param mixed $value Value to set.
-     */
-    public function set_failUrl( $value ) {
-        $this->set_prop( 'failUrl', $value );
     }
 
     /**
@@ -1386,8 +1379,8 @@ class ApiResponse extends WC_Data {
      *
      * @param mixed $value Value to set.
      */
-    public function set_clientId( $value ) {
-        $this->set_prop( 'clientId', $value );
+    public function set_clientid( $value ) {
+        $this->set_prop( 'clientid', $value );
     }
 
     /**
@@ -1396,14 +1389,6 @@ class ApiResponse extends WC_Data {
      */
     public function set_txstatus( $value ) {
         $this->set_prop( 'txstatus', $value );
-    }
-
-    /**
-     *
-     * @param mixed $value Value to set.
-     */
-    public function set__charset_( $value ) {
-        $this->set_prop( '_charset_', $value );
     }
 
     /**
@@ -1453,4 +1438,8 @@ class ApiResponse extends WC_Data {
     public function set_hc_active( $value ) {
         $this->set_prop( 'hc_active', $value );
     }
+
+    //phpcs:disable
+    #endregion Setters
+    //phpcs:enable
 }

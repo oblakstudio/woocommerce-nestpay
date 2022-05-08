@@ -4,10 +4,6 @@
     <config name="testVersion" value="7.3-"/>
     <rule ref="PHPCompatibilityWP"/>
     <rule ref="WordPress-Core">
-        <!-- a couple of excldes since I dont want any issues with composer packages -->
-        <!-- <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen"/> -->
-        <!-- <exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceAfterOpenParenthesis" /> -->
-        <!-- <exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceBeforeCloseParenthesis" /> -->
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
         <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
     </rule>
@@ -15,15 +11,18 @@
         <type>warning</type>
     </rule>
     <rule ref="WordPress-Extra" />
-    <!-- <rule ref="VariableAnalysis" /> -->
     <rule ref="WordPress.WP.I18n">
         <properties>
-            <!-- CONFIGURE HERE YOUR text-domain -->
-            <property name="text_domain" type="array" value="woocommerce-nestpay" />
+            <property name="text_domain" type="array" value="woocommerce-nestpay, woocommerce" />
         </properties>
 	</rule>
     <rule ref="Squiz.PHP.CommentedOutCode.Found">
         <severity>0</severity>
+    </rule>
+
+    <rule ref="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid">
+        <type>warning</type>
+        <severity>10</severity>
     </rule>
 
 
@@ -45,8 +44,6 @@
     
     <rule ref="WordPress">
         <exclude name="Generic.WhiteSpace.DisallowSpaceIndent" />
-        <exclude name="WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid" />
-        <exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid" />
     </rule>
 
     <rule ref="PEAR.Functions.FunctionCallSignature">
@@ -64,7 +61,6 @@
 
     <rule ref="WordPress-Extra">
         <exclude name="WordPress.Arrays.ArrayDeclarationSpacing"/>
-        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
     </rule>
     
     <rule ref="Generic.WhiteSpace.ScopeIndent">
@@ -74,10 +70,4 @@
         </properties>
     </rule>
     <rule ref="Generic.WhiteSpace.DisallowTabIndent" />
-    <rule ref="Generic.Files.LineLength">
-        <properties>
-            <property name="lineLimit" value="140"/>
-            <property name="absoluteLineLimit" value="180"/>
-        </properties>
-    </rule>
 </ruleset>

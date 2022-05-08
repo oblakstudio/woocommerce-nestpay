@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce NestPay Payment Gateway\n"
 "POT-Creation-Date: 2021-08-18 08:05+0200\n"
-"PO-Revision-Date: 2022-02-15 18:35+0000\n"
+"PO-Revision-Date: 2022-02-15 16:56+0000\n"
 "Last-Translator: \n"
 "Language-Team: Српски језик\n"
 "Language: sr_RS\n"
@@ -23,8 +23,6 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 "X-Poedit-SearchPathExcluded-2: node_modules\n"
-"Report-Msgid-Bugs-To: \n"
-"X-Loco-Version: 2.5.8; wp-5.9"
 
 #: lib/Utils/core.php:63
 msgid "3D Status"
@@ -161,6 +159,7 @@ msgid "NestPay"
 msgstr "NestPay"
 
 #: lib/WooCommerce/Gateway/Nestpay_Gateway.php:50
+#, fuzzy
 #| msgid ""
 #| "NestPay Payment Gateway handles card payments by redirecting users to "
 #| "your bank portal"
@@ -168,7 +167,7 @@ msgid ""
 "NestPay Payment Gateway handles card payments by redirecting users to the "
 "bank portal"
 msgstr ""
-"NestPay механизам плаћања вам омогућава да примате уплате путем платних "
+"NestPay механизам плћања вам омогућава да примате уплате путем платних "
 "картица"
 
 #: lib/WooCommerce/Gateway/Nestpay_Response.php:353
@@ -205,7 +204,7 @@ msgstr "Платите платном картицом"
 
 #: lib/WooCommerce/Gateway/Nestpay_Gateway.php:269
 msgid "Payment cannot be refunded."
-msgstr "Трансакција не може бити рефундирана"
+msgstr ""
 
 #: lib/Utils/core.php:64
 msgid "Payment card number"
@@ -218,7 +217,7 @@ msgstr "Потврда о плаћању"
 
 #: lib/WooCommerce/Email/Transaction_Failure_Email.php:35
 msgid "Payment Failed"
-msgstr "Плаћање неуспешно"
+msgstr ""
 
 #: lib/WooCommerce/Gateway/Nestpay_Response.php:201
 msgid "Payment failed"
@@ -300,8 +299,6 @@ msgid ""
 "PreAuth reserves the funds on the cardholder's account, Auth debits the "
 "funds from the cardholder's account."
 msgstr ""
-"Ауторизација резервише средства на рачуну платиоца. Задужење одмах повлачи "
-"новац са рачуна платиоца"
 
 #: config/settings.php:200
 msgid "Reserve funds (authorize)"
@@ -341,6 +338,7 @@ msgid "Store key"
 msgstr "Кључ продавнице"
 
 #: config/settings.php:189
+#, fuzzy
 #| msgid ""
 #| "Store page defines how the gateway works. hosted page will redirect to a "
 #| "bank portal, inline form will display the CC form on your website"
@@ -367,7 +365,7 @@ msgstr "Тип продавнице"
 
 #: lib/Utils/Installer.php:111
 msgid "The following tables are missing: "
-msgstr "Недостају следеће табеле базе података:"
+msgstr ""
 
 #: woocommerce/emails/customer-nestpay-status.php:32
 msgid "The order amount has been successfully reserved on your payment card."
@@ -407,9 +405,10 @@ msgid "Transaction ID"
 msgstr "ИД трансакције"
 
 #: lib/WooCommerce/Order/Admin_Order_Columns.php:54
+#, fuzzy
 #| msgid "Transaction Failed"
 msgid "Transaction refunded"
-msgstr "Трансакција рефундирана"
+msgstr "Плаћање неуспешно"
 
 #: lib/Utils/core.php:59 lib/WooCommerce/Gateway/Nestpay_Response.php:356
 msgid "Transaction status"
@@ -420,9 +419,10 @@ msgid "Transaction type"
 msgstr "Тип трансакције"
 
 #: lib/WooCommerce/Order/Admin_Order_Columns.php:51
+#, fuzzy
 #| msgid "Transaction code"
 msgid "Transaction voided"
-msgstr "Трансакција отказана"
+msgstr "Код трансакције"
 
 #: lib/WooCommerce/Order/Admin_Order_Columns.php:41
 msgid "Unknown"

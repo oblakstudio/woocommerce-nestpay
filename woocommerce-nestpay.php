@@ -9,7 +9,7 @@
  * Requires PHP:         7.3
  * Requires at least:    5.6
  * WC requires at least: 5.7
- * WC tested up to:      6.0
+ * WC tested up to:      6.2
  * Text Domain:          woocommerce-nestpay
  * Domain Path:          /languages
  *
@@ -21,5 +21,11 @@ defined( 'ABSPATH' ) || exit;
 ! defined( 'WCNPG_PLUGIN_FILE' ) && define( 'WCNPG_PLUGIN_FILE', __FILE__ );
 
 require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/lib/Utils/core.php';
+require __DIR__ . '/lib/Utils/transaction.php';
+require __DIR__ . '/lib/Utils/currency.php';
 
-WCNPG();
+
+add_action('woocommerce_loaded', function() {
+    WCNPG();
+});

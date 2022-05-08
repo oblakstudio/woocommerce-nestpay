@@ -13,8 +13,7 @@ module.exports = {
     }),
     new StyleLintPlugin({
       failOnError: !config.enabled.watcher,
-      syntax: 'scss',
-      configFile: `${config.paths.root}/.stylelintrc`,
+      configFile: `${config.paths.root}/.stylelintrc.js`,
     }),
   ],
 }

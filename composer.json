@@ -5,14 +5,11 @@
     "autoload": {
         "psr-4": {
             "Oblak\\NPG\\": "lib/"
-        },
-        "files": [
-            "lib/Utils/core.php",
-            "lib/Utils.php"
-        ]
+        }
     },
     "require": {
-        "oblak/asset-loader": "^1.0"
+        "oblak/asset-loader": "^1.0",
+        "oblak/admin-notice-manager": "^1.0"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
@@ -26,5 +23,10 @@
         "post-install-cmd": [
             "@install-codestandards"
         ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
