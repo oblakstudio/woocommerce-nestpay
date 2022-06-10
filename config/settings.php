@@ -1,277 +1,207 @@
-<?php
+<?php //phpcs:disable Generic.Files.LineLength.TooLong
+/**
+ * WooCommerce NPG settings
+ *
+ * @package WooCommerce NestPay Payment Gateway
+ * @since 1.0.0
+ */
 
-use function Oblak\NPG\getGatewayCurrencies;
+defined( 'ABSPATH' ) || exit;
 
-$statuses = wc_get_order_statuses();
-
-return [
-    'enabled' => [
-        'title'         => __('Enable/Disable', 'woocommerce-nestpay'),
-        'label'         => __('Enable NestPay', 'woocommerce-nestpay'),
-        'type'          => 'checkbox',
-        'default'       => 'no',
-    ],
-    'title' => [
-        'title'         => __('Title', 'woocommerce-nestpay'),
-        'type'          => 'text',
-        'description'   => __('This controls the title which the user sees during checkout.', 'woocommerce-nestpay'),
-        'default'       => 'NestPay',
-        'desc_tip'      => true
-    ],
-    'description' => [
-        'title'         => __('Description', 'woocommerce-nestpay'),
-        'type'          => 'text',
-        'description'   => __('This controls the description which the user sees during checkout.', 'woocommerce-nestpay'),
-        'default'       => __('Pay with your credit-card using NestPay', 'woocommerce-nestpay'),
-        'desc_tip'      => true
-    ],
-    'advanced' => [
-        'title'         => __('Advanced Settings', 'woocommerce-nestpay'),
-        'type'          => 'title',
-        'description'   => ''
-    ],
-    'testmode' => [
-        'title'         => __('NestPay Sandbox', 'woocommerce-nestpay'),
-        'label'         => __('Enable NestPay Sandbox', 'woocommerce-nestpay'),
-        'type'          => 'checkbox',
-        'description'   => __('NestPay sandbox can be used to test payments', 'woocommerce-nestpay'),
-        'default'       => 'no',
-    ],
-    'debug' => [
-        'title'         => __( 'Debug log', 'woocommerce-nestpay' ),
-        'type'          => 'checkbox',
-        'label'         => __( 'Enable logging', 'woocommerce-nestpay' ),
-        'default'       => 'no',
-        'description'   => sprintf(
-            __('Log NestPay events, inside %s Note: this may log personal information. We recommend using this for debugging purposes only and deleting the logs when finished.', 'woocommerce-nestpay'),
+return array(
+    'enabled'           => array(
+        'title'   => __( 'Enable/Disable', 'wc-serbian-nestpay' ),
+        'label'   => __( 'Enable NestPay', 'wc-serbian-nestpay' ),
+        'type'    => 'checkbox',
+        'default' => 'no',
+    ),
+    'title'             => array(
+        'title'       => __( 'Title', 'wc-serbian-nestpay' ),
+        'type'        => 'text',
+        'description' => __( 'This controls the title which the user sees during checkout.', 'wc-serbian-nestpay' ),
+        'default'     => 'NestPay',
+        'desc_tip'    => true,
+    ),
+    'description'       => array(
+        'title'       => __( 'Description', 'wc-serbian-nestpay' ),
+        'type'        => 'text',
+        'description' => __( 'This controls the description which the user sees during checkout.', 'wc-serbian-nestpay' ),
+        'default'     => __( 'Pay with your credit-card using NestPay', 'wc-serbian-nestpay' ),
+        'desc_tip'    => true,
+    ),
+    'advanced'          => array(
+        'title'       => __( 'Advanced Settings', 'wc-serbian-nestpay' ),
+        'type'        => 'title',
+        'description' => '',
+    ),
+    'testmode'          => array(
+        'title'       => __( 'NestPay Sandbox', 'wc-serbian-nestpay' ),
+        'label'       => __( 'Enable NestPay Sandbox', 'wc-serbian-nestpay' ),
+        'type'        => 'checkbox',
+        'description' => __( 'NestPay sandbox can be used to test payments', 'wc-serbian-nestpay' ),
+        'default'     => 'no',
+    ),
+    'debug'             => array(
+        'title'       => __( 'Debug log', 'wc-serbian-nestpay' ),
+        'type'        => 'checkbox',
+        'label'       => __( 'Enable logging', 'wc-serbian-nestpay' ),
+        'default'     => 'no',
+        'description' => sprintf(
+            // translators: %s log file path.
+            __(
+                'Log NestPay events, inside %s Note: this may log personal information. We recommend using this for debugging purposes only and deleting the logs when finished.',
+                'wc-serbian-nestpay'
+            ),
             '<code>' . WC_Log_Handler_File::get_log_file_path( 'nestpay' ) . '</code>'
         ),
-    ],
-    'auto_redirect' => [
-        'title'         => __('Payment process', 'woocommerce-nestpay'),
-        'label'         => __('Enable automatic redirect to NestPay payment form', 'woocommerce-nestpay'),
-        'type'          => 'checkbox',
-        'default'       => 'yes',
-    ],
-    // API CREDENTIALS
-    'api' => [
-        'title'         => __('API Settings', 'woocommerce-nestpay'),
-        'type'          => 'title',
-        'description'   => __('Enter your NestPay API credentials in order to process payments', 'woocommerce-nestpay'),
-    ],
-    // LIVE CREDENTIALS
-    'merchant_id' => [
-        'title'         => __('Merchant ID', 'woocommerce-nestpay'),
-        'type'          => 'text',
-        'description'   => __('Please enter your Merchant ID. This is needed in order to process payments', 'woocommerce-nestpay'),
+    ),
+    'auto_redirect'     => array(
+        'title'   => __( 'Payment process', 'wc-serbian-nestpay' ),
+        'label'   => __( 'Enable automatic redirect to NestPay payment form', 'wc-serbian-nestpay' ),
+        'type'    => 'checkbox',
+        'default' => 'yes',
+    ),
+    // API CREDENTIALS.
+    'api'               => array(
+        'title'       => __( 'API Settings', 'wc-serbian-nestpay' ),
+        'type'        => 'title',
+        'description' => __( 'Enter your NestPay API credentials in order to process payments', 'wc-serbian-nestpay' ),
+    ),
+    // LIVE CREDENTIALS.
+    'merchant_id'       => array(
+        'title'       => __( 'Merchant ID', 'wc-serbian-nestpay' ),
+        'type'        => 'text',
+        'description' => __( 'Please enter your Merchant ID. This is needed in order to process payments', 'wc-serbian-nestpay' ),
         // 'desc_tip'      => true
-    ],
-    'username' => [
-        'title'         => __('Username', 'woocommerce-nestpay'),
-        'type'          => 'text',
-        'description'   => __('Please enter your Username. This is needed in order to process payments', 'woocommerce-nestpay'),
+    ),
+    'username'          => array(
+        'title'       => __( 'Username', 'wc-serbian-nestpay' ),
+        'type'        => 'text',
+        'description' => __( 'Please enter your Username. This is needed in order to process payments', 'wc-serbian-nestpay' ),
         // 'desc_tip'      => true
-    ],
-    'password' => [
-        'title'         => __('Password', 'woocommerce-nestpay'),
-        'type'          => 'password',
-        'description'   => __('Please enter your Password. This is needed in order to process payments', 'woocommerce-nestpay'),
+    ),
+    'password'          => array(
+        'title'       => __( 'Password', 'wc-serbian-nestpay' ),
+        'type'        => 'password',
+        'description' => __( 'Please enter your Password. This is needed in order to process payments', 'wc-serbian-nestpay' ),
         // 'desc_tip'      => true
-    ],
-    'payment_url' => [
-        'title'         => __('Payment URL', 'woocommerce-nestpay'),
-        'type'          => 'text',
-        'description'   => __('Please enter your Username. This is needed in order to process payments', 'woocommerce-nestpay'),
-        'desc_tip'      => true
-    ],
-    'api_url' => [
-        'title'         => __('API URL', 'woocommerce-nestpay'),
-        'type'          => 'text',
-        'description'   => __('Please enter your Username. This is needed in order to take payments', 'woocommerce-nestpay'),
-        'desc_tip'      => true
-    ],
-    'store_key' => [
-        'title'         => __('Store key', 'woocommerce-nestpay'),
-        'type'          => 'password',
-        'description'   => __('Please enter your Password. This is needed in order to take payments', 'woocommerce-nestpay'),
+    ),
+    'payment_url'       => array(
+        'title'       => __( 'Payment URL', 'wc-serbian-nestpay' ),
+        'type'        => 'text',
+        'description' => __( 'Please enter your Username. This is needed in order to process payments', 'wc-serbian-nestpay' ),
+        'desc_tip'    => true,
+    ),
+    'api_url'           => array(
+        'title'       => __( 'API URL', 'wc-serbian-nestpay' ),
+        'type'        => 'text',
+        'description' => __( 'Please enter your Username. This is needed in order to take payments', 'wc-serbian-nestpay' ),
+        'desc_tip'    => true,
+    ),
+    'store_key'         => array(
+        'title'       => __( 'Store key', 'wc-serbian-nestpay' ),
+        'type'        => 'password',
+        'description' => __( 'Please enter your Password. This is needed in order to take payments', 'wc-serbian-nestpay' ),
         // 'desc_tip'      => true
-    ],
-    // TEST Credentials
-    'test_merchant_id' => [
-        'title'         => sprintf(
+    ),
+    // TEST Credentials.
+    'test_merchant_id'  => array(
+        'title'       => sprintf(
             '%s %s',
-            __('Sandbox', 'woocommerce-nestpay'),
-            __('Merchant ID', 'woocommerce-nestpay')
+            __( 'Sandbox', 'wc-serbian-nestpay' ),
+            __( 'Merchant ID', 'wc-serbian-nestpay' )
         ),
-        'type'          => 'text',
-        'description'   => __('Please enter your Merchant ID. This is needed in order to take payments', 'woocommerce-nestpay'),
+        'type'        => 'text',
+        'description' => __( 'Please enter your Merchant ID. This is needed in order to take payments', 'wc-serbian-nestpay' ),
         // 'desc_tip'      => true
-    ],
-    'test_username' => [
-        'title'         => sprintf(
+    ),
+    'test_username'     => array(
+        'title'       => sprintf(
             '%s %s',
-            __('Sandbox', 'woocommerce-nestpay'),
-            __('Username', 'woocommerce-nestpay')
+            __( 'Sandbox', 'wc-serbian-nestpay' ),
+            __( 'Username', 'wc-serbian-nestpay' )
         ),
-        'type'          => 'text',
-        'description'   => __('Please enter your Username. This is needed in order to take payments', 'woocommerce-nestpay'),
+        'type'        => 'text',
+        'description' => __( 'Please enter your Username. This is needed in order to take payments', 'wc-serbian-nestpay' ),
         // 'desc_tip'      => true
-    ],
-    'test_password' => [
-        'title'         => sprintf(
+    ),
+    'test_password'     => array(
+        'title'       => sprintf(
             '%s %s',
-            __('Sandbox', 'woocommerce-nestpay'),
-            __('Password', 'woocommerce-nestpay')
+            __( 'Sandbox', 'wc-serbian-nestpay' ),
+            __( 'Password', 'wc-serbian-nestpay' )
         ),
-        'type'          => 'password',
-        'description'   => __('Please enter your Password. This is needed in order to take payments', 'woocommerce-nestpay'),
+        'type'        => 'password',
+        'description' => __( 'Please enter your Password. This is needed in order to take payments', 'wc-serbian-nestpay' ),
         // 'desc_tip'      => true
-    ],
-    'test_payment_url' => [
-        'title'         => sprintf(
+    ),
+    'test_payment_url'  => array(
+        'title'       => sprintf(
             '%s %s',
-            __('Sandbox', 'woocommerce-nestpay'),
-            __('Payment URL', 'woocommerce-nestpay')
+            __( 'Sandbox', 'wc-serbian-nestpay' ),
+            __( 'Payment URL', 'wc-serbian-nestpay' )
         ),
-        'type'          => 'text',
-        'description'   => __('Please enter your Username. This is needed in order to take payments', 'woocommerce-nestpay'),
-        'desc_tip'      => true
-    ],
-    'test_api_url' => [
-        'title'         => sprintf(
+        'type'        => 'text',
+        'description' => __( 'Please enter your Username. This is needed in order to take payments', 'wc-serbian-nestpay' ),
+        'desc_tip'    => true,
+    ),
+    'test_api_url'      => array(
+        'title'       => sprintf(
             '%s %s',
-            __('Sandbox', 'woocommerce-nestpay'),
-            __('API URL', 'woocommerce-nestpay')
+            __( 'Sandbox', 'wc-serbian-nestpay' ),
+            __( 'API URL', 'wc-serbian-nestpay' )
         ),
-        'type'          => 'text',
-        'description'   => __('Please enter your Username. This is needed in order to take payments', 'woocommerce-nestpay'),
-        'desc_tip'      => true
-    ],
-    'test_store_key' => [
-        'title'         => __('Sandbox Store key', 'woocommerce-nestpay'),
-        'type'          => 'password',
-        'description'   => __('Please enter your Password. This is needed in order to take payments', 'woocommerce-nestpay'),
+        'type'        => 'text',
+        'description' => __( 'Please enter your Username. This is needed in order to take payments', 'wc-serbian-nestpay' ),
+        'desc_tip'    => true,
+    ),
+    'test_store_key'    => array(
+        'title'       => __( 'Sandbox Store key', 'wc-serbian-nestpay' ),
+        'type'        => 'password',
+        'description' => __( 'Please enter your Password. This is needed in order to take payments', 'wc-serbian-nestpay' ),
         // 'desc_tip'      => true
-    ],
-    // STORE SETTINGS
-    'store' => [
-        'title'         => __('Store Settings', 'woocommerce-nestpay'),
-        'type'          => 'title',
-        'description'   => __('Store settings define how payments are handled', 'woocommerce-nestpay'),
-    ],
-    'store_currency' => [
-        'title'         => __('Store Currency', 'woocommerce-nestpay'),
-        'type'          => 'select',
-        'options'       => getGatewayCurrencies(),
-        'default'       => 0,
-        'description'   => __('Select a currency to use - defaults to WooCommerce currency', 'woocommerce-nestpay'),
-        'class'         => 'select2',
-    ],
-    'store_rsd_fix'  => [
-        'title'         => __('Cyrillic RSD fix', 'woocommerce-nestpay'),
-        'type'          => 'checkbox',
-        'default'       => 'no',
-        'description'   => sprintf(
-            __('Enable this if RSD is shown in cyrillic (%s)', 'woocommerce-nestpay'),
-            "\u{0052}\u{0053}\u{0044}",
+    ),
+    // STORE SETTINGS.
+    'store'             => array(
+        'title'       => __( 'Store Settings', 'wc-serbian-nestpay' ),
+        'type'        => 'title',
+        'description' => __( 'Store settings define how payments are handled', 'wc-serbian-nestpay' ),
+    ),
+    'store_currency'    => array(
+        'title'       => __( 'Store Currency', 'wc-serbian-nestpay' ),
+        'type'        => 'select',
+        'options'     => wcnpg_get_currencies(),
+        'default'     => 0,
+        'description' => __( 'Select a currency to use - defaults to WooCommerce currency', 'wc-serbian-nestpay' ),
+        'class'       => 'select2',
+    ),
+    'store_type'        => array(
+        'title'       => __( 'Store type', 'wc-serbian-nestpay' ),
+        'type'        => 'select',
+        'options'     => array(
+            '3d_pay_hosting' => __( 'Hosted page', 'wc-serbian-nestpay' ),
+            // '3d'             => __('Inline form', 'wc-serbian-nestpay')
         ),
-    ],
-    'store_type' => [
-        'title'         => __('Store type', 'woocommerce-nestpay'),
-        'type'          => 'select',
-        'options'       => [
-            '3d_pay_hosting' => __('Hosted page', 'woocommerce-nestpay'),
-            // '3d'             => __('Inline form', 'woocommerce-nestpay')
-        ],
-        'description'   => __('Store page defines how the gateway works. hosted page will redirect to a bank portal, inline form will display the CC form on your website', 'woocommerce-nestpay'),
-    ],
-    'store_transaction' => [
-        'title'         => __('Transaction type', 'woocommerce-nestpay'),
-        'type'          => 'select',
-        'options'       => [
-            'PreAuth' => __('Reserve funds (authorize)', 'woocommerce-nestpay'),
-            'Auth'    => __('Debit funds (Capture)', 'woocommerce-nestpay'),
-        ],
-        'default'       => 'PreAuth',
-        'description'   => __('Store page defines how the gateway works. hosted page will redirect to a bank portal, inline form will display the CC form on your website', 'woocommerce-nestpay'),
-    ],
-     // SECURITY SETTINGS
-    'security' => [
-        'title'         => __('hCaptcha', 'woocommerce-nestpay'),
-        'type'          => 'title',
-        'description'   => __('hCaptcha settings are used to prevent automated payment form submissions', 'woocommerce-nestpay'),
-    ],
-    'hcaptcha_key' => [
-        'title'         => __('hCaptcha site key', 'woocommerce-nestpay'),
-        'type'          => 'text',
-        'default'       => '',
-        // 'description'   => __('Order status after successful Pre-Authorization', 'woocommerce-nestpay'),
-    ],
-    'hcaptcha_secret' => [
-        'title'         => __('hCaptcha secret', 'woocommerce-nestpay'),
-        'type'          => 'text',
-        'default'       => '',
-        // 'description'   => __('Order status after successful Pre-Authorization', 'woocommerce-nestpay'),
-    ],
-    // ORDER SETTINGS
-    // 'order' => [
-    //     'title'         => __('Order Settings', 'woocommerce-nestpay'),
-    //     'type'          => 'title',
-    //     'description'   => __('Order settings define order statuses during various stages of the shopping process', 'woocommerce-nestpay'),
-    // ],
-    // 'order_id_format'   => [
-    //     'title'         => __('Order ID Format', 'woocommerce-nestpay'),
-    //     'type'          => 'text',
-    //     'default'       => '%oid%',
-    //     'description'   => sprintf(
-    //         '%s<br>%s<br>
-    //         <code>%%oid%%</code> - %s<br>
-    //         <code>%%d%%</code> - %s<br>
-    //         <code>%%m%%</code> - %s<br>
-    //         <code>%%y%%</code> - %s<br>',
-    //         __('This controls the format of the order ID generated by the gateway. Change this if you are having issues with previous orders', 'woocommerce-nestpay'),
-    //         __('You can use the following replacement variables:', 'woocommerce-nestpay'),
-    //         __('Order ID', 'woocommerce'),
-    //         __('Day', 'woocommerce'),
-    //         __('Month', 'wordpress'),
-    //         __('Year', 'woocommerce'),
-    //     ),
-    // ],
-    // 'order_preauth_success' => [
-    //     'title'         => __('PreAuth Success', 'woocommerce-nestpay'),
-    //     'type'          => 'select',
-    //     'options'       => $statuses,
-    //     'default'       => 'wc-processing',
-    //     'description'   => __('Order status after successful Pre-Authorization', 'woocommerce-nestpay'),
-    // ],
-    // 'order_preauth_failure' => [
-    //     'title'         => __('PreAuth Failure', 'woocommerce-nestpay'),
-    //     'type'          => 'select',
-    //     'options'       => $statuses,
-    //     'default'       => 'wc-failed',
-    //     'description'   => __('Order status after failed Pre-Authorization', 'woocommerce-nestpay'),
-    // ],
-    // 'order_void' => [
-    //     'title'         => __('Voided', 'woocommerce-nestpay'),
-    //     'type'          => 'select',
-    //     'options'       => $statuses,
-    //     'default'       => 'wc-cancelled',
-    //     'description'   => __('Order status after voiding the transaction', 'woocommerce-nestpay'),
-    // ],
-    // 'order_postauth_success' => [
-    //     'title'         => __('PostAuth Success', 'woocommerce-nestpay'),
-    //     'type'          => 'select',
-    //     'options'       => $statuses,
-    //     'default'       => 'wc-completed',
-    //     'description'   => __('Order status after successful Post-Authorization', 'woocommerce-nestpay'),
-    // ],
-    // 'order_postauth_failure' => [
-    //     'title'         => __('PostAuth Failure', 'woocommerce-nestpay'),
-    //     'type'          => 'select',
-    //     'options'       => $statuses,
-    //     'default'       => 'wc-on-hold',
-    //     'description'   => __('Order status after failed Post-Authorization', 'woocommerce-nestpay'),
-    // ],
+        'description' => __(
+            'Store page defines how the gateway works.
+            Hosted page will redirect to a bank portal, inline form will display the CC form on your website',
+            'wc-serbian-nestpay'
+        ),
+    ),
+    'store_transaction' => array(
+        'title'       => __( 'Transaction type', 'wc-serbian-nestpay' ),
+        'type'        => 'select',
+        'options'     => array(
+            'Automatic' => __( 'Automatic', 'wc-serbian-nestpay' ),
+            'PreAuth'   => __( 'Reserve funds (authorize)', 'wc-serbian-nestpay' ),
+            'Auth'      => __( 'Debit funds (Capture)', 'wc-serbian-nestpay' ),
+        ),
+        'default'     => 'Automatic',
+        'description' => sprintf(
+            '%s<br>%s',
+            esc_html__( 'PreAuth reserves the funds on the cardholder\'s account, Auth debits the funds from the cardholder\'s account.', 'wc-serbian-nestpay' ),
+            esc_html__( 'Setting this to automatic will use PreAuth for physical goods and Auth for digital goods', 'wc-serbian-nestpay' ),
+        ),
+    ),
 
-
-];
+);

@@ -12,10 +12,12 @@ insert_final_newline = true
 
 [*.php]
 indent_size = 4
-trim_trailing_whitespace = false
 
 [*.scss]
 indent_size = 2
 
 [*.js]
 indent_size = 2
+
+[composer.json]
+indent_size = 4
