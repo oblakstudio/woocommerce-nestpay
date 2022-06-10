@@ -1,7 +1,7 @@
 //Magnific Popup Definition File
 
 interface JQuery {
-  magnificPopup(callback?: () => void): JQuery ;
+  magnificPopup(callback?: () => void): JQuery;
 }
 
 interface JQueryStatic {
