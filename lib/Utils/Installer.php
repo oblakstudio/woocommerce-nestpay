@@ -8,8 +8,6 @@
 
 namespace Oblak\NPG\Utils;
 
-use WC_Admin_Notices;
-
 /**
  * Installer class
  */
@@ -107,8 +105,8 @@ class Installer {
                     'caps'        => 'manage_woocommerce',
                     'message'     => sprintf(
                         '<p><strong>%s</strong> - %s: %s</p>',
-                        esc_html__( 'WooCommerce NestPay Payment Gateway', 'woocommerce-nestpay' ),
-                        esc_html__( 'The following tables are missing: ', 'woocommerce-nestpay' ),
+                        esc_html__( 'WooCommerce NestPay Payment Gateway', 'wc-serbian-nestpay' ),
+                        esc_html__( 'The following tables are missing: ', 'wc-serbian-nestpay' ),
                         implode( ', ', $missing_tables ),
                     ),
                     'dismissible' => false,
@@ -254,8 +252,8 @@ class Installer {
             'settings' => sprintf(
                 '<a href="%s" aria-label="%s">%s</a>',
                 admin_url( 'admin.php?page=wc-settings&tab=checkout&section=nestpay' ),
-                esc_attr__( 'Plugin Settings', 'woocommerce-nestpay' ),
-                esc_html__( 'Plugin Settings', 'woocommerce-nestpay' ),
+                esc_attr__( 'Plugin Settings', 'wc-serbian-nestpay' ),
+                esc_html__( 'Plugin Settings', 'wc-serbian-nestpay' ),
             ),
         );
 

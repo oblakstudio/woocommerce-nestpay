@@ -29,10 +29,10 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 <p>
     <?php
     if ( $order->is_paid() ) {
-        esc_html_e( 'The order amount has been successfully reserved on your payment card.', 'woocommerce-nestpay' );
+        esc_html_e( 'The order amount has been successfully reserved on your payment card.', 'wc-serbian-nestpay' );
         echo ' ' . wc_price( $order->get_total() ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     } else {
-        esc_html_e( 'Transaction failed. Your payment card is not charged.', 'woocommerce-nestpay' );
+        esc_html_e( 'Transaction failed. Your payment card is not charged.', 'wc-serbian-nestpay' );
     }
     ?>
 </p>

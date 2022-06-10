@@ -38,20 +38,20 @@ class Admin_Order_Columns {
             return;
         }
 
-        $nestpay_status = __( 'Unknown', 'woocommerce-nestpay' );
+        $nestpay_status = __( 'Unknown', 'wc-serbian-nestpay' );
 
         switch ( $the_order->get_meta( '_nestpay_status', true, 'edit' ) ) {
             case 'reserved':
-                $nestpay_status = __( 'Funds reserved', 'woocommerce-nestpay' );
+                $nestpay_status = __( 'Funds reserved', 'wc-serbian-nestpay' );
                 break;
             case 'charged':
-                $nestpay_status = __( 'Funds deposited', 'woocommerce-nestpay' );
+                $nestpay_status = __( 'Funds deposited', 'wc-serbian-nestpay' );
                 break;
             case 'void':
-                $nestpay_status = __( 'Transaction voided', 'woocommerce-nestpay' );
+                $nestpay_status = __( 'Transaction voided', 'wc-serbian-nestpay' );
                 break;
             case 'refunded':
-                $nestpay_status = __( 'Transaction refunded', 'woocommerce-nestpay' );
+                $nestpay_status = __( 'Transaction refunded', 'wc-serbian-nestpay' );
                 break;
         }
 

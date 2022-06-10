@@ -4,7 +4,6 @@
  *
  * @package WooCommerce NestPay Payment Gateway
  * @since 2.0.0
- * 
  */
 
 use Oblak\NPG\Woocommerce_Nestpay;

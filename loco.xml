@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <bundle name="WooCommerce NestPay Payment Gateway">
   <domain name="woocommerce-nestpay">
-    <project name="WooCommerce NestPay Payment Gateway" slug="woocommerce-nestpay">
+    <project name="WooCommerce NestPay Payment Gateway" slug="wc-serbian-nestpay">
       <source>
         <directory>.</directory>
       </source>
@@ -9,7 +9,7 @@
         <directory>languages</directory>
       </target>
       <template>
-        <file>languages/woocommerce-nestpay.pot</file>
+        <file>languages/wc-serbian-nestpay.pot</file>
       </template>
     </project>
   </domain>

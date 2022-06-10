@@ -21,7 +21,7 @@ final class Woocommerce_Nestpay {
      *
      * @var string
      */
-    public $version = '2.0.0';
+    public $version = '1.0.0';
 
     /**
      * DB Version
@@ -178,7 +178,7 @@ final class Woocommerce_Nestpay {
      * Initialize Admin
      */
     public function admin_init() {
-        new Admin\AdminAssets();
+        new Admin\Admin_Assets();
         new Admin\Admin_Tools();
     }
 
@@ -204,7 +204,7 @@ final class Woocommerce_Nestpay {
      */
     private function load_textdomain() {
         load_plugin_textdomain(
-            'woocommerce-nestpay',
+            'wc-serbian-nestpay',
             false,
             dirname( WCNPG_PLUGIN_BASENAME ) . '/languages'
         );

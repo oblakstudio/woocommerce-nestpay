@@ -7,16 +7,20 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     ["@semantic-release/exec", {
-      "prepareCmd": "sh ./assets/build/release.sh ${nextRelease.version}"
+      "prepareCmd": "sh ./.github/scripts/release.sh ${nextRelease.version}"
     }],
     ["@semantic-release/git", {
-      "assets": ["CHANGELOG.md", "woocommerce-nestpay.php"],
-      "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      "assets": [
+        "CHANGELOG.md", "wc-serbian-nestpay.php", ".wordpress-org/readme.txt"
+      ],
+      "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
     }],
     ["@semantic-release/github", {
-      "assets": [
-        {"path": "/tmp/*.zip", "label": "WooCommerce NestPay ${nextRelease.version}"}
-      ]
+      "assets": [{
+        "path": "/tmp/release.zip",
+        "name": "wc-serbian-nestpay-${nextRelease.version}.zip",
+        "label": "Version ${nextRelease.version}"
+      }]
     }]
   ]
 }

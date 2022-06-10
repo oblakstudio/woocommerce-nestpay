@@ -1,38 +1,57 @@
-name: Release
+name: Build and release
 on:
   push:
     branches:
       - master
+    paths-ignore:
+      - '.wordpress-org/**'
+      - '.github/workflows/wp-deploy.yml'
+      - '.github/workflows/wp-assets.yml'
+      - '.github/scripts/deploy.sh'
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - '.codeclimate.yml'
+
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
         with:
           fetch-depth: 0
       - name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.4.0
         with:
           node-version: 16
+          cache: yarn
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2.1.6
+        with:
+          path: /tmp/composer-cache
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
       - name: Install composer dependencies
-        uses: php-actions/composer@v5
+        uses: php-actions/composer@v6
         with:
           php_version: 7.4
           version: 2
           dev: no
-          args: --optimize-autoloader --classmap-authoritative
-      - name: Cache yarn dependencies
-        uses: c-hive/gha-yarn-cache@v1
+          quiet: yes
+          args: --optimize-autoloader --classmap-authoritative --prefer-dist
       - name: Install Yarn dependencies
         run: yarn install
       - name: Lint
         run: yarn lint
       - name: Build
-        run: yarn build:production
+        run: "yarn build:production"
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+          GIT_AUTHOR_NAME: "oblakbot"
+          GIT_AUTHOR_EMAIL: "sibin.grasic+bot@oblak.studio"
+          GIT_COMMITTER_NAME: "oblakbot"
+          GIT_COMMITTER_EMAIL: 'sibin.grasic+bot@oblak.studio'
+          GITHUB_TOKEN: ${{ secrets.OBLAK_BOT_TOKEN }}
+        run: yarn run semantic-release
+
 

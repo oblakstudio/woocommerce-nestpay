@@ -1,6 +1,6 @@
 <?php //phpcs:disable WordPress.Security.NonceVerification.Recommended
 /**
- * AdminAssets class file
+ * Admin_Assets class file
  *
  * @package WooCommerce NestPay Payment Gateway
  * @subpackage Admin
@@ -15,7 +15,7 @@ use Automattic\Jetpack\Constants;
  *
  * @since 2.0.0
  */
-class AdminAssets {
+class Admin_Assets {
     /** Class Constructor */
     public function __construct() {
         add_filter( 'admin_body_class', array($this, 'add_router_classes'), 9999 );
@@ -23,12 +23,16 @@ class AdminAssets {
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
     }
 
+    /**
+     * Add needed classes for WPRouter
+     *
+     * @param  string $classes Current classes.
+     * @return string          Updated classes.
+     */
     public function add_router_classes( $classes ) {
-        $page    = sanitize_text_field( wp_unslash( $_GET['page'] ?? '' ) );
-        $tab     = sanitize_text_field( wp_unslash( $_GET['tab'] ?? '' ) );
-        $section = sanitize_text_field( wp_unslash( $_GET['section'] ?? '' ) );
+        $get_array = wc_clean( wp_unslash( $_GET ) );
 
-        if ( 'wc-settings' === $page && 'checkout' === $tab && 'nestpay' === $section ) {
+        if ( 'wc-settings' === $get_array['page'] && 'checkout' === $get_array['tab'] && 'nestpay' === $get_array['section'] ) {
             $classes .= ' nestpay-settings ';
         }
 

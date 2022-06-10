@@ -32,8 +32,8 @@ class Transaction_Failure_Email extends WC_Email {
         $this->template_base  = WCNPG_PLUGIN_PATH . 'woocommerce/';
         $this->template_html  = 'emails/customer-nestpay-status.php';
         $this->id             = 'nestpay_transaction_success';
-        $this->title          = __( 'Payment Failed', 'woocommerce-nestpay' ) . ' (' . __( 'NestPay', 'woocommerce-nestpay' ) . ')';
-        $this->description    = __( 'Payment failure e-mail is sent to the buyer upon unsuccesful payment card transaction', 'woocommerce-nestpay' );
+        $this->title          = __( 'Payment Failed', 'wc-serbian-nestpay' ) . ' (' . __( 'NestPay', 'wc-serbian-nestpay' ) . ')';
+        $this->description    = __( 'Payment failure e-mail is sent to the buyer upon unsuccesful payment card transaction', 'wc-serbian-nestpay' );
         $this->placeholders   = array (
             '{site_title}'   => $this->get_blogname(),
             '{order_number}' => '',
@@ -51,7 +51,7 @@ class Transaction_Failure_Email extends WC_Email {
      * @return string
      */
     public function get_default_subject() {
-        return __( 'Your card payment on {site_title} was succesful!', 'woocommerce-nestpay' );
+        return __( 'Your card payment on {site_title} was succesful!', 'wc-serbian-nestpay' );
     }
 
     /**
@@ -60,7 +60,7 @@ class Transaction_Failure_Email extends WC_Email {
      * @return string
      */
     public function get_default_heading() {
-        return __( 'Payment confirmation', 'woocommerce-nestpay' );
+        return __( 'Payment confirmation', 'wc-serbian-nestpay' );
     }
 
     /**

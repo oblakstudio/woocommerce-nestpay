@@ -8,6 +8,7 @@
 
 namespace Oblak\NPG\WooCommerce\Gateway;
 
+use Automattic\Jetpack\Constants;
 use Oblak\NPG\WooCommerce\Data\Nestpay_Transaction;
 use WC_Logger;
 use WC_Order;
@@ -44,8 +45,8 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
         $this->id                 = 'nestpay';
         $this->icon               = apply_filters( 'woocommerce_nestpay_payment_icon', '' );
         $this->has_fields         = true;
-        $this->method_title       = __( 'NestPay', 'woocommerce-nestpay' );
-        $this->method_description = __( 'NestPay Payment Gateway handles card payments by redirecting users to the bank portal', 'woocommerce-nestpay' );
+        $this->method_title       = __( 'NestPay', 'wc-serbian-nestpay' );
+        $this->method_description = __( 'NestPay Payment Gateway handles card payments by redirecting users to the bank portal', 'wc-serbian-nestpay' );
         $this->supports           = array(
             'products',
             'refunds',
@@ -82,16 +83,13 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
         $this->store_type       = $this->get_option( 'store_type' );
         $this->transaction_type = $this->get_option( 'store_transaction' );
 
-        // Security details.
-        $this->hcaptcha_key    = $this->get_option( 'hcaptcha_key' );
-        $this->hcaptcha_secret = $this->get_option( 'hcaptcha_secret' );
-
         // Admin actions and filters.
         add_action( "woocommerce_update_options_payment_gateways_{$this->id}", array($this, 'process_admin_options') );
         add_filter( 'woocommerce_locate_template', array($this, 'override_form_template'), 50, 2 );
 
         // Store filters and actions.
         add_action( "woocommerce_receipt_{$this->id}", array($this, 'receipt_page') );
+        add_action( 'wp_enqueue_scripts', array($this, 'enqueue_hcaptcha'), 999 );
 
         // NestPay response handler.
         new Nestpay_Response(
@@ -260,7 +258,7 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
         }
 
         if ( ! $this->can_refund_order( $order ) ) {
-            return new WP_Error( 'error', __( 'Payment cannot be refunded.', 'woocommerce-nestpay' ) );
+            return new WP_Error( 'error', __( 'Payment cannot be refunded.', 'wc-serbian-nestpay' ) );
         }
 
         $future_status = $order->get_meta( '_nestpay_status', true ) === 'charged' ? 'refunded' : 'voided';
@@ -359,9 +357,9 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
 
         wc_get_template('checkout/form-nestpay.php', array(
             'payment_url'        => $this->payment_url,
+            'auto_redirect'      => $this->auto_redirect,
             'transaction_fields' => $params,
             'enable_hcaptcha'    => ! is_user_logged_in(),
-            'hcaptcha_site_key'  => $this->hcaptcha_key,
         ));
 
     }
@@ -400,6 +398,23 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
         //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
         return base64_encode( pack( 'H*', hash( 'sha512', $string ) ) );
 
+    }
+
+    /**
+     * Enqueues hCaptcha JS file
+     */
+    public function enqueue_hcaptcha() {
+        if ( ! is_checkout() && ! is_wc_endpoint_url( 'order-pay' ) ) {
+            return;
+        }
+
+        $suffix = Constants::is_true( 'SCRIPT_DEBUG' ) ? '' : '.min';
+
+        wp_register_script( 'woocommerce-nestpay-hcaptcha', 'https://hcaptcha.com/1/api.js', array(), WCNPG()->version, true );
+        wp_register_script( 'woocommerce-nestpay-main', WCNPG()->plugin_url() . "/dist/scripts/main{$suffix}.js", array(), WCNPG()->version, true );
+
+        wp_enqueue_script( 'woocommerce-nestpay-hcaptcha' );
+        wp_enqueue_script( 'woocommerce-nestpay-main' );
     }
 
 }

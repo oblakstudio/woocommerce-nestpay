@@ -14,8 +14,8 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Get transaction by transaction ID
  *
- * @param  string $transaction_id Transaction ID from NestPay.
- * @return Nestpay_Transaction|false   Transaction object if found, false otherwise
+ * @param  string $transaction_id    Transaction ID from NestPay.
+ * @return Nestpay_Transaction|false Transaction object if found, false otherwise
  */
 function wcnpg_get_transaction_by_id( $transaction_id ) {
     /**
@@ -48,19 +48,21 @@ function wcnpg_get_transactions_for_order( $order_id ) {
  */
 function wcnpg_get_user_transaction_fields() {
     $fields = array(
-        'Response'       => __( 'Transaction status', 'woocommerce-nestpay' ),
-        'TransId'        => __( 'Transaction ID', 'woocommerce-nestpay' ),
-        'ProcReturnCode' => __( 'Status code', 'woocommerce-nestpay' ),
-        'AuthCode'       => __( 'Authorization code', 'woocommerce-nestpay' ),
-        'mdStatus'       => __( '3D Status', 'woocommerce-nestpay' ),
-        'MaskedPan'      => __( 'Payment card number', 'woocommerce-nestpay' ),
+        'Response'       => __( 'Transaction status', 'wc-serbian-nestpay' ),
+        'TransId'        => __( 'Transaction ID', 'wc-serbian-nestpay' ),
+        'ProcReturnCode' => __( 'Status code', 'wc-serbian-nestpay' ),
+        'AuthCode'       => __( 'Authorization code', 'wc-serbian-nestpay' ),
+        'mdStatus'       => __( '3D Status', 'wc-serbian-nestpay' ),
+        'MaskedPan'      => __( 'Payment card number', 'wc-serbian-nestpay' ),
     );
 
     /**
      * Filter the list of fields to show on the thank you page and emails
      *
+     * @param  array $fields Transaction field key-value pairs.
+     * @return array         Transaction field key-value pairs.
+     *
      * @since 1.0.0
-     * @param array    $fields Transaction field key-value pairs
      */
     return apply_filters( 'woocommerce_nestpay_user_transaction_fields', $fields );
 

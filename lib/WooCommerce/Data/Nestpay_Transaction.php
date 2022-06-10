@@ -930,7 +930,7 @@ class Nestpay_Transaction extends WC_Data {
     //phpcs:enable
 
     /**
-     * Order ID Setter
+     * Set Order ID
      *
      * @param mixed $value Value to set.
      */
@@ -939,7 +939,9 @@ class Nestpay_Transaction extends WC_Data {
     }
 
     /**
-     * Oid Setter
+     * Set Oid
+     *
+     * Oid is the nestpay order identifier
      *
      * @param mixed $value Value to set.
      */
@@ -948,7 +950,7 @@ class Nestpay_Transaction extends WC_Data {
     }
 
     /**
-     * ReturnOid Setter
+     * Set ReturnOid
      *
      * @param mixed $value Value to set.
      */
@@ -957,7 +959,7 @@ class Nestpay_Transaction extends WC_Data {
     }
 
     /**
-     * PAResSytnaxOk Setter
+     * Set PAResSytnaxOk
      *
      * @param mixed $value Value to set.
      */
@@ -966,6 +968,7 @@ class Nestpay_Transaction extends WC_Data {
     }
 
     /**
+     * Set Refreshtime
      *
      * @param mixed $value Value to set.
      */
@@ -974,6 +977,7 @@ class Nestpay_Transaction extends WC_Data {
     }
 
     /**
+     * Set lang
      *
      * @param mixed $value Value to set.
      */
@@ -982,6 +986,7 @@ class Nestpay_Transaction extends WC_Data {
     }
 
     /**
+     * Set Merchant ID
      *
      * @param mixed $value Value to set.
      */
@@ -990,6 +995,7 @@ class Nestpay_Transaction extends WC_Data {
     }
 
     /**
+     * Set masked credit card
      *
      * @param mixed $value Value to set.
      */
@@ -998,6 +1004,7 @@ class Nestpay_Transaction extends WC_Data {
     }
 
     /**
+     * Set order amount
      *
      * @param mixed $value Value to set.
      */
@@ -1006,6 +1013,7 @@ class Nestpay_Transaction extends WC_Data {
     }
 
     /**
+     * Set sID
      *
      * @param mixed $value Value to set.
      */
@@ -1014,429 +1022,487 @@ class Nestpay_Transaction extends WC_Data {
     }
 
     /**
+     * Set ACQBIN
      *
-     * @param mixed $value Value to set.
+     * @param mixed $acqbin ACQBIN.
      */
-    public function set_ACQBIN( $value ) {
-        $this->set_prop( 'ACQBIN', $value );
+    public function set_ACQBIN( $acqbin ) {
+        $this->set_prop( 'ACQBIN', $acqbin );
     }
 
     /**
+     * Set payment card expiration year
      *
-     * @param mixed $value Value to set.
+     * @param mixed $exp_year Expiration year.
      */
-    public function set_Ecom_Payment_Card_ExpDate_Year( $value ) {
-        $this->set_prop( 'Ecom_Payment_Card_ExpDate_Year', $value );
+    public function set_Ecom_Payment_Card_ExpDate_Year( $exp_year ) {
+        $this->set_prop( 'Ecom_Payment_Card_ExpDate_Year', $exp_year );
     }
 
     /**
+     * Set payment card expiration month
      *
-     * @param mixed $value Value to set.
+     * @param mixed $exp_month Expiration month.
      */
-    public function set_Ecom_Payment_Card_ExpDate_Month( $value ) {
-        $this->set_prop( 'Ecom_Payment_Card_ExpDate_Month', $value );
+    public function set_Ecom_Payment_Card_ExpDate_Month( $exp_month ) {
+        $this->set_prop( 'Ecom_Payment_Card_ExpDate_Month', $exp_month );
     }
 
     /**
+     * Set IsHPPCall
      *
-     * @param mixed $value Value to set.
+     * @param mixed $is_hpp_call HPP Call flag.
      */
-    public function set_isHPPCall( $value ) {
-        $this->set_prop( 'isHPPCall', $value );
+    public function set_isHPPCall( $is_hpp_call ) {
+        $this->set_prop( 'isHPPCall', $is_hpp_call );
     }
 
     /**
+     * Set card brand
      *
-     * @param mixed $value Value to set.
+     * @param mixed $card_brand Card brand.
      */
-    public function set_EXTRA_CARDBRAND( $value ) {
-        $this->set_prop( 'EXTRA_CARDBRAND', $value );
+    public function set_EXTRA_CARDBRAND( $card_brand ) {
+        $this->set_prop( 'EXTRA_CARDBRAND', $card_brand );
     }
 
     /**
+     * Set Masked PAN
      *
-     * @param mixed $value Value to set.
+     * @param mixed $masked_pan Masked PAN.
      */
-    public function set_MaskedPan( $value ) {
-        $this->set_prop( 'MaskedPan', $value );
+    public function set_MaskedPan( $masked_pan ) {
+        $this->set_prop( 'MaskedPan', $masked_pan );
     }
 
     /**
+     * Set ACQ Stan
      *
-     * @param mixed $value Value to set.
+     * @param mixed $acq_stan ACQ Stan.
      */
-    public function set_acqStan( $value ) {
-        $this->set_prop( 'acqStan', $value );
+    public function set_acqStan( $acq_stan ) {
+        $this->set_prop( 'acqStan', $acq_stan );
     }
 
     /**
+     * Set UCAF Indicator
      *
-     * @param mixed $value Value to set.
+     * @param mixed $ucaf_indicator UCAF Indicator.
      */
-    public function set_EXTRA_UCAFINDICATOR( $value ) {
-        $this->set_prop( 'EXTRA_UCAFINDICATOR', $value );
+    public function set_EXTRA_UCAFINDICATOR( $ucaf_indicator ) {
+        $this->set_prop( 'EXTRA_UCAFINDICATOR', $ucaf_indicator );
     }
 
     /**
+     * Set Client IP Address
      *
-     * @param mixed $value Value to set.
+     * @param mixed $client_ip Client IP.
      */
-    public function set_clientIp( $value ) {
-        $this->set_prop( 'clientIp', $value );
+    public function set_clientIp( $client_ip ) {
+        $this->set_prop( 'clientIp', $client_ip );
     }
 
     /**
+     * Set Transaction Type
      *
-     * @param mixed $value Value to set.
+     * Can be PreAuth or Auth.
+     *
+     * @param mixed $transaction_type Transaction type.
      */
-    public function set_trantype( $value ) {
-        $this->set_prop( 'trantype', $value );
+    public function set_trantype( $transaction_type ) {
+        $this->set_prop( 'trantype', $transaction_type );
     }
 
     /**
+     * Set Transaction Protocol
      *
-     * @param mixed $value Value to set.
+     * @param mixed $protocol Transaction Protocol.
      */
-    public function set_protocol( $value ) {
-        $this->set_prop( 'protocol', $value );
+    public function set_protocol( $protocol ) {
+        $this->set_prop( 'protocol', $protocol );
     }
 
     /**
+     * Set iReq Detail
      *
-     * @param mixed $value Value to set.
+     * @param mixed $ireq_detail iReq Detail.
      */
-    public function set_iReqDetail( $value ) {
-        $this->set_prop( 'iReqDetail', $value );
+    public function set_iReqDetail( $ireq_detail ) {
+        $this->set_prop( 'iReqDetail', $ireq_detail );
     }
 
     /**
+     * Set MD
      *
-     * @param mixed $value Value to set.
+     * @param mixed $md MD.
      */
-    public function set_md( $value ) {
-        $this->set_prop( 'md', $value );
+    public function set_md( $md ) {
+        $this->set_prop( 'md', $md );
     }
 
     /**
+     * Set Proc Return Code
      *
-     * @param mixed $value Value to set.
+     * @param mixed $proc_return_code Proc Return Code.
      */
-    public function set_ProcReturnCode( $value ) {
-        $this->set_prop( 'ProcReturnCode', $value );
+    public function set_ProcReturnCode( $proc_return_code ) {
+        $this->set_prop( 'ProcReturnCode', $proc_return_code );
     }
 
     /**
+     * Set Instalment number
      *
-     * @param mixed $value Value to set.
+     * @param int $instalment Number of instalments.
      */
-    public function set_instalment( $value ) {
-        $this->set_prop( 'instalment', $value );
+    public function set_instalment( $instalment ) {
+        $this->set_prop( 'instalment', $instalment );
     }
 
     /**
+     * Set Payment result DSID
      *
-     * @param mixed $value Value to set.
+     * @param int $pay_results_dsid Payment result DSID.
      */
-    public function set_payResults_dsId( $value ) {
-        $this->set_prop( 'payResults_dsId', $value );
+    public function set_payResults_dsId( $pay_results_dsid ) {
+        $this->set_prop( 'payResults_dsId', $pay_results_dsid );
     }
 
     /**
+     * Set Vendor Code
      *
-     * @param mixed $value Value to set.
+     * @param mixed $vendor_code Vendor code.
      */
-    public function set_vendorCode( $value ) {
-        $this->set_prop( 'vendorCode', $value );
+    public function set_vendorCode( $vendor_code ) {
+        $this->set_prop( 'vendorCode', $vendor_code );
     }
 
     /**
+     * Set Transaction ID
      *
-     * @param mixed $value Value to set.
+     * @param mixed $transaction_id Transaction ID.
      */
-    public function set_TransId( $value ) {
-        $this->set_prop( 'TransId', $value );
+    public function set_TransId( $transaction_id ) {
+        $this->set_prop( 'TransId', $transaction_id );
     }
 
     /**
+     * Set Transaction date
      *
-     * @param mixed $value Value to set.
+     * @param string $transaction_date Transaction Date.
      */
-    public function set_EXTRA_TRXDATE( $value ) {
-        $this->set_prop( 'EXTRA_TRXDATE', $value );
+    public function set_EXTRA_TRXDATE( $transaction_date ) {
+        $this->set_prop( 'EXTRA_TRXDATE', $transaction_date );
     }
 
     /**
+     * Set Transaction signature
      *
-     * @param mixed $value Value to set.
+     * @param mixed $signature Transaction signature.
      */
-    public function set_signature( $value ) {
-        $this->set_prop( 'signature', $value );
+    public function set_signature( $signature ) {
+        $this->set_prop( 'signature', $signature );
     }
 
     /**
+     * Set Store type
      *
-     * @param mixed $value Value to set.
+     * @param mixed $store_type Store type.
      */
-    public function set_storetype( $value ) {
-        $this->set_prop( 'storetype', $value );
+    public function set_storetype( $store_type ) {
+        $this->set_prop( 'storetype', $store_type );
     }
 
     /**
+     * Set iReq Code
      *
-     * @param mixed $value Value to set.
+     * @param mixed $i_req_code iReq Code.
      */
-    public function set_iReqCode( $value ) {
-        $this->set_prop( 'iReqCode', $value );
+    public function set_iReqCode( $i_req_code ) {
+        $this->set_prop( 'iReqCode', $i_req_code );
     }
 
     /**
+     * Set Veres enrolled status
      *
-     * @param mixed $value Value to set.
+     * @param mixed $veres_enrolled_status Veres enrolled status.
      */
-    public function set_veresEnrolledStatus( $value ) {
-        $this->set_prop( 'veresEnrolledStatus', $value );
+    public function set_veresEnrolledStatus( $veres_enrolled_status ) {
+        $this->set_prop( 'veresEnrolledStatus', $veres_enrolled_status );
     }
 
     /**
+     * Set Transaction response.
      *
-     * @param mixed $value Value to set.
+     * Can be:
+     *  - Approved
+     *  - Declined
+     *  - Error
+     *
+     * @param string $response Transaction response.
      */
-    public function set_Response( $value ) {
-        $this->set_prop( 'Response', $value );
+    public function set_Response( $response ) {
+        $this->set_prop( 'Response', $response );
     }
 
     /**
+     * Set Settlement ID
      *
-     * @param mixed $value Value to set.
+     * @param mixed $settlement_id Settlement ID.
      */
-    public function set_SettleId( $value ) {
-        $this->set_prop( 'SettleId', $value );
+    public function set_SettleId( $settlement_id ) {
+        $this->set_prop( 'SettleId', $settlement_id );
     }
 
     /**
+     * Set Organisation Hash
      *
-     * @param mixed $value Value to set.
+     * @param mixed $organisation_hash Organization hash.
      */
-    public function set_orgHash( $value ) {
-        $this->set_prop( 'orgHash', $value );
+    public function set_orgHash( $organisation_hash ) {
+        $this->set_prop( 'orgHash', $organisation_hash );
     }
 
     /**
+     * Set MD Error message
      *
-     * @param mixed $value Value to set.
+     * @param mixed $md_error_message MD error message.
      */
-    public function set_mdErrorMsg( $value ) {
-        $this->set_prop( 'mdErrorMsg', $value );
+    public function set_mdErrorMsg( $md_error_message ) {
+        $this->set_prop( 'mdErrorMsg', $md_error_message );
     }
 
     /**
+     * Set Error message
      *
-     * @param mixed $value Value to set.
+     * @param mixed $error_message Error message.
      */
-    public function set_ErrMsg( $value ) {
-        $this->set_prop( 'ErrMsg', $value );
+    public function set_ErrMsg( $error_message ) {
+        $this->set_prop( 'ErrMsg', $error_message );
     }
 
     /**
+     * Set PAResVerified
      *
-     * @param mixed $value Value to set.
+     * @param mixed $pares_verified PARes Verified.
      */
-    public function set_PAResVerified( $value ) {
-        $this->set_prop( 'PAResVerified', $value );
+    public function set_PAResVerified( $pares_verified ) {
+        $this->set_prop( 'PAResVerified', $pares_verified );
     }
 
     /**
+     * Set Shop URL
      *
-     * @param mixed $value Value to set.
+     * @param string $shop_url Shop URL.
      */
-    public function set_shopurl( $value ) {
-        $this->set_prop( 'shopurl', $value );
+    public function set_shopurl( $shop_url ) {
+        $this->set_prop( 'shopurl', $shop_url );
     }
 
     /**
+     * Set CAVV
      *
-     * @param mixed $value Value to set.
+     * @param mixed $cavv CAVV.
      */
-    public function set_cavv( $value ) {
-        $this->set_prop( 'cavv', $value );
+    public function set_cavv( $cavv ) {
+        $this->set_prop( 'cavv', $cavv );
     }
 
     /**
+     * Set Digest
      *
-     * @param mixed $value Value to set.
+     * @param mixed $digest Digest.
      */
-    public function set_digest( $value ) {
-        $this->set_prop( 'digest', $value );
+    public function set_digest( $digest ) {
+        $this->set_prop( 'digest', $digest );
     }
 
     /**
+     * Set host reference number
      *
-     * @param mixed $value Value to set.
+     * @param mixed $host_reference_number Host reference number.
      */
-    public function set_HostRefNum( $value ) {
-        $this->set_prop( 'HostRefNum', $value );
+    public function set_HostRefNum( $host_reference_number ) {
+        $this->set_prop( 'HostRefNum', $host_reference_number );
     }
 
     /**
-     * CallbackCall setter
+     * Set CallbackCall.
      *
-     * @param mixed $value Value to set.
-     * @todo Set proper wc_string_to_bool handling
+     * @param mixed $callback_call Callback call.
      */
-    public function set_callbackCall( $value ) {
-        $this->set_prop( 'callbackCall', $value );
+    public function set_callbackCall( $callback_call ) {
+        $this->set_prop( 'callbackCall', $callback_call );
     }
 
     /**
+     * Set AuthCode.
      *
-     * @param mixed $value Value to set.
+     * @param mixed $auth_code Auth Code.
      */
-    public function set_AuthCode( $value ) {
-        $this->set_prop( 'AuthCode', $value );
+    public function set_AuthCode( $auth_code ) {
+        $this->set_prop( 'AuthCode', $auth_code );
     }
 
     /**
+     * Set CAVV Algorithm.
      *
-     * @param mixed $value Value to set.
+     * @param mixed $cavv_algorithm Cavv algorithm.
      */
-    public function set_cavvAlgorithm( $value ) {
-        $this->set_prop( 'cavvAlgorithm', $value );
+    public function set_cavvAlgorithm( $cavv_algorithm ) {
+        $this->set_prop( 'cavvAlgorithm', $cavv_algorithm );
     }
 
     /**
+     * Set XID
      *
-     * @param mixed $value Value to set.
+     * @param mixed $xid XID.
      */
-    public function set_xid( $value ) {
-        $this->set_prop( 'xid', $value );
+    public function set_xid( $xid ) {
+        $this->set_prop( 'xid', $xid );
     }
 
     /**
+     * Set Encoding
      *
-     * @param mixed $value Value to set.
+     * @param string $encoding Character Encoding.
      */
-    public function set_encoding( $value ) {
-        $this->set_prop( 'encoding', $value );
+    public function set_encoding( $encoding ) {
+        $this->set_prop( 'encoding', $encoding );
     }
 
     /**
+     * Set Currency
      *
-     * @param mixed $value Value to set.
+     * @param int $currency Transaction currency.
      */
-    public function set_currency( $value ) {
-        $this->set_prop( 'currency', $value );
+    public function set_currency( $currency ) {
+        $this->set_prop( 'currency', $currency );
     }
 
     /**
+     * Set MD Status
      *
-     * @param mixed $value Value to set.
+     * @param mixed $md_status MD Status.
      */
-    public function set_mdStatus( $value ) {
-        $this->set_prop( 'mdStatus', $value );
+    public function set_mdStatus( $md_status ) {
+        $this->set_prop( 'mdStatus', $md_status );
     }
 
     /**
+     * Set DS ID
      *
-     * @param mixed $value Value to set.
+     * @param int $ds_id DS ID.
      */
-    public function set_dsId( $value ) {
-        $this->set_prop( 'dsId', $value );
+    public function set_dsId( $ds_id ) {
+        $this->set_prop( 'dsId', $ds_id );
     }
 
     /**
+     * Set ECI
      *
-     * @param mixed $value Value to set.
+     * @param mixed $eci ECI.
      */
-    public function set_eci( $value ) {
-        $this->set_prop( 'eci', $value );
+    public function set_eci( $eci ) {
+        $this->set_prop( 'eci', $eci );
     }
 
     /**
+     * Set Version
      *
-     * @param mixed $value Value to set.
+     * @param mixed $version Version.
      */
-    public function set_version( $value ) {
-        $this->set_prop( 'version', $value );
+    public function set_version( $version ) {
+        $this->set_prop( 'version', $version );
     }
 
     /**
+     * Set OrgRnd
      *
-     * @param mixed $value Value to set.
+     * @param mixed $org_rnd Organization random code.
      */
-    public function set_orgRnd( $value ) {
-        $this->set_prop( 'orgRnd', $value );
+    public function set_orgRnd( $org_rnd ) {
+        $this->set_prop( 'orgRnd', $org_rnd );
     }
 
     /**
+     * Set Extra CardIssuer
      *
-     * @param mixed $value Value to set.
+     * @param mixed $extra_cardissuer Extra Card Issuer.
      */
-    public function set_EXTRA_CARDISSUER( $value ) {
-        $this->set_prop( 'EXTRA_CARDISSUER', $value );
+    public function set_EXTRA_CARDISSUER( $extra_cardissuer ) {
+        $this->set_prop( 'EXTRA_CARDISSUER', $extra_cardissuer );
     }
 
     /**
+     * Set client ID.
      *
-     * @param mixed $value Value to set.
+     * @param mixed $client_id Client ID.
      */
-    public function set_clientid( $value ) {
-        $this->set_prop( 'clientid', $value );
+    public function set_clientid( $client_id ) {
+        $this->set_prop( 'clientid', $client_id );
     }
 
     /**
+     * Set TX status.
      *
-     * @param mixed $value Value to set.
+     * @param mixed $tx_status TX status.
      */
-    public function set_txstatus( $value ) {
-        $this->set_prop( 'txstatus', $value );
+    public function set_txstatus( $tx_status ) {
+        $this->set_prop( 'txstatus', $tx_status );
     }
 
     /**
+     * Set RND.
      *
-     * @param mixed $value Value to set.
+     * @param mixed $rnd RND.
      */
-    public function set_HASH( $value ) {
-        $this->set_prop( 'HASH', $value );
+    public function set_rnd( $rnd ) {
+        $this->set_prop( 'rnd', $rnd );
     }
 
     /**
+     * Set HASH.
      *
-     * @param mixed $value Value to set.
+     * @param mixed $hash Value to set.
      */
-    public function set_rnd( $value ) {
-        $this->set_prop( 'rnd', $value );
+    public function set_HASH( $hash ) {
+        $this->set_prop( 'HASH', $hash );
     }
 
     /**
+     * Set Hash parameters
      *
-     * @param mixed $value Value to set.
+     * @param mixed $hash_params Hash parameters.
      */
-    public function set_HASHPARAMS( $value ) {
-        $this->set_prop( 'HASHPARAMS', $value );
+    public function set_HASHPARAMS( $hash_params ) {
+        $this->set_prop( 'HASHPARAMS', $hash_params );
     }
 
     /**
+     * Set Hash Params value
      *
-     * @param mixed $value Value to set.
+     * @param string $hash_params_val Hash parameters value.
      */
-    public function set_HASHPARAMSVAL( $value ) {
-        $this->set_prop( 'HASHPARAMSVAL', $value );
+    public function set_HASHPARAMSVAL( $hash_params_val ) {
+        $this->set_prop( 'HASHPARAMSVAL', $hash_params_val );
     }
 
     /**
+     * Set Hash algorithm
      *
-     * @param mixed $value Value to set.
+     * @param mixed $hash_algorithm Hash algorithm.
      */
-    public function set_hashAlgorithm( $value ) {
-        $this->set_prop( 'hashAlgorithm', $value );
+    public function set_hashAlgorithm( $hash_algorithm ) {
+        $this->set_prop( 'hashAlgorithm', $hash_algorithm );
     }
 
     /**
+     * Set hc_active
      *
-     * @param mixed $value Value to set.
+     * @param mixed $hc_active HC Active.
      */
-    public function set_hc_active( $value ) {
-        $this->set_prop( 'hc_active', $value );
+    public function set_hc_active( $hc_active ) {
+        $this->set_prop( 'hc_active', $hc_active );
     }
 
     //phpcs:disable

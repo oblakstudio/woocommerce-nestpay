@@ -34,7 +34,7 @@ $text_align = is_rtl() ? 'right' : 'left';
         <tbody>
             <tr>
                 <td style="text-align: <?php echo esc_attr( $text_align ); ?>;">
-                    <?php esc_html_e( 'Order ID', 'woocommerce-nestpay' ); ?>
+                    <?php esc_html_e( 'Order ID', 'wc-serbian-nestpay' ); ?>
                 </td>
                 <td style="text-align: <?php echo esc_attr( $text_align ); ?>;">
                     <?php echo esc_html( $order->get_order_number() ); ?>

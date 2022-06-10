@@ -33,7 +33,7 @@ class Admin_Tools {
             'nestpay_verify_db_tables' => array(
                 'name'     => sprintf(
                     '%s: %s',
-                    __( 'WooCommerce NestPay Payment Gateway', 'woocommerce-nestpay' ),
+                    __( 'WooCommerce NestPay Payment Gateway', 'wc-serbian-nestpay' ),
                     __( 'Verify base database tables', 'woocommerce' )
                 ),
                 'button'   => __( 'Verify database', 'woocommerce' ),
