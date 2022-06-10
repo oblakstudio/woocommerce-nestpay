@@ -1,16 +1,24 @@
-function checkCaptcha(e: Event) : void {
+function checkCaptcha(e: Event): void {
+  const active = document.querySelector<HTMLInputElement>('input[name="hcActive"]').value === 'yes';
+  const response = document.querySelector<HTMLInputElement>('[name=h-captcha-response]');
 
-  const response = document.querySelector('[name=h-captcha-response]') as HTMLInputElement;
+  if (!active) {
+    return;
+  }
 
   if (response.value === '') {
     e.preventDefault();
     alert('Please complete the captcha');
   }
-
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('nestpay-payment-form') as HTMLFormElement;
 
-  document.getElementById('nestpay-form').addEventListener('submit', evt => checkCaptcha(evt));
+  if (form.dataset.autoRedirect === 'yes') {
+    form.submit();
+    return;
+  }
 
+  form.addEventListener('submit', (evt) => checkCaptcha(evt));
 });

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle name="WooCommerce NestPay Payment Gateway">
+  <domain name="woocommerce-nestpay">
+    <project name="WooCommerce NestPay Payment Gateway" slug="wc-serbian-nestpay">
+      <source>
+        <directory>.</directory>
+      </source>
+      <target>
+        <directory>languages</directory>
+      </target>
+      <template>
+        <file>languages/wc-serbian-nestpay.pot</file>
+      </template>
+    </project>
+  </domain>
+  <exclude>
+    <directory>node_modules</directory>
+    <directory>vendor</directory>
+  </exclude>
+</bundle>

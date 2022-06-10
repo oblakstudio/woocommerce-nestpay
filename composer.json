@@ -1,16 +1,32 @@
 {
-  "name": "oblak/woocommerce-nestpay-payment-gateway",
-  "description": "NestPay Payment Gateway for WooCommerce",
-  "version": "1.0.0",
-  "autoload": {
-      "psr-4": {
-          "Oblak\\NPG\\": "lib/"
-      },
-      "files": [
-        "lib/Utils.php"
-      ]
-  },
-  "require": {
-    "oblak/asset-loader": "^1.0"
-  }
+    "name": "oblak/woocommerce-nestpay-payment-gateway",
+    "description": "NestPay Payment Gateway for WooCommerce",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "Oblak\\NPG\\": "lib/"
+        }
+    },
+    "require": {
+        "oblak/asset-loader": "^1.0",
+        "oblak/admin-notice-manager": "^1.0"
+    },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+        "wp-coding-standards/wpcs": "*",
+        "phpcompatibility/phpcompatibility-wp": "*"
+    },
+    "scripts": {
+        "install-codestandards": [
+            "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+        ],
+        "post-install-cmd": [
+            "@install-codestandards"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
 }

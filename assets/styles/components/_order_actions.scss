@@ -1,42 +1,42 @@
-@keyframes blinker {
-  50% {
-    opacity: 0.7;
-  }
-}
+// @keyframes blinker {
+//   50% {
+//     opacity: 0.7;
+//   }
+// }
 
-.woocommerce-page {
-  td.column-wc_actions {
-    .nestpay_query::after {
-      content: "\f14c";
-    }
+// .woocommerce-page {
+//   td.column-wc_actions {
+//     .nestpay_query::after {
+//       content: "\f14c";
+//     }
 
-    .nestpay_capture {
-      background: #ffa556 !important;
-      animation: blinker 2s linear infinite;
+//     .nestpay_capture {
+//       background: #ffa556 !important;
+//       animation: blinker 2s linear infinite;
 
-      &::after {
-        content: "\e01e";
-        font-family: "WooCommerce", sans-serif !important;
-      }
-    }
+//       &::after {
+//         content: "\e01e";
+//         font-family: "WooCommerce", sans-serif !important;
+//       }
+//     }
 
-    .nestpay_void::after {
-      content: "\e013";
-      font-family: "WooCommerce", sans-serif !important;
-    }
+//     .nestpay_void::after {
+//       content: "\e013";
+//       font-family: "WooCommerce", sans-serif !important;
+//     }
 
-    .nestpay_refund::after {
-      content: "\e014";
-      font-family: "WooCommerce", sans-serif !important;
-    }
-  }
-}
+//     .nestpay_refund::after {
+//       content: "\e014";
+//       font-family: "WooCommerce", sans-serif !important;
+//     }
+//   }
+// }
 
-.np-popup {
-  position: relative;
-  background: #fff;
-  padding: 20px;
-  width: auto;
-  max-width: 500px;
-  margin: 20px auto;
-}
+// .np-popup {
+//   position: relative;
+//   background: #fff;
+//   padding: 20px;
+//   width: auto;
+//   max-width: 500px;
+//   margin: 20px auto;
+// }

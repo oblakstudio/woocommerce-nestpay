@@ -1,6 +1,18 @@
+.cache-loader
+.vscode
+config/modules.php
 dist
 node_modules
 vendor
-composer.lock
 studio.json
+yarn-error.log
+*.zip
+error_log
 
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

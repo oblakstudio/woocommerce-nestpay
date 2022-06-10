@@ -1,65 +1,51 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { AbstractRoute } from "body-class-router";
+import { RouteInterface } from '@wptoolset/router';
 import 'magnific-popup';
 
-export default class NestPayOrders extends AbstractRoute {
-
-  private preloader:  HTMLDivElement;
+export default class NestPayOrders implements RouteInterface {
+  private preloader: HTMLDivElement;
   private simpleBtns: NodeListOf<HTMLAnchorElement>;
   private promptBtns: NodeListOf<HTMLAnchorElement>;
 
-
-  public init() : void {
-
-    this.preloader  = <HTMLDivElement>document.getElementById('nestpay-loading');
-    this.simpleBtns = document.querySelectorAll('.wc-action-button-nestpay_query, .wc-action-button-nestpay_void')
+  public init(): void {
+    this.preloader = <HTMLDivElement>document.getElementById('nestpay-loading');
+    this.simpleBtns = document.querySelectorAll('.wc-action-button-nestpay_query, .wc-action-button-nestpay_void');
     this.promptBtns = document.querySelectorAll('.wc-action-button-nestpay_capture, .wc-action-button-nestpay_refund');
-
   }
 
-  public finalize() : void {
-
-    this.simpleBtns.forEach(button => button.addEventListener('click', evt => this.handleSimpleAction(evt)));
-    this.promptBtns.forEach(button => button.addEventListener('click', evt => this.handlePromptAction(evt)));
-
+  public finalize(): void {
+    this.simpleBtns.forEach((button) => button.addEventListener('click', (evt) => this.handleSimpleAction(evt)));
+    this.promptBtns.forEach((button) => button.addEventListener('click', (evt) => this.handlePromptAction(evt)));
   }
 
-  private handleSimpleAction(evt: Event) : void {
-
+  private handleSimpleAction(evt: Event): void {
     evt.preventDefault();
 
     this.preloader.classList.add('active');
 
-    this.sendRequest((evt.currentTarget as HTMLAnchorElement).href)
-
+    this.sendRequest((evt.currentTarget as HTMLAnchorElement).href);
   }
 
-  private handlePromptAction(evt: Event) : void {
-
+  private handlePromptAction(evt: Event): void {
     evt.preventDefault();
 
     const prompted = prompt(window.nestpay.prompt, '');
-    const amount   = (prompted == '') ? 0 : parseInt(prompted);
-    const capture  = `${(evt.currentTarget as HTMLAnchorElement).href}&amount=${amount}`;
+    const amount = prompted == '' ? 0 : parseInt(prompted);
+    const capture = `${(evt.currentTarget as HTMLAnchorElement).href}&amount=${amount}`;
 
     this.preloader.classList.add('active');
 
     this.sendRequest(capture);
-
   }
 
-  private sendRequest(href: string) : void {
-
+  private sendRequest(href: string): void {
     fetch(href)
-      .then(response => response.json())
-      .then(response => this.handleResponse(response));
-
+      .then((response) => response.json())
+      .then((response) => this.handleResponse(response));
   }
 
-  private handleResponse(response: AjaxResponse) : void {
-
-    const html =
-      `<div class="np-popup">
+  private handleResponse(response: AjaxResponse): void {
+    const html = `<div class="np-popup">
         <h3>${response.message}</h3>
         <span class="info">${window.nestpay.status}: </span>${response.data.status}<br>
         <span class="info">${window.nestpay.transCode}: </span>${response.data.code}<br>
@@ -77,8 +63,5 @@ export default class NestPayOrders extends AbstractRoute {
         type: 'inline',
       },
     });
-
   }
-
-
 }
