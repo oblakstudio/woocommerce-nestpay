@@ -1,7 +1,7 @@
 === Payment gateway NestPay for WooCommerce ===
-Contributors: oblakstudio, seebeen
+Contributors: oblakstudio, misticx
 Donate link: https://srbizasrbe.org
-Tags: serbia, woocommerce, woocommerce-serbia, nestpay
+Tags: woocommerce, nestpay
 Requires at least: 5.9
 Tested up to: 6.0
 Requires PHP: 7.3
