@@ -54,6 +54,7 @@ function wcnpg_get_user_transaction_fields() {
         'AuthCode'       => __( 'Authorization code', 'wc-serbian-nestpay' ),
         'mdStatus'       => __( '3D Status', 'wc-serbian-nestpay' ),
         'MaskedPan'      => __( 'Payment card number', 'wc-serbian-nestpay' ),
+        'EXTRA_TRXDATE'  => __( 'Transaction date', 'wc-serbian-nestpay' ),
     );
 
     /**
