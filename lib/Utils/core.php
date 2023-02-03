@@ -6,15 +6,15 @@
  * @since 2.0.0
  */
 
-use Oblak\NPG\Woocommerce_Nestpay;
+use Oblak\NPG\WooCommerce_Nestpay;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Returns the main instance of WCNPG
  *
- * @return Woocommerce_Nestpay
+ * @return WooCommerce_Nestpay
  */
 function WCNPG() { //phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-    return Woocommerce_Nestpay::get_instance();
+    return WooCommerce_Nestpay::get_instance();
 }

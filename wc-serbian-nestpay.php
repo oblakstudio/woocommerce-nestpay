@@ -3,13 +3,13 @@
  * Plugin Name:          Payment gateway NestPay for WooCommerce
  * Plugin URI:           https://oblak.studio/
  * Description:          Payment Gateway for WooCommerce allowing you to process card payments from all banks using NestPay system
- * Version:              1.0.0
+ * Version:              1.1.1
  * Author:               Oblak Studio
  * Author URI:           https://oblak.studio
  * Requires PHP:         7.3
  * Requires at least:    5.6
  * WC requires at least: 5.7
- * WC tested up to:      6.2
+ * WC tested up to:      7.3
  * Text Domain:          wc-serbian-nestpay
  * Domain Path:          /languages
  *

@@ -15,13 +15,13 @@ use Oblak\NPG\WooCommerce\Gateway\Nestpay_Client;
 /**
  * Main WCNPG class
  */
-final class Woocommerce_Nestpay {
+final class WooCommerce_Nestpay {
     /**
      * Plugin Version
      *
      * @var string
      */
-    public $version = '1.0.0';
+    public $version = '1.1.2';
 
     /**
      * DB Version
@@ -47,7 +47,7 @@ final class Woocommerce_Nestpay {
     /**
      * Plugin instance
      *
-     * @var Woocommerce_Nestpay
+     * @var WooCommerce_Nestpay
      */
     protected static $instance = null;
 
