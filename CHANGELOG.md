@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.1.0...v1.1.1) (2023-02-03)
+
+
+### Bug Fixes
+
+* Fixed readme.txt ([1c04e13](https://github.com/oblakstudio/woocommerce-nestpay/commit/1c04e1342d358c974fe9ba635ae5fa5646a7da9f))
+* Fixed readme.txt ([4852795](https://github.com/oblakstudio/woocommerce-nestpay/commit/48527956fb36bacc5045d7cde686389ba6135976))
+* Removed unnedded composer module ([f5bf644](https://github.com/oblakstudio/woocommerce-nestpay/commit/f5bf644aaa9f552d4280bd92a3ecfe11b4717e1e))
+
 # [1.1.0](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.0.0...v1.1.0) (2023-02-03)
 
 
