@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.0.0...v1.1.0) (2023-02-03)
+
+
+### Bug Fixes
+
+* Fixed readme txt ([97bc930](https://github.com/oblakstudio/woocommerce-nestpay/commit/97bc93090d94407bbe3816082a9bee0429d1b835))
+
+
+### Features
+
+* Added codeclimate file ([24e2ace](https://github.com/oblakstudio/woocommerce-nestpay/commit/24e2ace6204083c554d535f8bf02b0d2e09e842e))
+* Implemented trans date and time ([92d51f0](https://github.com/oblakstudio/woocommerce-nestpay/commit/92d51f0d250fd112a2a29da65656443e0d8c43de))
+
 # 1.0.0 (2022-06-10)
 
 
