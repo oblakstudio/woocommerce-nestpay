@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.1.1...v1.1.2) (2023-02-03)
+
+
+### Bug Fixes
+
+* **build:** Build fixes and tweaks ([03e8c15](https://github.com/oblakstudio/woocommerce-nestpay/commit/03e8c1572c4f440b237bd8ac31b913bab6b02189))
+* **build:** Build fixes and tweaks ([8dcf29d](https://github.com/oblakstudio/woocommerce-nestpay/commit/8dcf29dfffb5cacc7dc42b97419f16287068b6e1))
+
 ## [1.1.1](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.1.0...v1.1.1) (2023-02-03)
 
 
