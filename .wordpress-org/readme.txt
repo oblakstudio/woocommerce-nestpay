@@ -5,7 +5,7 @@ Tags: woocommerce, nestpay
 Requires at least: 5.9
 Tested up to: 6.0
 Requires PHP: 7.3
-Stable tag: 1.1.01.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
