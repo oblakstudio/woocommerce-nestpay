@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.1.3...v1.1.4) (2023-02-28)
+
+
+### Bug Fixes
+
+* **Build:** Fixed release version numbering ([d24d6c1](https://github.com/oblakstudio/woocommerce-nestpay/commit/d24d6c121720b58bd9f3dbdca60e57bea5810199))
+
 ## [1.1.3](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.1.2...v1.1.3) (2023-02-28)
 
 
