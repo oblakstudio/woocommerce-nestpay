@@ -87,7 +87,7 @@ class Nestpay_Response {
         $data['order_id'] = $this->get_order_id_by_oid( $data['oid'] );
         $data['clientid'] = $this->merchant_id;
 
-        $transaction = wcnpg_get_transaction_by_id( $data['TransId'] );
+        $transaction = wcnpg_get_transaction_by_id( $data['TransId'] ?? '' );
 
         if ( ! $transaction ) {
             $transaction = new Nestpay_Transaction( $data );
