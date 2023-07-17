@@ -32,7 +32,7 @@ class Admin_Assets {
     public function add_router_classes( $classes ) {
         $get_array = wc_clean( wp_unslash( $_GET ) );
 
-        if ( 'wc-settings' === $get_array['page'] && 'checkout' === $get_array['tab'] && 'nestpay' === $get_array['section'] ) {
+        if ( 'wc-settings' === $get_array['page'] ?? '' && 'checkout' === $get_array['tab'] ?? '' && 'nestpay' === $get_array['section'] ?? '' ) {
             $classes .= ' nestpay-settings ';
         }
 
