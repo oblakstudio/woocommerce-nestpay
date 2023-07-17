@@ -24,6 +24,90 @@ use WP_Error;
 class Nestpay_Gateway extends WC_Payment_Gateway {
 
     /**
+     * Is test mode active?
+     *
+     * @var bool
+     */
+    private $testmode;
+
+    /**
+     * Is debug mode active?
+     *
+     * @var bool
+     */
+    private $debug;
+
+    /**
+     * Is auto redirect enabled?
+     *
+     * @var bool
+     */
+    private $auto_redirect;
+
+    /**
+     * Merchant ID
+     *
+     * @var string
+     */
+    private $merchant_id;
+
+    /**
+     * Username
+     *
+     * @var string
+     */
+    private $username;
+
+    /**
+     * Password
+     *
+     * @var string
+     */
+    private $password;
+
+    /**
+     * Payment URL
+     *
+     * @var string
+     */
+    private $payment_url;
+
+    /**
+     * API URL
+     *
+     * @var string
+     */
+    private $api_url;
+
+    /**
+     * Store key
+     *
+     * @var string
+     */
+    private $store_key;
+
+    /**
+     * Store currency
+     *
+     * @var string
+     */
+    private $store_currency;
+
+    /**
+     * Store type
+     *
+     * @var string
+     */
+    private $store_type;
+
+    /**
+     * Transaction type
+     *
+     * @var string
+     */
+    private $transaction_type;
+
+    /**
      * Whether or not logging is enabled
      *
      * @var bool
@@ -325,7 +409,7 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
         $customer_is_company =
             'company' === $order->get_meta( '_billing_type', true )
             ||
-            ( '' === $order->get_meta( '_billing_type', true ) && '' !== $order->get_meta( '_billing_company', true ) );
+            ( '' === $order->get_meta( '_billing_type', true ) && '' !== $order->get_billing_company() );
 
         $params = array(
             // Default params needed to process payment.
