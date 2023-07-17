@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.1.5...v1.1.6) (2023-07-17)
+
+
+### Bug Fixes
+
+* Added Null coalescing operator in admin ([8e368f6](https://github.com/oblakstudio/woocommerce-nestpay/commit/8e368f6cf2ae8ff1692334278288ebfa9376b830))
+
 ## [1.1.5](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.1.4...v1.1.5) (2023-07-17)
 
 
