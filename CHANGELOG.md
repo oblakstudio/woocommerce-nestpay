@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.1.4...v1.1.5) (2023-07-17)
+
+
+### Bug Fixes
+
+* Removed meta key error ([5330d7d](https://github.com/oblakstudio/woocommerce-nestpay/commit/5330d7de6a487246ba61586876ab95901405d94b))
+
 ## [1.1.4](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.1.3...v1.1.4) (2023-02-28)
 
 
