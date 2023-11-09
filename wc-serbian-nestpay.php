@@ -7,9 +7,9 @@
  * Author:               Oblak Studio
  * Author URI:           https://oblak.studio
  * Requires PHP:         7.3
- * Requires at least:    5.6
- * WC requires at least: 5.7
- * WC tested up to:      7.3
+ * Requires at least:    6.0
+ * WC requires at least: 7.5
+ * WC tested up to:      8.2
  * Text Domain:          wc-serbian-nestpay
  * Domain Path:          /languages
  *
@@ -26,6 +26,4 @@ require __DIR__ . '/lib/Utils/transaction.php';
 require __DIR__ . '/lib/Utils/currency.php';
 
 
-add_action('woocommerce_loaded', function() {
-    WCNPG();
-});
+add_action( 'woocommerce_loaded', 'WCNPG' );

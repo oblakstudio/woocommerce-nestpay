@@ -22,7 +22,6 @@ use WP_Error;
  * @since 1.0.0
  */
 class Nestpay_Gateway extends WC_Payment_Gateway {
-
     /**
      * Is test mode active?
      *
@@ -127,7 +126,7 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
     public function __construct() {
         // Predefined Gateway fields.
         $this->id                 = 'nestpay';
-        $this->icon               = apply_filters( 'woocommerce_nestpay_payment_icon', '' );
+        $this->icon               = apply_filters( 'woocommerce_nestpay_payment_icon', '' ); //phpcs:ignore
         $this->has_fields         = true;
         $this->method_title       = __( 'NestPay', 'wc-serbian-nestpay' );
         $this->method_description = __( 'NestPay Payment Gateway handles card payments by redirecting users to the bank portal', 'wc-serbian-nestpay' );
@@ -168,12 +167,12 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
         $this->transaction_type = $this->get_option( 'store_transaction' );
 
         // Admin actions and filters.
-        add_action( "woocommerce_update_options_payment_gateways_{$this->id}", array($this, 'process_admin_options') );
-        add_filter( 'woocommerce_locate_template', array($this, 'override_form_template'), 50, 2 );
+        add_action( "woocommerce_update_options_payment_gateways_{$this->id}", array( $this, 'process_admin_options' ) );
+        add_filter( 'woocommerce_locate_template', array( $this, 'override_form_template' ), 50, 2 );
 
         // Store filters and actions.
-        add_action( "woocommerce_receipt_{$this->id}", array($this, 'receipt_page') );
-        add_action( 'wp_enqueue_scripts', array($this, 'enqueue_hcaptcha'), 999 );
+        add_action( "woocommerce_receipt_{$this->id}", array( $this, 'receipt_page' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_hcaptcha' ), 999 );
 
         // NestPay response handler.
         new Nestpay_Response(
@@ -202,7 +201,6 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
      *                      emergency | alert | critical | error | warning | notice | info | debug.
      */
     public static function log( $message, $level = 'info' ) {
-
         if ( ! self::$log_enabled ) {
             return;
         }
@@ -211,8 +209,7 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
             self::$log = wc_get_logger();
         }
 
-        self::$log->log( $level, $message, array('source' => 'nestpay') );
-
+        self::$log->log( $level, $message, array( 'source' => 'nestpay' ) );
     }
 
     /**
@@ -229,7 +226,6 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
      * @return bool was anything saved?
      */
     public function process_admin_options() {
-
         $saved = parent::process_admin_options();
 
         // Maybe clear logs.
@@ -250,14 +246,12 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
      * @return array         Redirect data.
      */
     public function process_payment( $order_id ) {
-
         $order = new WC_Order( $order_id );
 
         return array(
             'result'   => 'success',
             'redirect' => $order->get_checkout_payment_url( true ),
         );
-
     }
 
     /**
@@ -267,11 +261,9 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
      * @return Nestpay_Transaction The transaction object.
      */
     public function query_payment( $order_id ) {
-
         $order = wc_get_order( $order_id );
 
         return WCNPG()->client->query_payment( $order );
-
     }
 
     /**
@@ -290,7 +282,6 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
 
         $order->add_order_note( Nestpay_Response::generate_order_note( $transaction ) );
         $order->save();
-
     }
 
     /**
@@ -299,7 +290,6 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
      * @param int $order_id Order ID.
      */
     public function process_void( $order_id ) {
-
         $order = wc_get_order( $order_id );
 
         $transaction = WCNPG()->client->void_payment( $order );
@@ -310,7 +300,6 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
 
         $order->add_order_note( Nestpay_Response::generate_order_note( $transaction ) );
         $order->save();
-
     }
 
     /**
@@ -321,8 +310,8 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
      * @param  WC_Order $order Order object.
      * @return bool            True if the order can be refunded, false otherwise.
      */
-    public function can_refund_order( $order ) : bool {
-        return ! in_array( $order->get_meta( '_nestpay_status', true ), array('refunded', 'voided'), true );
+    public function can_refund_order( $order ): bool {
+        return ! in_array( $order->get_meta( '_nestpay_status', true ), array( 'refunded', 'voided' ), true );
     }
 
     /**
@@ -334,7 +323,6 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
      * @return bool             True if refund successful, false if not.
      */
     public function process_refund( $order_id, $amount = null, $reason = '' ) {
-
         $order = wc_get_order( $order_id );
 
         if ( is_null( $amount ) || 0 === $amount ) {
@@ -363,7 +351,6 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
         $order->save();
 
         return true;
-
     }
 
     /**
@@ -439,13 +426,15 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
             'BillToCountry'    => $order->get_billing_country(),
         );
 
-        wc_get_template('checkout/form-nestpay.php', array(
-            'payment_url'        => $this->payment_url,
-            'auto_redirect'      => $this->auto_redirect,
-            'transaction_fields' => $params,
-            'enable_hcaptcha'    => ! is_user_logged_in(),
-        ));
-
+        wc_get_template(
+            'checkout/form-nestpay.php',
+            array(
+				'payment_url'        => $this->payment_url,
+				'auto_redirect'      => $this->auto_redirect,
+				'transaction_fields' => $params,
+				'enable_hcaptcha'    => ! is_user_logged_in(),
+            )
+        );
     }
 
     /**
@@ -463,25 +452,26 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
      * @param  string $currency_code    Currency code.
      * @return string                   Transaction hash
      */
-    private function generate_transaction_hash( $order_id, $order_total, $random_string, $success_url, $failure_url, $transaction_type, $currency_code ) : string {
-
+    private function generate_transaction_hash( $order_id, $order_total, $random_string, $success_url, $failure_url, $transaction_type, $currency_code ): string {
         $hash_template = 'merchant_id|order_id|order_total|success_url|failure_url|transaction_type||random_string||||currency_code|store_key';
 
-        $string = strtr($hash_template, array(
-            'merchant_id'      => $this->merchant_id,
-            'order_id'         => $order_id,
-            'order_total'      => $order_total,
-            'success_url'      => $success_url,
-            'failure_url'      => $failure_url,
-            'transaction_type' => $transaction_type,
-            'random_string'    => $random_string,
-            'currency_code'    => $currency_code,
-            'store_key'        => $this->store_key,
-        ));
+        $string = strtr(
+            $hash_template,
+            array(
+				'merchant_id'      => $this->merchant_id,
+				'order_id'         => $order_id,
+				'order_total'      => $order_total,
+				'success_url'      => $success_url,
+				'failure_url'      => $failure_url,
+				'transaction_type' => $transaction_type,
+				'random_string'    => $random_string,
+				'currency_code'    => $currency_code,
+				'store_key'        => $this->store_key,
+            )
+        );
 
         //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
         return base64_encode( pack( 'H*', hash( 'sha512', $string ) ) );
-
     }
 
     /**
@@ -500,5 +490,4 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
         wp_enqueue_script( 'woocommerce-nestpay-hcaptcha' );
         wp_enqueue_script( 'woocommerce-nestpay-main' );
     }
-
 }

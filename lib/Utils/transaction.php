@@ -66,5 +66,4 @@ function wcnpg_get_user_transaction_fields() {
      * @since 1.0.0
      */
     return apply_filters( 'woocommerce_nestpay_user_transaction_fields', $fields );
-
 }

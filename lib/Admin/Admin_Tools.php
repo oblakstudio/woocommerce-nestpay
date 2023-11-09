@@ -19,7 +19,7 @@ class Admin_Tools {
      * Class Constructor
      */
     public function __construct() {
-        add_filter( 'woocommerce_debug_tools', array($this, 'add_debug_tools'), 99, 1 );
+        add_filter( 'woocommerce_debug_tools', array( $this, 'add_debug_tools' ), 99, 1 );
     }
 
     /**
@@ -38,7 +38,7 @@ class Admin_Tools {
                 ),
                 'button'   => __( 'Verify database', 'woocommerce' ),
                 'desc'     => __( 'Verify if all base database tables are present.', 'woocommerce' ),
-                'callback' => array($this, 'verify_db_tables'),
+                'callback' => array( $this, 'verify_db_tables' ),
             ),
         );
 

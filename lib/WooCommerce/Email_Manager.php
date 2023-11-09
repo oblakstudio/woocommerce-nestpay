@@ -32,11 +32,11 @@ class Email_Manager {
      * Class Constructor
      */
     public function __construct() {
-        add_filter( 'woocommerce_get_path_define_tokens', array($this, 'add_path_define_token'), 50, 1 );
-        add_filter( 'woocommerce_locate_template', array($this, 'override_templates'), 50, 2 );
-        add_filter( 'woocommerce_email_classes', array($this, 'add_email_classes'), 99, 1 );
+        add_filter( 'woocommerce_get_path_define_tokens', array( $this, 'add_path_define_token' ), 50, 1 );
+        add_filter( 'woocommerce_locate_template', array( $this, 'override_templates' ), 50, 2 );
+        add_filter( 'woocommerce_email_classes', array( $this, 'add_email_classes' ), 99, 1 );
 
-        add_action( 'woocommerce_email_nestpay_transaction_details', array($this, 'transaction_details'), 99, 2 );
+        add_action( 'woocommerce_email_nestpay_transaction_details', array( $this, 'transaction_details' ), 99, 2 );
     }
 
     /**
@@ -67,10 +67,12 @@ class Email_Manager {
         $default_path = WC()->template_path();
 
         // Try to locate the template file in the theme.
-        $template = locate_template(array(
-            trailingslashit( $default_path ) . $template_name,
-            $template_name,
-        ));
+        $template = locate_template(
+            array(
+				trailingslashit( $default_path ) . $template_name,
+				$template_name,
+            )
+        );
 
         if ( ! empty( $template ) ) {
             return $template;
@@ -105,9 +107,9 @@ class Email_Manager {
             if ( method_exists( $transaction, "get_{$prop}" ) ) {
                 $data[ $label ] = $transaction->{"get_{$prop}"}();
             } else {
-                $data[ $label ] = apply_filters( 'woocommerce_nestpay_transaction_field_prop', '', $transaction, $order );
+                $data[ $label ] = apply_filters( 'woocommerce_nestpay_transaction_field_prop', '', $transaction, $order ); // phpcs:ignore
             }
-        };
+        }
 
         wc_get_template(
             'emails/email-nestpay-transaction-details.php',
@@ -118,5 +120,4 @@ class Email_Manager {
             )
         );
     }
-
 }

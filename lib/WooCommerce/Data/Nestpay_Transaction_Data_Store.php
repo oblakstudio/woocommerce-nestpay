@@ -15,7 +15,6 @@ use WC_Object_Data_Store_Interface;
  * Nestpay_Transaction_Data_Store class
  */
 class Nestpay_Transaction_Data_Store extends WC_Data_Store_WP implements WC_Object_Data_Store_Interface {
-
     /**
      * Columns for the transactions table.
      *
@@ -139,7 +138,6 @@ class Nestpay_Transaction_Data_Store extends WC_Data_Store_WP implements WC_Obje
         }
 
         $transaction->set_object_read( true );
-
     }
 
     /**
@@ -148,7 +146,6 @@ class Nestpay_Transaction_Data_Store extends WC_Data_Store_WP implements WC_Obje
      * @param Nestpay_Transaction $transaction Transaction object.
      */
     public function update( &$transaction ) {
-
     }
 
     /**
@@ -158,7 +155,6 @@ class Nestpay_Transaction_Data_Store extends WC_Data_Store_WP implements WC_Obje
      * @param array               $args        Unused.
      */
     public function delete( &$transaction, $args = array() ) {
-
     }
 
     /**
@@ -177,5 +173,4 @@ class Nestpay_Transaction_Data_Store extends WC_Data_Store_WP implements WC_Obje
             )
         );
     }
-
 }

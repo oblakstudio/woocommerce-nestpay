@@ -18,9 +18,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-/*
+/**
+ * Email header
+ *
  * @hooked WC_Emails::email_header() Output the email header
  */
+// Documented in lib/WooCommerce/Emails.php.
 do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php /* translators: %s: Customer first name */ ?>
@@ -38,10 +41,13 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 </p>
 
 <?php
-/*
+/**
+ * Transaction details
+ *
  * @hooked Email_Manager::transaction_details() Shows the transaction details table.
  * @since 2.0.0
  */
+// Documented in lib/WooCommerce/Emails.php.
 do_action( 'woocommerce_email_nestpay_transaction_details', $order, $transaction, $email );
 
 /**
@@ -51,8 +57,11 @@ if ( $additional_content ) {
     echo wp_kses_post( wpautop( wptexturize( $additional_content ) ) );
 }
 
-/*
+/**
+ * Email footer
+ *
  * @hooked WC_Emails::email_footer() Output the email footer
  * @since 2.0.0
  */
+// Documented in lib/WooCommerce/Emails.php.
 do_action( 'woocommerce_email_footer', $email );

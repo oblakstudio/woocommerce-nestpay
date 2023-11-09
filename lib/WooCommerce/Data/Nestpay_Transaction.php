@@ -145,7 +145,7 @@ class Nestpay_Transaction extends WC_Data {
     }
 
     //phpcs:disable
-    #region Getters 
+    #region Getters
     //phpcs:enable
 
     /**

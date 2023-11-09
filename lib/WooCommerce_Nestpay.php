@@ -8,6 +8,7 @@
 
 namespace Oblak\NPG;
 
+use Automattic\WooCommerce\Utilities\FeaturesUtil;
 use Oblak\Admin_Notice_Manager;
 use Oblak\NPG\Utils\Installer;
 use Oblak\NPG\WooCommerce\Gateway\Nestpay_Client;
@@ -144,12 +145,24 @@ final class WooCommerce_Nestpay {
      * Initialize our plugin
      */
     private function init_hooks() {
-        add_filter( 'woocommerce_data_stores', array($this, 'init_data_store'), 50, 1 );
-        add_filter( 'woocommerce_payment_gateways', array($this, 'add_payment_gateway'), 50, 1 );
+        add_action( 'before_woocommerce_init', array( $this, 'declare_hpos_compat' ), 999 );
+        add_filter( 'woocommerce_data_stores', array( $this, 'init_data_store' ), 50, 1 );
+        add_filter( 'woocommerce_payment_gateways', array( $this, 'add_payment_gateway' ), 50, 1 );
 
-        add_filter( 'admin_init', array($this, 'admin_init'), 99 );
-        add_filter( 'woocommerce_init', array($this, 'woocommerce_init'), 99 );
-        add_filter( 'init', array($this, 'init'), 99 );
+        add_filter( 'admin_init', array( $this, 'admin_init' ), 99 );
+        add_filter( 'woocommerce_init', array( $this, 'woocommerce_init' ), 99 );
+        add_filter( 'init', array( $this, 'init' ), 99 );
+    }
+
+    /**
+     * Declares compatibility with HPOS
+     */
+    public function declare_hpos_compat() {
+        if ( version_compare( WC()->version, '7.1.0', '<' ) ) {
+            return;
+        }
+
+        FeaturesUtil::declare_compatibility( 'custom_order_tables', WCS_PLUGIN_FILE, true );
     }
 
     /**
@@ -196,7 +209,6 @@ final class WooCommerce_Nestpay {
         new WooCommerce\Email_Manager();
         new WooCommerce\Order\Admin_Order_Columns();
         new WooCommerce\Order\Order_Actions();
-
     }
 
     /**
@@ -238,6 +250,5 @@ final class WooCommerce_Nestpay {
      */
     public function plugin_url() {
         return untrailingslashit( plugins_url( '/', WCNPG_PLUGIN_FILE ) );
-
     }
 }

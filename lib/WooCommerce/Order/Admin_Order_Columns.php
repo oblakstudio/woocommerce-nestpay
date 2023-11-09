@@ -18,7 +18,7 @@ class Admin_Order_Columns {
      * Class Constructor
      */
     public function __construct() {
-        add_filter( 'manage_shop_order_posts_custom_column', array($this, 'add_nestpay_status_to_order_total'), 99, 1 );
+        add_filter( 'manage_shop_order_posts_custom_column', array( $this, 'add_nestpay_status_to_order_total' ), 99, 1 );
     }
 
     /**

@@ -90,7 +90,6 @@ class Nestpay_Client {
             $this->password,
             $this->merchant_id
         );
-
     }
 
     /**
@@ -124,7 +123,6 @@ class Nestpay_Client {
         }
 
         return sprintf( $this->base_xml, $order_xml, $action_xml );
-
     }
 
     /**
@@ -137,7 +135,6 @@ class Nestpay_Client {
      * @return Nestpay_Transaction Transaction object
      */
     private function parse_xml_response( $trantype, $response, $order, $amount ) {
-
         $xml  = simplexml_load_string( $response );
         $json = wp_json_encode( $xml );
 
@@ -183,20 +180,22 @@ class Nestpay_Client {
      * @return WP_Error|Nestpay_Transaction Transaction object if request was successful, WP_Error if not
      */
     private function send_request( $transaction_type, $order, $xml, $amount = 0 ) {
-
         Nestpay_Gateway::log( 'Transaction XML: ' . $xml, 'debug' );
 
-        $raw_response = wp_safe_remote_post($this->api_url, array(
-            'method'      => 'POST',
-            'headers'     => array(
-                'Content-Type' => 'application/x-www-form-urlencoded',
-                'Accept'       => '*/*',
-            ),
-            'user-agent'  => 'WooCommerce/' . WC()->version,
-            'httpversion' => '1.1',
-            'timeout'     => 70,
-            'body'        => array('DATA' => $xml),
-        ));
+        $raw_response = wp_safe_remote_post(
+            $this->api_url,
+            array(
+				'method'      => 'POST',
+				'headers'     => array(
+					'Content-Type' => 'application/x-www-form-urlencoded',
+					'Accept'       => '*/*',
+				),
+				'user-agent'  => 'WooCommerce/' . WC()->version,
+				'httpversion' => '1.1',
+				'timeout'     => 70,
+				'body'        => array( 'DATA' => $xml ),
+            )
+        );
 
         if ( is_wp_error( $raw_response ) ) {
             return $raw_response;
@@ -216,11 +215,9 @@ class Nestpay_Client {
      * @return WP_Error|Nestpay_Transaction Transaction object if request was successful, WP_Error if not
      */
     public function query_payment( $order ) {
-
         $request_xml = $this->generate_request_xml( 'query', $order->get_order_number() );
 
         return $this->send_request( 'Query', $order, $request_xml );
-
     }
 
     /**
@@ -233,7 +230,6 @@ class Nestpay_Client {
      * @return WP_Error|Nestpay_Transaction Transaction object if request was successful, WP_Error if not
      */
     public function capture_payment( $order, $amount = 0 ) {
-
         if ( 0 === $amount ) {
             $amount = $order->get_total();
         }
@@ -241,7 +237,6 @@ class Nestpay_Client {
         $request_xml = $this->generate_request_xml( 'capture', $order->get_order_number(), $amount );
 
         return $this->send_request( 'Capture', $order, $request_xml, $amount );
-
     }
 
     /**
@@ -254,11 +249,9 @@ class Nestpay_Client {
      * @return WP_Error|Nestpay_Transaction Transaction object if request was successful, WP_Error if not
      */
     public function refund_payment( $order, $amount ) {
-
         $request_xml = $this->generate_request_xml( 'refund', $order->get_order_number(), $amount );
 
         return $this->send_request( 'Refund', $order, $request_xml, $amount );
-
     }
 
     /**
@@ -268,11 +261,8 @@ class Nestpay_Client {
      * @return WP_Error|Nestpay_Transaction Transaction object if request was successful, WP_Error if not
      */
     public function void_payment( $order ) {
-
         $request_xml = $this->generate_request_xml( 'void', $order->get_order_number() );
 
         return $this->send_request( 'Void', $order, $request_xml );
-
     }
-
 }

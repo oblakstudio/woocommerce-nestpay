@@ -29,7 +29,6 @@ return array(
         'name' => __( 'Pound sterling', 'woocommerce' ),
         'code' => 826,
     ),
-
     'CHF' => array(
         'id'   => 0,
         'name' => __( 'Swiss franc', 'woocommerce' ),

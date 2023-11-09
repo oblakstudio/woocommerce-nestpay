@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
  */
 function wcnpg_get_currencies() {
     $raw_currencies = require WCNPG_ABSPATH . 'config/currencies.php';
-    $formatted      = array(0 => __( 'WooCommerce currency', 'wc-serbian-nestpay' ));
+    $formatted      = array( 0 => __( 'WooCommerce currency', 'wc-serbian-nestpay' ) );
 
     foreach ( $raw_currencies as $code => $data ) {
         $formatted[ $code ] = $code . ' &ndash; ' . $data['name'];
@@ -32,7 +32,6 @@ function wcnpg_get_currencies() {
  * @return int              Currency code.
  */
 function wcnpg_get_currency_code( $currency ) {
-
     $currencies = wcnpg_get_currencies();
 
     if ( ! in_array( $currency, array_keys( $currencies ), true ) ) {

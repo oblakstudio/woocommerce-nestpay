@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:disable WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 /**
  * Core functions and utilities
  *
@@ -15,6 +15,6 @@ defined( 'ABSPATH' ) || exit;
  *
  * @return WooCommerce_Nestpay
  */
-function WCNPG() { //phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
+function WCNPG() {
     return WooCommerce_Nestpay::get_instance();
 }

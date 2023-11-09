@@ -72,19 +72,16 @@ return array(
         'title'       => __( 'Merchant ID', 'wc-serbian-nestpay' ),
         'type'        => 'text',
         'description' => __( 'Please enter your Merchant ID. This is needed in order to process payments', 'wc-serbian-nestpay' ),
-        // 'desc_tip'      => true
     ),
     'username'          => array(
         'title'       => __( 'Username', 'wc-serbian-nestpay' ),
         'type'        => 'text',
         'description' => __( 'Please enter your Username. This is needed in order to process payments', 'wc-serbian-nestpay' ),
-        // 'desc_tip'      => true
     ),
     'password'          => array(
         'title'       => __( 'Password', 'wc-serbian-nestpay' ),
         'type'        => 'password',
         'description' => __( 'Please enter your Password. This is needed in order to process payments', 'wc-serbian-nestpay' ),
-        // 'desc_tip'      => true
     ),
     'payment_url'       => array(
         'title'       => __( 'Payment URL', 'wc-serbian-nestpay' ),
@@ -102,7 +99,6 @@ return array(
         'title'       => __( 'Store key', 'wc-serbian-nestpay' ),
         'type'        => 'password',
         'description' => __( 'Please enter your Password. This is needed in order to take payments', 'wc-serbian-nestpay' ),
-        // 'desc_tip'      => true
     ),
     // TEST Credentials.
     'test_merchant_id'  => array(
@@ -113,7 +109,6 @@ return array(
         ),
         'type'        => 'text',
         'description' => __( 'Please enter your Merchant ID. This is needed in order to take payments', 'wc-serbian-nestpay' ),
-        // 'desc_tip'      => true
     ),
     'test_username'     => array(
         'title'       => sprintf(
@@ -123,7 +118,6 @@ return array(
         ),
         'type'        => 'text',
         'description' => __( 'Please enter your Username. This is needed in order to take payments', 'wc-serbian-nestpay' ),
-        // 'desc_tip'      => true
     ),
     'test_password'     => array(
         'title'       => sprintf(
@@ -133,7 +127,6 @@ return array(
         ),
         'type'        => 'password',
         'description' => __( 'Please enter your Password. This is needed in order to take payments', 'wc-serbian-nestpay' ),
-        // 'desc_tip'      => true
     ),
     'test_payment_url'  => array(
         'title'       => sprintf(
@@ -159,7 +152,6 @@ return array(
         'title'       => __( 'Sandbox Store key', 'wc-serbian-nestpay' ),
         'type'        => 'password',
         'description' => __( 'Please enter your Password. This is needed in order to take payments', 'wc-serbian-nestpay' ),
-        // 'desc_tip'      => true
     ),
     // STORE SETTINGS.
     'store'             => array(
@@ -180,7 +172,6 @@ return array(
         'type'        => 'select',
         'options'     => array(
             '3d_pay_hosting' => __( 'Hosted page', 'wc-serbian-nestpay' ),
-            // '3d'             => __('Inline form', 'wc-serbian-nestpay')
         ),
         'description' => __(
             'Store page defines how the gateway works.
@@ -203,5 +194,4 @@ return array(
             esc_html__( 'Setting this to automatic will use PreAuth for physical goods and Auth for digital goods', 'wc-serbian-nestpay' ),
         ),
     ),
-
 );

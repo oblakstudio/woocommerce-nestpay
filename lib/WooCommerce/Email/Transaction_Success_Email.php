@@ -27,30 +27,29 @@ class Transaction_Success_Email extends WC_Email {
      * Class Constructor
      */
     public function __construct() {
-
         $this->customer_email = true;
         $this->template_base  = WCNPG_PLUGIN_PATH . 'woocommerce/';
         $this->template_html  = 'emails/customer-nestpay-status.php';
         $this->id             = 'nestpay_transaction_success';
         $this->title          = __( 'Payment Success', 'wc-serbian-nestpay' ) . ' (' . __( 'NestPay', 'wc-serbian-nestpay' ) . ')';
         $this->description    = __( 'Payment Success e-mail is sent to the buyer upon succesful payment card transaction', 'wc-serbian-nestpay' );
-        $this->placeholders   = array (
+        $this->placeholders   = array(
             '{site_title}'   => $this->get_blogname(),
             '{order_number}' => '',
             '{order_date}'   => '',
         );
 
-        add_action( 'woocommerce_order_status_pending_to_on-hold_notification', array($this, 'trigger'), 10, 2 );
-        add_action( 'woocommerce_order_status_pending_to_processing_notification', array($this, 'trigger'), 10, 2 );
-        add_action( 'woocommerce_order_status_pending_to_completed_notification', array($this, 'trigger'), 10, 2 );
+        add_action( 'woocommerce_order_status_pending_to_on-hold_notification', array( $this, 'trigger' ), 10, 2 );
+        add_action( 'woocommerce_order_status_pending_to_processing_notification', array( $this, 'trigger' ), 10, 2 );
+        add_action( 'woocommerce_order_status_pending_to_completed_notification', array( $this, 'trigger' ), 10, 2 );
 
-        add_action( 'woocommerce_order_status_failed_to_processing_notification', array($this, 'trigger'), 10, 2 );
-        add_action( 'woocommerce_order_status_failed_to_on-hold_notification', array($this, 'trigger'), 10, 2 );
-        add_action( 'woocommerce_order_status_failed_to_completed_notification', array($this, 'trigger'), 10, 2 );
+        add_action( 'woocommerce_order_status_failed_to_processing_notification', array( $this, 'trigger' ), 10, 2 );
+        add_action( 'woocommerce_order_status_failed_to_on-hold_notification', array( $this, 'trigger' ), 10, 2 );
+        add_action( 'woocommerce_order_status_failed_to_completed_notification', array( $this, 'trigger' ), 10, 2 );
 
-        add_action( 'woocommerce_order_status_cancelled_to_on-hold_notification', array($this, 'trigger'), 10, 2 );
-        add_action( 'woocommerce_order_status_cancelled_to_processing_notification', array($this, 'trigger'), 10, 2 );
-        add_action( 'woocommerce_order_status_cancelled_to_completed_notification', array($this, 'trigger'), 10, 2 );
+        add_action( 'woocommerce_order_status_cancelled_to_on-hold_notification', array( $this, 'trigger' ), 10, 2 );
+        add_action( 'woocommerce_order_status_cancelled_to_processing_notification', array( $this, 'trigger' ), 10, 2 );
+        add_action( 'woocommerce_order_status_cancelled_to_completed_notification', array( $this, 'trigger' ), 10, 2 );
 
         parent::__construct();
     }
@@ -80,7 +79,6 @@ class Transaction_Success_Email extends WC_Email {
      * @param WC_Order|false $order Order object.
      */
     public function trigger( $order_id, $order = false ) {
-
         if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
             $order = wc_get_order( $order_id );
         }
@@ -104,7 +102,6 @@ class Transaction_Success_Email extends WC_Email {
         }
 
         $this->restore_locale();
-
     }
 
     /**
@@ -113,15 +110,17 @@ class Transaction_Success_Email extends WC_Email {
      * @return string
      */
     public function get_content_html() {
-        return wc_get_template_html( $this->template_html, array(
-            'order'              => $this->object,
-            'transaction'        => $this->transaction,
-            'email_heading'      => $this->get_heading(),
-            'additional_content' => $this->get_additional_content(),
-            'sent_to_admin'      => false,
-            'plain_text'         => false,
-            'email'              => $this,
-        ));
+        return wc_get_template_html(
+            $this->template_html,
+            array(
+				'order'              => $this->object,
+				'transaction'        => $this->transaction,
+				'email_heading'      => $this->get_heading(),
+				'additional_content' => $this->get_additional_content(),
+				'sent_to_admin'      => false,
+				'plain_text'         => false,
+				'email'              => $this,
+            )
+        );
     }
-
 }

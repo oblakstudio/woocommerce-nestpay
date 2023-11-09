@@ -16,8 +16,8 @@ class Installer {
      * Init function for the installer
      */
     public static function init() {
-        add_action( 'init', array(__CLASS__, 'check_version') );
-        add_action( 'plugin_action_links_' . WCNPG_PLUGIN_BASENAME, array(__CLASS__, 'plugin_action_links') );
+        add_action( 'init', array( __CLASS__, 'check_version' ) );
+        add_action( 'plugin_action_links_' . WCNPG_PLUGIN_BASENAME, array( __CLASS__, 'plugin_action_links' ) );
     }
 
     /**
@@ -26,7 +26,7 @@ class Installer {
     public static function check_version() {
         if ( ! defined( 'IFRAME_REQUEST' ) && version_compare( get_option( 'wcnpg_version', '0.0.1' ), WCNPG()->version, '<' ) ) {
             self::install();
-            do_action( 'wcnpg_updated' );
+            do_action( 'wcnpg_updated' ); //phpcs:ignore
         }
     }
 
@@ -50,6 +50,12 @@ class Installer {
         self::update_wcnpg_version();
 
         delete_transient( 'wcnpg_installing' );
+
+        /**
+         * Fires after the plugin has been installed.
+         *
+         * @since 2.0.0
+         */
         do_action( 'wcnpg_installed' );
     }
 
@@ -100,18 +106,23 @@ class Installer {
 
         if ( count( $missing_tables ) > 0 ) {
             if ( $modify_notice ) {
-                WCNPG()->amn->add_notice('missing_tables', array(
-                    'type'        => 'error',
-                    'caps'        => 'manage_woocommerce',
-                    'message'     => sprintf(
-                        '<p><strong>%s</strong> - %s: %s</p>',
-                        esc_html__( 'WooCommerce NestPay Payment Gateway', 'wc-serbian-nestpay' ),
-                        esc_html__( 'The following tables are missing: ', 'wc-serbian-nestpay' ),
-                        implode( ', ', $missing_tables ),
+                WCNPG()->amn->add_notice(
+                    'missing_tables',
+                    array(
+						'type'        => 'error',
+						'caps'        => 'manage_woocommerce',
+						'message'     => sprintf(
+							'<p><strong>%s</strong> - %s: %s</p>',
+							esc_html__( 'WooCommerce NestPay Payment Gateway', 'wc-serbian-nestpay' ),
+							esc_html__( 'The following tables are missing: ', 'wc-serbian-nestpay' ),
+							implode( ', ', $missing_tables ),
+						),
+						'dismissible' => false,
+						'persistent'  => true,
                     ),
-                    'dismissible' => false,
-                    'persistent'  => true,
-                ), 'wcnpg', true);
+                    'wcnpg',
+                    true
+                );
             }
         } else {
             if ( $modify_notice ) {
@@ -227,11 +238,6 @@ class Installer {
      * @since 2.0.0
      */
     public static function create_options() {
-        // add_option('woocommerce_serbian', [
-        // 'enabled_customer_type'  => 'both',
-        // 'remove_unneeded_fields' => 'yes',
-        // 'fix_currency_symbol'    => 'no',
-        // ]).
     }
 
     /**

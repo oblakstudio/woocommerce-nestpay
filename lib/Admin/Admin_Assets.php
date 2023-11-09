@@ -18,7 +18,7 @@ use Automattic\Jetpack\Constants;
 class Admin_Assets {
     /** Class Constructor */
     public function __construct() {
-        add_filter( 'admin_body_class', array($this, 'add_router_classes'), 9999 );
+        add_filter( 'admin_body_class', array( $this, 'add_router_classes' ), 9999 );
 
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
     }
@@ -32,7 +32,11 @@ class Admin_Assets {
     public function add_router_classes( $classes ) {
         $get_array = wc_clean( wp_unslash( $_GET ) );
 
-        if ( 'wc-settings' === $get_array['page'] ?? '' && 'checkout' === $get_array['tab'] ?? '' && 'nestpay' === $get_array['section'] ?? '' ) {
+        if (
+            'wc-settings' === ( $get_array['page'] ?? '' ) &&
+            'checkout' === ( $get_array['tab'] ?? '' ) &&
+            'nestpay' === ( $get_array['section'] ?? '' )
+        ) {
             $classes .= ' nestpay-settings ';
         }
 

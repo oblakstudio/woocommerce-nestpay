@@ -20,15 +20,15 @@ class Order_Actions {
      * Class constructor.
      */
     public function __construct() {
-        add_action( 'woocommerce_order_status_processing_to_completed', array($this, 'capture_payment'), 50, 2 );
-        add_action( 'woocommerce_order_status_on-hold_to_completed', array($this, 'capture_payment'), 50, 2 );
-        add_action( 'woocommerce_order_failed_to_completed', array($this, 'capture_payment'), 50, 2 );
+        add_action( 'woocommerce_order_status_processing_to_completed', array( $this, 'capture_payment' ), 50, 2 );
+        add_action( 'woocommerce_order_status_on-hold_to_completed', array( $this, 'capture_payment' ), 50, 2 );
+        add_action( 'woocommerce_order_failed_to_completed', array( $this, 'capture_payment' ), 50, 2 );
 
-        add_action( 'woocommerce_order_status_processing_to_cancelled', array($this, 'void_payment'), 50, 2 );
-        add_action( 'woocommerce_order_status_on-hold_to_cancelled', array($this, 'void_payment'), 50, 2 );
-        add_action( 'woocommerce_order_failed_to_cancelled', array($this, 'void_payment'), 50, 2 );
+        add_action( 'woocommerce_order_status_processing_to_cancelled', array( $this, 'void_payment' ), 50, 2 );
+        add_action( 'woocommerce_order_status_on-hold_to_cancelled', array( $this, 'void_payment' ), 50, 2 );
+        add_action( 'woocommerce_order_failed_to_cancelled', array( $this, 'void_payment' ), 50, 2 );
 
-        add_action( 'woocommerce_order_status_completed_to_cancelled', array($this, 'refund_payment'), 50, 2 );
+        add_action( 'woocommerce_order_status_completed_to_cancelled', array( $this, 'refund_payment' ), 50, 2 );
     }
 
     /**
@@ -48,7 +48,6 @@ class Order_Actions {
      * @param WC_Order $order    Order object.
      */
     public function capture_payment( $order_id, $order ) {
-
         if ( ! $this->is_nestpay_order( $order ) || $order->get_meta( '_nestpay_status', true ) === 'charged' ) {
             return;
         }
@@ -80,7 +79,5 @@ class Order_Actions {
          */
         $gw = wc_get_payment_gateway_by_order( $order_id );
         $gw->process_void( $order_id );
-
     }
-
 }
