@@ -2,8 +2,8 @@
 Contributors: oblakstudio, misticx
 Donate link: https://srbizasrbe.org
 Tags: woocommerce, nestpay
-Requires at least: 5.9
-Tested up to: 6.1
+Requires at least: 6.0
+Tested up to: 6.4
 Requires PHP: 7.3
 Stable tag: 1.2.0
 License: GPLv2 or later
