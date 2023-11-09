@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.1.6...v1.2.0) (2023-11-09)
+
+
+### Features
+
+* Maintenance development ([bf60c4a](https://github.com/oblakstudio/woocommerce-nestpay/commit/bf60c4ac669b27c5250aedb1a2ba8c77f63b2bf9))
+
 ## [1.1.6](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.1.5...v1.1.6) (2023-07-17)
 
 
