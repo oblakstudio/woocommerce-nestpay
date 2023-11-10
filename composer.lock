@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f46f4ce3e74efb91e251e976fe1af257",
+    "content-hash": "6b8d90302688ffc2018c7508f58279af",
     "packages": [
         {
             "name": "oblak/admin-notice-manager",
-            "version": "1.2.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oblakstudio/admin-notice-manager.git",
-                "reference": "ac2f0d49d7aba2efc88af8dd747a94f49f43c76a"
+                "reference": "53a32b62d9799fd486adf0bb09aeb5d80a7a214d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oblakstudio/admin-notice-manager/zipball/ac2f0d49d7aba2efc88af8dd747a94f49f43c76a",
-                "reference": "ac2f0d49d7aba2efc88af8dd747a94f49f43c76a",
+                "url": "https://api.github.com/repos/oblakstudio/admin-notice-manager/zipball/53a32b62d9799fd486adf0bb09aeb5d80a7a214d",
+                "reference": "53a32b62d9799fd486adf0bb09aeb5d80a7a214d",
                 "shasum": ""
             },
             "require": {
@@ -42,9 +42,9 @@
             "description": "Admin Notice manager for WordPress Admin",
             "support": {
                 "issues": "https://github.com/oblakstudio/admin-notice-manager/issues",
-                "source": "https://github.com/oblakstudio/admin-notice-manager/tree/v1.2.0"
+                "source": "https://github.com/oblakstudio/admin-notice-manager/tree/v2.0.0"
             },
-            "time": "2022-10-23T14:00:02+00:00"
+            "time": "2022-10-23T15:30:02+00:00"
         }
     ],
     "packages-dev": [
