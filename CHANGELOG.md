@@ -1,3 +1,11 @@
+## [1.2.1](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.2.0...v1.2.1) (2023-11-10)
+
+
+### Bug Fixes
+
+* Fixed AMN class invocation ([2f39985](https://github.com/oblakstudio/woocommerce-nestpay/commit/2f399856430e2c44827a453e15d7cad7b2db0f41))
+* Fixed readme file ([f3af776](https://github.com/oblakstudio/woocommerce-nestpay/commit/f3af776031d4e159ea53ea02f5fa436101d8b5f4))
+
 # [1.2.0](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.1.6...v1.2.0) (2023-11-09)
 
 
