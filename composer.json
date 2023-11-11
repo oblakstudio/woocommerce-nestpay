@@ -13,15 +13,10 @@
     "require-dev": {
         "oblak/wordpress-coding-standard": "^1.0"
     },
-    "scripts": {
-        "install-codestandards": [
-            "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
-        ],
-        "post-install-cmd": [
-            "@install-codestandards"
-        ]
-    },
     "config": {
+        "sort-packages": true,
+        "classmap-authoritative": true,
+        "optimize-autoloader": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }

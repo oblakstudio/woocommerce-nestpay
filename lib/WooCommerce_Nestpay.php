@@ -9,9 +9,9 @@
 namespace Oblak\NPG;
 
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
-use Oblak\Admin_Notice_Manager;
 use Oblak\NPG\Utils\Installer;
 use Oblak\NPG\WooCommerce\Gateway\Nestpay_Client;
+use Oblak\WP\Admin_Notice_Manager;
 
 /**
  * Main WCNPG class
@@ -76,7 +76,7 @@ final class WooCommerce_Nestpay {
     /**
      * Retrieves the singleton instance
      *
-     * @return WooCommerceSerbian
+     * @return WooCommerce_Nestpay
      */
     public static function get_instance() {
         return is_null( self::$instance )
@@ -162,7 +162,7 @@ final class WooCommerce_Nestpay {
             return;
         }
 
-        FeaturesUtil::declare_compatibility( 'custom_order_tables', WCS_PLUGIN_FILE, true );
+        FeaturesUtil::declare_compatibility( 'custom_order_tables', WCNPG_PLUGIN_FILE, true );
     }
 
     /**
