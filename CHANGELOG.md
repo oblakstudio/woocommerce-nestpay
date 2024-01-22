@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.2.1...v1.2.2) (2023-11-11)
+
+
+### Bug Fixes
+
+* HPOS Compatibility implementation ([987a0f8](https://github.com/oblakstudio/woocommerce-nestpay/commit/987a0f893dae1cf170f66dd25220a90ed0277b06))
+
 ## [1.2.1](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.2.0...v1.2.1) (2023-11-10)
 
 
