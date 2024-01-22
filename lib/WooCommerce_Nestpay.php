@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:disable Squiz.Commenting.VariableComment.MissingVar
 /**
  * WooCommerce NPG setup
  *
@@ -8,15 +8,22 @@
 
 namespace Oblak\NPG;
 
-use Automattic\WooCommerce\Utilities\FeaturesUtil;
-use Oblak\NPG\Utils\Installer;
+use Oblak\NPG\Core\Installer;
+use Oblak\NPG\WooCommerce\Data\Nestpay_Transaction;
 use Oblak\NPG\WooCommerce\Gateway\Nestpay_Client;
 use Oblak\WP\Admin_Notice_Manager;
+use Oblak\WP\Loader_Trait;
+use Oblak\WP\Traits\Hook_Processor_Trait;
+use Oblak\WP\Traits\Singleton_Trait;
 
 /**
  * Main WCNPG class
  */
 final class WooCommerce_Nestpay {
+    use Hook_Processor_Trait;
+    use Loader_Trait;
+    use Singleton_Trait;
+
     /**
      * Plugin Version
      *
@@ -46,13 +53,6 @@ final class WooCommerce_Nestpay {
     public $amn = null;
 
     /**
-     * Plugin instance
-     *
-     * @var WooCommerce_Nestpay
-     */
-    protected static $instance = null;
-
-    /**
      * Plugin settings
      *
      * @var array
@@ -60,66 +60,51 @@ final class WooCommerce_Nestpay {
     protected $options = array();
 
     /**
-     * Disallow cloning
-     */
-    public function __clone() {
-        wc_doing_it_wrong( __FUNCTION__, 'Cloning is disabled', 'NestPay 2.0.0' );
-    }
-
-    /**
-     * Disallow serialization
-     */
-    public function __wakeup() {
-        wc_doing_it_wrong( __FUNCTION__, 'Unserializing is disabled', 'NestPay 2.0.0' );
-    }
-
-    /**
-     * Retrieves the singleton instance
+     * Transaction factory
      *
-     * @return WooCommerce_Nestpay
+     * @var WooCommerce\Data\NestPay_Transaction_Factory
      */
-    public static function get_instance() {
-        return is_null( self::$instance )
-        ? self::$instance = new self()
-        : self::$instance;
-    }
+    public WooCommerce\Data\NestPay_Transaction_Factory $transaction_factory;
 
     /**
-     * Private class constructor
+     * Class Constructor
      */
-    private function __construct() {
-        $this->define_constants();
-        $this->define_tables();
+    protected function __construct() {
         $this->load_classes();
-        $this->init_hooks();
+        $this->init( 'woocommerce_loaded', 1 );
     }
 
     /**
-     * Add needed constants
+     * {@inheritDoc}
      */
-    private function define_constants() {
-        $this->define( 'WCNPG_ABSPATH', dirname( WCNPG_PLUGIN_FILE ) . '/' );
-        $this->define( 'WCNPG_PLUGIN_BASENAME', plugin_basename( WCNPG_PLUGIN_FILE ) );
-        $this->define( 'WCNPG_PLUGIN_PATH', plugin_dir_path( WCNPG_PLUGIN_FILE ) );
-        $this->define( 'WCNPG_VERSION', $this->version );
+    protected function get_dependencies(): array {
+        return array(
+            WooCommerce\Admin\Admin_Assets::class,
+            WooCommerce\Admin\Image_Select_Field::class,
+            WooCommerce\Admin\Order_Page_Addons::class,
+            WooCommerce\Data\NestPay_Transaction_Factory::class,
+            WooCommerce\Core\Template_Extender::class,
+        );
     }
 
     /**
-     * Define constant if not already set.
-     *
-     * @param string      $name  Constant name.
-     * @param string|bool $value Constant value.
+     * Load plugin classes
      */
-    private function define( $name, $value ) {
-        if ( ! defined( $name ) ) {
-            define( $name, $value );
-        }
+    protected function load_classes() {
+        Installer::instance()->init();
+        $this->namespace = 'wc-serbian-nestpay';
+
+        $this->init_asset_loader( include WCNPG_ABSPATH . 'config/assets.php' );
     }
 
     /**
      * Adds plugin tables to WPDB class
+     *
+     * @hook     plugins_loaded
+     * @type     action
+     * @priority PHP_INT_MAX
      */
-    private function define_tables() {
+    public function define_tables() {
         global $wpdb;
 
         $tables = array(
@@ -133,88 +118,13 @@ final class WooCommerce_Nestpay {
     }
 
     /**
-     * Load plugin classes
-     */
-    private function load_classes() {
-        Installer::init();
-        $this->client = new Nestpay_Client();
-        $this->amn    = Admin_Notice_Manager::get_instance();
-    }
-
-    /**
-     * Initialize our plugin
-     */
-    private function init_hooks() {
-        add_action( 'before_woocommerce_init', array( $this, 'declare_hpos_compat' ), 999 );
-        add_filter( 'woocommerce_data_stores', array( $this, 'init_data_store' ), 50, 1 );
-        add_filter( 'woocommerce_payment_gateways', array( $this, 'add_payment_gateway' ), 50, 1 );
-
-        add_filter( 'admin_init', array( $this, 'admin_init' ), 99 );
-        add_filter( 'woocommerce_init', array( $this, 'woocommerce_init' ), 99 );
-        add_filter( 'init', array( $this, 'init' ), 99 );
-    }
-
-    /**
-     * Declares compatibility with HPOS
-     */
-    public function declare_hpos_compat() {
-        if ( version_compare( WC()->version, '7.1.0', '<' ) ) {
-            return;
-        }
-
-        FeaturesUtil::declare_compatibility( 'custom_order_tables', WCNPG_PLUGIN_FILE, true );
-    }
-
-    /**
-     * Adds the transaction data store to WooCommerce data store list
-     *
-     * @param  string[] $data_stores List of data stores.
-     * @return string[]              List of modified data stores.
-     */
-    public function init_data_store( $data_stores ) {
-        $data_stores['nestpay-transaction'] = 'Oblak\\NPG\\WooCommerce\\Data\\Nestpay_Transaction_Data_Store';
-        return $data_stores;
-    }
-
-    /**
-     * Adds our Payment Gateway to list of WooCommerce Gateways
-     *
-     * @param  string[] $gateways List of gateways.
-     * @return string[]           Modified list of gateways.
-     */
-    public function add_payment_gateway( $gateways ) {
-        $gateways[] = '\\Oblak\NPG\\WooCommerce\\Gateway\\Nestpay_Gateway';
-        return $gateways;
-    }
-
-    /**
-     * Initialize Admin
-     */
-    public function admin_init() {
-        new Admin\Admin_Assets();
-        new Admin\Admin_Tools();
-    }
-
-    /**
-     * Initialize plugin when WordPress Initialises.
-     */
-    public function init() {
-        $this->load_textdomain();
-    }
-
-    /**
-     * Initializes Woocommerce addons and hooks
-     */
-    public function woocommerce_init() {
-        new WooCommerce\Email_Manager();
-        new WooCommerce\Order\Admin_Order_Columns();
-        new WooCommerce\Order\Order_Actions();
-    }
-
-    /**
      * Loads the plugin textdomain
+     *
+     * @hook     plugins_loaded
+     * @type     action
+     * @priority 1000
      */
-    private function load_textdomain() {
+    public function load_textdomain() {
         load_plugin_textdomain(
             'wc-serbian-nestpay',
             false,
@@ -223,24 +133,110 @@ final class WooCommerce_Nestpay {
     }
 
     /**
-     * What type of request is this?
+     * Declares compatibility with HPOS
      *
-     * Copied verbatim from WooCommerce
-     *
-     * @param  string $type admin, ajax, cron or frontend.
-     * @return bool
+     * @hook     before_woocommerce_init
+     * @type     action
+     * @priority 999
      */
-    public function is_request( $type ) {
-        switch ( $type ) {
-            case 'admin':
-                return is_admin();
-            case 'ajax':
-                return defined( 'DOING_AJAX' );
-            case 'cron':
-                return defined( 'DOING_CRON' );
-            case 'frontend':
-                return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' ) && ! WC()->is_rest_api_request();
+    public function declare_hpos_compat() {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WCNPG_PLUGIN_FILE, true );
+    }
+
+    /**
+     * Adds the transaction data store to WooCommerce data store list
+     *
+     * @param  string[] $data_stores List of data stores.
+     * @return string[]              List of modified data stores.
+     *
+     * @hook     woocommerce_data_stores
+     * @type     filter
+     * @priority 50
+     */
+    public function init_data_store( $data_stores ) {
+        return array_merge(
+            $data_stores,
+            array(
+                'nestpay-transaction' => WooCommerce\Data\Nestpay_Transaction_Data_Store::class,
+            )
+        );
+    }
+
+    /**
+     * Adds our Payment Gateway to list of WooCommerce Gateways
+     *
+     * @param  string[] $gateways List of gateways.
+     * @return string[]           Modified list of gateways.
+     *
+     * @hook     woocommerce_payment_gateways
+     * @type     filter
+     * @priority 50
+     */
+    public function add_payment_gateway( $gateways ) {
+        $gateways[] = WooCommerce\Gateway\Nestpay_Gateway::class;
+        return $gateways;
+    }
+
+    /**
+     * Adds our emails to the list of WooCommerce emails.
+     *
+     * @param  array $classes List of WooCommerce email classes.
+     * @return array          Modified list of WooCommerce email classes.
+     *
+     * @hook woocommerce_email_classes
+     * @type filter
+     */
+    public function add_email_classes( $classes ) {
+        $classes['WC_Email_NestPay_Status'] = new WooCommerce\Email\Transaction_Status_Email();
+
+        return $classes;
+    }
+
+    /**
+     * Adds transaction details to the status emails.
+     *
+     * @param  WC_Order            $order       Order object.
+     * @param  Nestpay_Transaction $transaction Transaction object.
+     *
+     * @hook woocommerce_email_nestpay_transaction_details
+     * @type action
+     */
+    public function email_transaction_details( $order, $transaction ) {
+        $data = array();
+
+        foreach ( nestpay_get_transaction_fields() as $prop => $label ) {
+            if ( method_exists( $transaction, "get_{$prop}" ) ) {
+                $data[ $label ] = $transaction->{"get_{$prop}"}();
+            } else {
+                $data[ $label ] = apply_filters( 'woocommerce_nestpay_transaction_field_prop', '', $transaction, $order ); // phpcs:ignore
+            }
         }
+
+        wc_get_template(
+            'emails/email-nestpay-transaction-details.php',
+            array(
+                'fields'      => $data,
+                'order'       => $order,
+                'transaction' => $transaction,
+            )
+        );
+    }
+
+    /**
+     * Dequeues nestpay scripts on the frontend
+     *
+     * @param  bool $enqueue Whether to enqueue the script.
+     * @return bool
+     *
+     * @hook wc-serbian-nestpay_load_scripts
+     * @type filter
+     */
+    public function maybe_dequeue_script( bool $enqueue ): bool {
+        if ( is_admin() ) {
+            return $enqueue;
+        }
+
+        return is_checkout() && is_wc_endpoint_url( 'order-pay' );
     }
 
     /**
@@ -250,5 +246,14 @@ final class WooCommerce_Nestpay {
      */
     public function plugin_url() {
         return untrailingslashit( plugins_url( '/', WCNPG_PLUGIN_FILE ) );
+    }
+
+    /**
+     * Get Admin Notice Manager instance
+     *
+     * @return Admin_Notice_Manager
+     */
+    public function amn(): Admin_Notice_Manager {
+        return Admin_Notice_Manager::get_instance();
     }
 }

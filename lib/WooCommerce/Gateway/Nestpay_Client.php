@@ -25,50 +25,40 @@ class Nestpay_Client {
     private $base_xml = null;
 
     /**
-     * Merchant ID recieved from the bank
-     *
-     * @var string
-     */
-    private $merchant_id;
-
-    /**
-     * API Username
-     *
-     * @var string
-     */
-    private $username;
-
-    /**
-     * API Password
-     *
-     * @var string
-     */
-    private $password;
-
-    /**
-     * NestPay API URL
-     *
-     * @var string
-     */
-    private $api_url;
-
-    /**
      * Class constructor
+     *
+     * @param string $merchant_id Merchant ID recieved from the bank.
+     * @param string $username    API Username.
+     * @param string $password    API Password.
+     * @param string $api_url     NestPay API URL.
      */
-    public function __construct() {
-        $opts = get_option( 'woocommerce_nestpay_settings', false );
-
-        if ( false === $opts ) {
-            return;
-        }
-
-        $prefix = 'yes' === $opts['testmode'] ? 'test_' : '';
-
-        $this->merchant_id = $opts[ $prefix . 'merchant_id' ];
-        $this->username    = $opts[ $prefix . 'username' ];
-        $this->password    = $opts[ $prefix . 'password' ];
-        $this->api_url     = $opts[ $prefix . 'api_url' ];
-        $this->base_xml    = $this->generate_base_xml();
+    public function __construct(
+        /**
+         * Merchant ID recieved from the bank
+         *
+         * @var string
+         */
+        private string $merchant_id,
+        /**
+         * API Username
+         *
+         * @var string
+         */
+        private string $username,
+        /**
+         * API Password
+         *
+         * @var string
+         */
+        private string $password,
+        /**
+         * NestPay API URL
+         *
+         * @var string
+         */
+        private string $api_url
+    ) {
+        $this->base_xml = $this->generate_base_xml();
     }
 
     /**
@@ -156,15 +146,16 @@ class Nestpay_Client {
             }
         }
 
-        $transaction = new Nestpay_Transaction( $data );
+        $classname   = WCNPG()->transaction_factory->get_transaction_classname( 0, 'api' );
+        $transaction = new $classname( $data );
 
-        if ( ! array_key_exists( 'trantype', $data ) ) {
-            $transaction->set_trantype( $trantype );
-        }
+        $data['trantype'] ??= $trantype;
+        $data['order_id']   = $order->get_id();
+        $data['oid']        = $order->get_order_number();
+        $data['amount']     = $amount;
 
-        $transaction->set_order_id( $order->get_id() );
-        $transaction->set_oid( $order->get_order_number() );
-        $transaction->set_amount( $amount );
+        $transaction->set_props( $data, 'set' );
+
         $transaction->save();
 
         return $transaction;

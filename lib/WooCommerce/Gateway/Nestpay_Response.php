@@ -50,7 +50,7 @@ class Nestpay_Response {
         add_action( 'woocommerce_api_nestpay', array( $this, 'check_response' ) );
         add_action( 'valid_nestpay_response', array( $this, 'valid_response' ) );
         add_action( 'woocommerce_before_thankyou', array( $this, 'before_thankyou_nestpay' ) );
-        add_action( 'woocommerce_thankyou_nestpay', array( $this, 'thankyou_nestpay_details' ) );
+        add_action( 'woocommerce_thankyou_nestpay', array( $this, 'thankyou_nestpay_details' ), 9 );
         add_filter( 'woocommerce_thankyou_order_received_text', array( $this, 'thankyou_text' ), 99, 2 );
     }
 
@@ -90,12 +90,10 @@ class Nestpay_Response {
         $data['order_id'] = $this->get_order_id_by_oid( $data['oid'] );
         $data['clientid'] = $this->merchant_id;
 
-        $transaction = wcnpg_get_transaction_by_id( $data['TransId'] ?? '' );
+        $transaction = nestpay_get_transaction( nestpay_get_transaction_id_by_transid( $data['TransId'] ?? '' ) );
+        $transaction = $transaction ?: new Nestpay_Transaction( $data ); // phpcs:ignore Universal.Operators.DisallowShortTernary.Found -- ELVIS LIVES.
 
-        if ( ! $transaction ) {
-            $transaction = new Nestpay_Transaction( $data );
-            $transaction->save();
-        }
+        $transaction->save();
 
         if ( $this->validate_hash( $transaction ) ) {
             /**
@@ -259,7 +257,7 @@ class Nestpay_Response {
             return;
         }
 
-        $transaction = new Nestpay_Transaction( $order->get_meta( '_nestpay_callback_id', true ) );
+        $transaction = nestpay_get_transaction( $order );
 
         if ( '00' !== $transaction->get_ProcReturnCode() ) {
             echo '<' . 'style>.woocommerce-thankyou-order-failed { display: none !important; }</style>'; //phpcs:ignore
@@ -274,18 +272,18 @@ class Nestpay_Response {
      * @param  WC_Order $order The order object.
      * @return string          The new text.
      */
-    public function thankyou_text( string $text, WC_Order $order ) {
-        if ( $order->get_payment_method() !== 'nestpay' ) :
+    public function thankyou_text( string $text, WC_Order|false $order ) {
+        if ( !$order || $order->get_payment_method() !== 'nestpay' ) :
             return $text;
         endif;
 
-        $transaction = new Nestpay_Transaction( $order->get_meta( '_nestpay_callback_id', true ) );
+        $transaction = nestpay_get_transaction( $order );
 
         if ( 0 === $transaction->get_id() ) {
             return $text . esc_html__( 'NestPay response unknown', 'wc-serbian-nestpay' );
         }
 
-        return $text . esc_html__( 'Your payment card has been successfully charged', 'wc-serbian-nestpay' );
+        return $text . ' ' . esc_html__( 'Your payment card has been successfully charged', 'wc-serbian-nestpay' );
     }
 
     /**
@@ -294,7 +292,7 @@ class Nestpay_Response {
      * @param int $order_id Order ID.
      */
     public function thankyou_nestpay_details( $order_id ) {
-        $transaction = new Nestpay_Transaction( wc_get_order( $order_id )->get_meta( '_nestpay_callback_id', true ) );
+        $transaction = nestpay_get_transaction( wc_get_order( $order_id ) );
 
         if ( 0 === $transaction->get_id() ) {
             return;
@@ -305,8 +303,10 @@ class Nestpay_Response {
             esc_html__( 'Transaction details', 'wc-serbian-nestpay' )
         );
 
+        add_filter( 'woocommerce_nestpay-transaction_get_EXTRA_TRXDATE', fn( $d ) => $d->date_i18n( wc_date_format() . ' ' . wc_time_format() ) );
+
         // Chunk the fields into groups of 5.
-        foreach ( array_chunk( wcnpg_get_user_transaction_fields(), 5, true ) as $row ) {
+        foreach ( array_chunk( nestpay_get_transaction_fields(), 5, true ) as $row ) {
 
             echo '<ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">';
 
@@ -350,17 +350,15 @@ class Nestpay_Response {
      * @param  Nestpay_Transaction $transaction Transaction object.
      */
     public static function generate_order_note( $transaction ) {
-        $transaction_status = __( 'Declined', 'wc-serbian-nestpay' );
-
-        if ( '00' === $transaction->get_ProcReturnCode() ) {
-
-            $transaction_status = __( 'Approved', 'wc-serbian-nestpay' ) . ' - ';
-
-            $transaction_status .= ( 'PreAuth' === $transaction->get_trantype() )
+        $success            = '00' === $transaction->get_ProcReturnCode();
+        $transaction_status = sprintf(
+            '%1$s %2$s',
+            $success ? __( 'Approved', 'wc-serbian-nestpay' ) : __( 'Declined', 'wc-serbian-nestpay' ),
+            $success && 'PreAuth' === $transaction->get_trantype()
                 ? __( 'Funds reserved', 'wc-serbian-nestpay' )
-                : __( 'Funds deposited', 'wc-serbian-nestpay' );
-
-        }
+                : __( 'Funds deposited', 'wc-serbian-nestpay' )
+        );
+        $transaction_status = __( 'Declined', 'wc-serbian-nestpay' );
 
         return sprintf(
             '<h4>%s</h4>
@@ -375,9 +373,9 @@ class Nestpay_Response {
             __( 'Transaction date', 'wc-serbian-nestpay' ),
             gmdate( 'd. m. Y - H:i', strtotime( $transaction->get_EXTRA_TRXDATE() ) ),
             __( 'Transaction status', 'wc-serbian-nestpay' ),
-            $transaction_status,
+            trim( $transaction_status ),
             __( 'Transaction amount', 'wc-serbian-nestpay' ),
-            $transaction->get_amount() . ' ' . wcnpg_get_currencies()[ $transaction->get_currency() ],
+            $transaction->get_amount() . ' ' . get_woocommerce_currency(),
             __( 'Status code', 'wc-serbian-nestpay' ),
             $transaction->get_ProcReturnCode(),
             __( 'Authorization code', 'wc-serbian-nestpay' ),

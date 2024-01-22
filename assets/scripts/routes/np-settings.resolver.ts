@@ -6,7 +6,7 @@ export default class NestPaySettings implements RouteInterface {
   private switch: HTMLInputElement;
 
   public init(): void {
-    this.fields = ['merchant_id', 'username', 'password', 'payment_url', 'api_url', 'store_key'];
+    this.fields = ['merchant_id', 'username', 'password', 'store_key'];
 
     this.switch = <HTMLInputElement>document.getElementById('woocommerce_nestpay_testmode');
   }

@@ -18,8 +18,6 @@ use WC_Data_Store;
  *
  * @since 2.0.0
  * @uses WC_Data
- *
- * @todo Add short descriptions for setters
  */
 class Nestpay_Transaction extends WC_Data {
 
@@ -1191,7 +1189,7 @@ class Nestpay_Transaction extends WC_Data {
      * @param string $transaction_date Transaction Date.
      */
     public function set_EXTRA_TRXDATE( $transaction_date ) {
-        $this->set_prop( 'EXTRA_TRXDATE', $transaction_date );
+        $this->set_date_prop( 'EXTRA_TRXDATE', $transaction_date );
     }
 
     /**

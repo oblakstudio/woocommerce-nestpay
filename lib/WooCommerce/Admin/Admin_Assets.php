@@ -6,28 +6,27 @@
  * @subpackage Admin
  */
 
-namespace Oblak\NPG\Admin;
+namespace Oblak\NPG\WooCommerce\Admin;
 
-use Automattic\Jetpack\Constants;
+use Oblak\WP\Abstracts\Hook_Runner;
+use Oblak\WP\Decorators\Hookable;
 
 /**
  * Admin Assets class
  *
  * @since 2.0.0
  */
-class Admin_Assets {
-    /** Class Constructor */
-    public function __construct() {
-        add_filter( 'admin_body_class', array( $this, 'add_router_classes' ), 9999 );
-
-        add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-    }
-
+#[Hookable( 'admin_init', 10 )]
+class Admin_Assets extends Hook_Runner {
     /**
      * Add needed classes for WPRouter
      *
      * @param  string $classes Current classes.
      * @return string          Updated classes.
+     *
+     * @hook     admin_body_class
+     * @type     filter
+     * @priority 9999
      */
     public function add_router_classes( $classes ) {
         $get_array = wc_clean( wp_unslash( $_GET ) );
@@ -44,13 +43,19 @@ class Admin_Assets {
     }
 
     /**
-     * Enqueue Admin scripts
+     * Sets the proper image select URL
+     *
+     * @param  string $image_url  Image URL.
+     * @param  string $option_key Option key.
+     *
+     * @hook woocommerce_image_select_option_image_url
+     * @type filter
      */
-    public function admin_scripts() {
-        $suffix = Constants::is_true( 'SCRIPT_DEBUG' ) ? '' : '.min';
+    public function set_image_option_url( string $image_url, string $option_key ): string {
+        if ( 'woocommerce_nestpay_bank' !== $option_key ) {
+            return $image_url;
+        }
 
-        wp_register_script( 'woocommerce_nestpay_admin', WCNPG()->plugin_url() . "/dist/scripts/admin{$suffix}.js", array(), WCNPG()->version, true );
-
-        wp_enqueue_script( 'woocommerce_nestpay_admin' );
+        return WCNPG()->asset_uri( $image_url );
     }
 }

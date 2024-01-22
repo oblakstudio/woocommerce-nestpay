@@ -1,14 +1,21 @@
 {
-    "name": "oblak/woocommerce-nestpay-payment-gateway",
-    "description": "NestPay Payment Gateway for WooCommerce",
-    "version": "1.0.0",
     "autoload": {
         "psr-4": {
             "Oblak\\NPG\\": "lib/"
-        }
+        },
+        "files": [
+            "lib/Utils/nestpay-core-functions.php",
+            "lib/Utils/nestpay-currency-functions.php",
+            "lib/Utils/nestpay-transaction-functions.php"
+        ]
     },
     "require": {
-        "oblak/admin-notice-manager": "^2.0"
+        "php": ">=8.0",
+        "automattic/jetpack-autoloader": "^3.0",
+        "oblak/woocommerce-utils": "^1.20",
+        "oblak/wp-asset-loader": "^2.1",
+        "oblak/wp-hook-di": "^1.0",
+        "oblak/wp-plugin-installer": "^2.0"
     },
     "require-dev": {
         "oblak/wordpress-coding-standard": "^1.0"
@@ -18,7 +25,8 @@
         "classmap-authoritative": true,
         "optimize-autoloader": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "automattic/jetpack-autoloader": true
         }
     }
 }

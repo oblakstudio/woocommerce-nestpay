@@ -4,8 +4,122 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b8d90302688ffc2018c7508f58279af",
+    "content-hash": "efcd603cae30adfb9026ff49b8e7275c",
     "packages": [
+        {
+            "name": "automattic/jetpack-autoloader",
+            "version": "v3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Automattic/jetpack-autoloader.git",
+                "reference": "bbf43988d1538a9f2678809b0868dc42111d0b12"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/bbf43988d1538a9f2678809b0868dc42111d0b12",
+                "reference": "bbf43988d1538a9f2678809b0868dc42111d0b12",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1 || ^2.0",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "automattic/jetpack-changelogger": "^4.0.2",
+                "yoast/phpunit-polyfills": "1.1.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "autotagger": true,
+                "class": "Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin",
+                "mirror-repo": "Automattic/jetpack-autoloader",
+                "changelogger": {
+                    "link-template": "https://github.com/Automattic/jetpack-autoloader/compare/v${old}...v${new}"
+                },
+                "version-constants": {
+                    "::VERSION": "src/AutoloadGenerator.php"
+                },
+                "branch-alias": {
+                    "dev-trunk": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Automattic\\Jetpack\\Autoloader\\": "src"
+                },
+                "classmap": [
+                    "src/AutoloadGenerator.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Creates a custom autoloader for a plugin or theme.",
+            "keywords": [
+                "autoload",
+                "autoloader",
+                "composer",
+                "jetpack",
+                "plugin",
+                "wordpress"
+            ],
+            "support": {
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.0.2"
+            },
+            "time": "2023-11-21T18:59:10+00:00"
+        },
+        {
+            "name": "automattic/jetpack-constants",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Automattic/jetpack-constants.git",
+                "reference": "d4244e33d2d18902951af05ca5dbb689a23c9cdc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Automattic/jetpack-constants/zipball/d4244e33d2d18902951af05ca5dbb689a23c9cdc",
+                "reference": "d4244e33d2d18902951af05ca5dbb689a23c9cdc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "automattic/jetpack-changelogger": "^4.0.0",
+                "brain/monkey": "2.6.1",
+                "yoast/phpunit-polyfills": "1.1.0"
+            },
+            "suggest": {
+                "automattic/jetpack-autoloader": "Allow for better interoperability with other plugins that use this package."
+            },
+            "type": "jetpack-library",
+            "extra": {
+                "autotagger": true,
+                "mirror-repo": "Automattic/jetpack-constants",
+                "changelogger": {
+                    "link-template": "https://github.com/Automattic/jetpack-constants/compare/v${old}...v${new}"
+                },
+                "branch-alias": {
+                    "dev-trunk": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "A wrapper for defining constants in a more testable way.",
+            "support": {
+                "source": "https://github.com/Automattic/jetpack-constants/tree/v2.0.0"
+            },
+            "time": "2023-11-20T20:02:28+00:00"
+        },
         {
             "name": "oblak/admin-notice-manager",
             "version": "2.0.0",
@@ -45,6 +159,293 @@
                 "source": "https://github.com/oblakstudio/admin-notice-manager/tree/v2.0.0"
             },
             "time": "2022-10-23T15:30:02+00:00"
+        },
+        {
+            "name": "oblak/woocommerce-utils",
+            "version": "1.20.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oblakstudio/woocommerce-utils.git",
+                "reference": "eecc3c4c2d12ca339cc1f3301dc27f7e3bdfaabe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oblakstudio/woocommerce-utils/zipball/eecc3c4c2d12ca339cc1f3301dc27f7e3bdfaabe",
+                "reference": "eecc3c4c2d12ca339cc1f3301dc27f7e3bdfaabe",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 7.4"
+            },
+            "require-dev": {
+                "oblak/wordpress-coding-standard": "^1.0"
+            },
+            "suggest": {
+                "automattic/jetpack-autoloader": "Allow for better interoperability with other plugins that use this package."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Utils/woocommerce-utils-functions.php"
+                ],
+                "psr-4": {
+                    "\\": "src/Interfaces/Shared",
+                    "Oblak\\WooCommerce\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sibin Grasic",
+                    "email": "sibin.grasic@oblak.studio"
+                }
+            ],
+            "description": "This module contains various utilities for WooCommerce.",
+            "support": {
+                "issues": "https://github.com/oblakstudio/woocommerce-utils/issues",
+                "source": "https://github.com/oblakstudio/woocommerce-utils/tree/v1.20.2"
+            },
+            "time": "2023-12-29T19:10:04+00:00"
+        },
+        {
+            "name": "oblak/wp-asset-loader",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oblakstudio/wp-asset-loader.git",
+                "reference": "8908b031d78d1aaa8542d6242b3ce83141c6ea1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oblakstudio/wp-asset-loader/zipball/8908b031d78d1aaa8542d6242b3ce83141c6ea1c",
+                "reference": "8908b031d78d1aaa8542d6242b3ce83141c6ea1c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+                "phpcompatibility/phpcompatibility-wp": "*",
+                "squizlabs/php_codesniffer": "*",
+                "wp-coding-standards/wpcs": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Oblak\\WP\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-only"
+            ],
+            "description": "Simple Asset Loader for WordPress",
+            "support": {
+                "issues": "https://github.com/oblakstudio/wp-asset-loader/issues",
+                "source": "https://github.com/oblakstudio/wp-asset-loader/tree/v2.1.0"
+            },
+            "time": "2023-08-08T18:50:42+00:00"
+        },
+        {
+            "name": "oblak/wp-hook-di",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oblakstudio/wp-hook-di.git",
+                "reference": "06d102066e9fcf746ace022a9039f3eb129e16d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oblakstudio/wp-hook-di/zipball/06d102066e9fcf746ace022a9039f3eb129e16d8",
+                "reference": "06d102066e9fcf746ace022a9039f3eb129e16d8",
+                "shasum": ""
+            },
+            "require": {
+                "automattic/jetpack-constants": "^2.0",
+                "oblak/wp-polyfills": "^1.0",
+                "php": ">= 8.0"
+            },
+            "require-dev": {
+                "oblak/wordpress-coding-standard": "^1"
+            },
+            "suggest": {
+                "automattic/jetpack-autoloader": "Allow for better interoperability with other plugins that use this package."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Utils/oblak-wp-metadata-utils.php"
+                ],
+                "psr-4": {
+                    "Oblak\\WP\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Sibin Grasic",
+                    "email": "sibin.grasic@oblak.studio"
+                }
+            ],
+            "description": "Simplifies the use of WordPress hooks by allowing you to use simple dependency injection.",
+            "support": {
+                "issues": "https://github.com/oblakstudio/wp-hook-di/issues",
+                "source": "https://github.com/oblakstudio/wp-hook-di/tree/v1.0.0"
+            },
+            "time": "2024-01-03T12:52:32+00:00"
+        },
+        {
+            "name": "oblak/wp-plugin-installer",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oblakstudio/wp-plugin-installer.git",
+                "reference": "a4f1be7cf4112038914fc0f8b09dd605bb2c81ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oblakstudio/wp-plugin-installer/zipball/a4f1be7cf4112038914fc0f8b09dd605bb2c81ab",
+                "reference": "a4f1be7cf4112038914fc0f8b09dd605bb2c81ab",
+                "shasum": ""
+            },
+            "require": {
+                "automattic/jetpack-constants": "^2",
+                "oblak/admin-notice-manager": "^2",
+                "php": ">= 8.0",
+                "woocommerce/action-scheduler": "^3.7"
+            },
+            "require-dev": {
+                "oblak/wordpress-coding-standard": "^1"
+            },
+            "suggest": {
+                "automattic/jetpack-autoloader": "Allow for better interoperability with other plugins that use this package."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/wppi-as-loader.php"
+                ],
+                "psr-4": {
+                    "Oblak\\WP\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Sibin Grasic",
+                    "email": "sibin.grasic@oblak.studio"
+                }
+            ],
+            "description": "Simplifies the installation and activation of WordPress plugins",
+            "support": {
+                "issues": "https://github.com/oblakstudio/wp-plugin-installer/issues",
+                "source": "https://github.com/oblakstudio/wp-plugin-installer/tree/v2.1.0"
+            },
+            "time": "2024-01-03T13:49:51+00:00"
+        },
+        {
+            "name": "oblak/wp-polyfills",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oblakstudio/wp-polyfills.git",
+                "reference": "b5444775f32b555b700a3f447dc2da99a5069ea3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oblakstudio/wp-polyfills/zipball/b5444775f32b555b700a3f447dc2da99a5069ea3",
+                "reference": "b5444775f32b555b700a3f447dc2da99a5069ea3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 8.0"
+            },
+            "require-dev": {
+                "oblak/wordpress-coding-standard": "^1"
+            },
+            "suggest": {
+                "automattic/jetpack-autoloader": "Allow for better interoperability with other plugins that use this package."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/oblak-polyfill-array.php",
+                    "src/oblak-polyfill-terms.php",
+                    "src/oblak-polyfill-wpfs.php"
+                ],
+                "psr-4": {
+                    "Oblak\\WP\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Sibin Grasic",
+                    "email": "sibin.grasic@oblak.studio"
+                }
+            ],
+            "description": "Various polyfills for WordPress.",
+            "support": {
+                "issues": "https://github.com/oblakstudio/wp-polyfills/issues",
+                "source": "https://github.com/oblakstudio/wp-polyfills/tree/v1.1.0"
+            },
+            "time": "2024-01-03T12:46:21+00:00"
+        },
+        {
+            "name": "woocommerce/action-scheduler",
+            "version": "3.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/woocommerce/action-scheduler.git",
+                "reference": "bdaecb016e0358065a8bf76a41fdd60772cacaa5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/bdaecb016e0358065a8bf76a41fdd60772cacaa5",
+                "reference": "bdaecb016e0358065a8bf76a41fdd60772cacaa5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5",
+                "woocommerce/woocommerce-sniffs": "0.1.0",
+                "wp-cli/wp-cli": "~2.5.0",
+                "yoast/phpunit-polyfills": "^2.0"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "scripts-description": {
+                    "test": "Run unit tests",
+                    "phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
+                    "phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "Action Scheduler for WordPress and WooCommerce",
+            "homepage": "https://actionscheduler.org/",
+            "support": {
+                "issues": "https://github.com/woocommerce/action-scheduler/issues",
+                "source": "https://github.com/woocommerce/action-scheduler/tree/3.7.1"
+            },
+            "time": "2023-12-13T21:52:55+00:00"
         }
     ],
     "packages-dev": [
@@ -128,16 +529,16 @@
         },
         {
             "name": "oblak/wordpress-coding-standard",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oblakstudio/wordpress-coding-standards.git",
-                "reference": "3d24dca7f2134fab22d326249e8d6a113768504a"
+                "reference": "1200c99b65b7ea0698bce345bbe10e3b635fab58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oblakstudio/wordpress-coding-standards/zipball/3d24dca7f2134fab22d326249e8d6a113768504a",
-                "reference": "3d24dca7f2134fab22d326249e8d6a113768504a",
+                "url": "https://api.github.com/repos/oblakstudio/wordpress-coding-standards/zipball/1200c99b65b7ea0698bce345bbe10e3b635fab58",
+                "reference": "1200c99b65b7ea0698bce345bbe10e3b635fab58",
                 "shasum": ""
             },
             "require": {
@@ -175,9 +576,9 @@
             ],
             "support": {
                 "issues": "https://github.com/oblakstudio/wordpress-coding-standards/issues",
-                "source": "https://github.com/oblakstudio/wordpress-coding-standards/tree/v1.0.0"
+                "source": "https://github.com/oblakstudio/wordpress-coding-standards/tree/v1.0.1"
             },
-            "time": "2023-08-24T07:03:16+00:00"
+            "time": "2023-12-09T17:30:35+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
@@ -494,12 +895,12 @@
             "version": "3.7.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
                 "reference": "ed8e00df0a83aa96acf703f8c2979ff33341f879"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/ed8e00df0a83aa96acf703f8c2979ff33341f879",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/ed8e00df0a83aa96acf703f8c2979ff33341f879",
                 "reference": "ed8e00df0a83aa96acf703f8c2979ff33341f879",
                 "shasum": ""
             },
@@ -544,6 +945,20 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
+            "funding": [
+                {
+                    "url": "https://github.com/PHPCSStandards",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/jrfnl",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/php_codesniffer",
+                    "type": "open_collective"
+                }
+            ],
             "time": "2023-02-22T23:07:41+00:00"
         },
         {
@@ -618,7 +1033,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=8.0"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }

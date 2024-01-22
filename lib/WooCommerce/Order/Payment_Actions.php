@@ -9,28 +9,15 @@
 namespace Oblak\NPG\WooCommerce\Order;
 
 use Oblak\NPG\WooCommerce\Gateway\Nestpay_Gateway;
+use Oblak\WP\Abstracts\Hook_Runner;
+use Oblak\WP\Decorators\Hookable;
 use WC_Order;
 
 /**
  * Handles voiding, refunding and capturing payments when order status changes.
  */
-class Order_Actions {
-
-    /**
-     * Class constructor.
-     */
-    public function __construct() {
-        add_action( 'woocommerce_order_status_processing_to_completed', array( $this, 'capture_payment' ), 50, 2 );
-        add_action( 'woocommerce_order_status_on-hold_to_completed', array( $this, 'capture_payment' ), 50, 2 );
-        add_action( 'woocommerce_order_failed_to_completed', array( $this, 'capture_payment' ), 50, 2 );
-
-        add_action( 'woocommerce_order_status_processing_to_cancelled', array( $this, 'void_payment' ), 50, 2 );
-        add_action( 'woocommerce_order_status_on-hold_to_cancelled', array( $this, 'void_payment' ), 50, 2 );
-        add_action( 'woocommerce_order_failed_to_cancelled', array( $this, 'void_payment' ), 50, 2 );
-
-        add_action( 'woocommerce_order_status_completed_to_cancelled', array( $this, 'refund_payment' ), 50, 2 );
-    }
-
+#[Hookable( 'woocommerce_init', 99 )]
+class Payment_Actions extends Hook_Runner {
     /**
      * Checks if the order is handled by nestpay
      *
@@ -46,6 +33,9 @@ class Order_Actions {
      *
      * @param int      $order_id Order ID.
      * @param WC_Order $order    Order object.
+     *
+     * @hook woocommerce_order_status_processing_to_completed, woocommerce_order_status_on-hold_to_completed, woocommerce_order_failed_to_completed
+     * @type action
      */
     public function capture_payment( $order_id, $order ) {
         if ( ! $this->is_nestpay_order( $order ) || $order->get_meta( '_nestpay_status', true ) === 'charged' ) {
@@ -66,6 +56,9 @@ class Order_Actions {
      *
      * @param int      $order_id Order ID.
      * @param WC_Order $order    Order object.
+     *
+     * @hook woocommerce_order_status_processing_to_cancelled, woocommerce_order_status_on-hold_to_cancelled, woocommerce_order_failed_to_cancelled
+     * @type action
      */
     public function void_payment( $order_id, $order ) {
         if ( ! $this->is_nestpay_order( $order ) || $order->get_meta( '_nestpay_status' ) === 'charged' ) {
