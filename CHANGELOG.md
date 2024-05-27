@@ -1,3 +1,11 @@
+## [1.3.1](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.3.0...v1.3.1) (2024-05-27)
+
+
+### Bug Fixes
+
+* **Deps:** Critical error fix ([aacebc8](https://github.com/oblakstudio/woocommerce-nestpay/commit/aacebc82fdd3bded280c626200fb37ee67aaa29e))
+* **Deps:** Critical error fix ([e792151](https://github.com/oblakstudio/woocommerce-nestpay/commit/e7921518cf268ec9a17eb44553cf649ee074d206))
+
 # [1.3.0](https://github.com/oblakstudio/woocommerce-nestpay/compare/v1.2.2...v1.3.0) (2024-05-27)
 
 
