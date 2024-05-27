@@ -11,7 +11,7 @@ sed -i "s/'$CURRENT_VERSION'/'$NEXT_VERSION'/g" ./lib/WooCommerce_Nestpay.php
 rm -f /tmp/release.zip
 rm -rf /tmp/$PROJECT_NAME*
 mkdir /tmp/$PROJECT_NAME
-cp -ar config dist languages lib vendor ./*.php loco.xml /tmp/$PROJECT_NAME 2>/dev/null
+cp -ar config dist languages lib vendor woocommerce ./*.php loco.xml /tmp/$PROJECT_NAME 2>/dev/null
 cp ./.wordpress-org/readme.txt /tmp/$PROJECT_NAME 2>/dev/null
 
 cd /tmp || exit
