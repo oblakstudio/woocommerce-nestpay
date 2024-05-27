@@ -2,6 +2,7 @@
 .vscode
 config/modules.php
 dist
+languages/*.php
 node_modules
 vendor
 studio.json

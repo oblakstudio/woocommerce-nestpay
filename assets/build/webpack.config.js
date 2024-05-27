@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 'use strict';
 
-const { merge }= require('webpack-merge');
-const { CleanWebpackPlugin  } = require('clean-webpack-plugin');
-const CopyPlugin = require("copy-webpack-plugin");
+const { merge } = require('webpack-merge');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 
 const config = require('./config');
 
-const assetsFilenames = (config.enabled.cacheBusting) ? config.cacheBusting : '[name]';
+const assetsFilenames = config.enabled.cacheBusting ? config.cacheBusting : '[name]';
 
 let webpackConfig = {
   stats: false,
-  devtool: (config.enabled.sourceMaps) ? 'eval-source-map' : false,
+  devtool: config.enabled.sourceMaps ? 'eval-source-map' : false,
   context: config.paths.assets,
   entry: config.entry,
   cache: {
@@ -26,12 +26,12 @@ let webpackConfig = {
     publicPath: config.publicPath,
     filename: `scripts/${assetsFilenames}.js`,
   },
-  module :{
+  module: {
     rules: [
       {
         test: /\.ts$/,
         exclude: [/node_modules(?![/|\\](bootstrap|foundation-sites))/],
-        use : ['babel-loader'],
+        use: ['babel-loader'],
       },
       {
         test: /\.scss$/,
@@ -40,7 +40,7 @@ let webpackConfig = {
           {
             loader: 'css-loader',
             options: {
-                importLoaders: 2,
+              importLoaders: 2,
             },
           },
           {
@@ -58,7 +58,7 @@ let webpackConfig = {
               sourceMap: config.enabled.sourceMaps,
               implementation: require('sass'),
               sassOptions: {
-                fiber: config.useFibers ? require('fibers') : false,
+                fiber: false,
               },
             },
           },
@@ -85,7 +85,7 @@ let webpackConfig = {
     new CopyPlugin({
       patterns: [
         {
-          from: `images/**`,
+          from: 'images/**',
           to: `images/${assetsFilenames}[ext]`,
           force: false,
           noErrorOnMissing: true,
@@ -95,7 +95,7 @@ let webpackConfig = {
     new MiniCssExtractPlugin({
       filename: `styles/${assetsFilenames}.css`,
     }),
-    new CleanWebpackPlugin ({
+    new CleanWebpackPlugin({
       verbose: false,
       cleanStaleWebpackAssets: true,
     }),
@@ -131,9 +131,8 @@ if (config.enabled.cacheBusting) {
       writeToDisk: false,
       assets: config.manifest,
       replacer: require('./util/assetManifestsFormatter'),
-    })
+    }),
   );
-
 }
 
 module.exports = webpackConfig;

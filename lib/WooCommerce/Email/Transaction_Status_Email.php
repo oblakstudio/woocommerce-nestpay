@@ -1,6 +1,6 @@
 <?php
 /**
- * Transaction_Success_Email class file.
+ * Transaction_Status_Email class file.
  *
  * @package WooCommerce NestPay Payment Gateway
  * @subpackage WooCommerce\Email
@@ -9,13 +9,14 @@
 namespace Oblak\NPG\WooCommerce\Email;
 
 use Oblak\NPG\WooCommerce\Data\Nestpay_Transaction;
+
 use WC_Email;
+use WC_Order;
 
 /**
- * Email sent when transaction is successful
+ * Email sent after NestPay order payment
  */
-class Transaction_Success_Email extends WC_Email {
-
+class Transaction_Status_Email extends WC_Email {
     /**
      * Transaction object
      *
@@ -30,13 +31,14 @@ class Transaction_Success_Email extends WC_Email {
         $this->customer_email = true;
         $this->template_base  = WCNPG_PLUGIN_PATH . 'woocommerce/';
         $this->template_html  = 'emails/customer-nestpay-status.php';
-        $this->id             = 'nestpay_transaction_success';
-        $this->title          = __( 'Payment Success', 'wc-serbian-nestpay' ) . ' (' . __( 'NestPay', 'wc-serbian-nestpay' ) . ')';
-        $this->description    = __( 'Payment Success e-mail is sent to the buyer upon succesful payment card transaction', 'wc-serbian-nestpay' );
+        $this->id             = 'nestpay_transaction_status';
+        $this->title          = __( 'NestPay Payment Status', 'wc-serbian-nestpay' );
+        $this->description    = __( 'Payment Status e-mail is sent to the buyer upon payment card transaction', 'wc-serbian-nestpay' );
         $this->placeholders   = array(
-            '{site_title}'   => $this->get_blogname(),
-            '{order_number}' => '',
-            '{order_date}'   => '',
+            '{site_title}'     => $this->get_blogname(),
+            '{order_number}'   => '',
+            '{order_date}'     => '',
+            '{payment_status}' => '',
         );
 
         add_action( 'woocommerce_order_status_pending_to_on-hold_notification', array( $this, 'trigger' ), 10, 2 );
@@ -51,6 +53,8 @@ class Transaction_Success_Email extends WC_Email {
         add_action( 'woocommerce_order_status_cancelled_to_processing_notification', array( $this, 'trigger' ), 10, 2 );
         add_action( 'woocommerce_order_status_cancelled_to_completed_notification', array( $this, 'trigger' ), 10, 2 );
 
+        add_action( 'woocommerce_order_status_pending_to_failed_notification', array( $this, 'trigger' ), 10, 2 );
+
         parent::__construct();
     }
 
@@ -60,7 +64,7 @@ class Transaction_Success_Email extends WC_Email {
      * @return string
      */
     public function get_default_subject() {
-        return __( 'Your card payment on {site_title} was succesful!', 'wc-serbian-nestpay' );
+        return __( 'Your card payment on {site_title} was {payment_status}!', 'wc-serbian-nestpay' );
     }
 
     /**
@@ -75,31 +79,37 @@ class Transaction_Success_Email extends WC_Email {
     /**
      * Trigger the sending of this email.
      *
-     * @param int            $order_id The order ID.
-     * @param WC_Order|false $order Order object.
+     * @param int           $order_id The order ID.
+     * @param WC_Order|null $order Order object.
      */
-    public function trigger( $order_id, $order = false ) {
-        if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
-            $order = wc_get_order( $order_id );
-        }
-        if ( ! is_a( $order, 'WC_Order' ) ) {
-            return;
-        }
-        if ( $order->get_payment_method() !== 'nestpay' ) {
+    public function trigger( $order_id, $order = null ) {
+        $order ??= wc_get_order( $order_id );
+        $order   = $order ?: null; // phpcs:ignore Universal.Operators.DisallowShortTernary.Found -- ELVIS LIVES.
+
+        if ( ( ! $order_id || is_null( $order ) ) || 'nestpay' !== $order?->get_payment_method() ) {
             return;
         }
 
         $this->setup_locale();
 
-        $this->object                         = $order;
-        $this->transaction                    = new Nestpay_Transaction( $order->get_meta( '_nestpay_callback_id', true ) );
-        $this->recipient                      = $this->object->get_billing_email();
-        $this->placeholders['{order_number}'] = $this->object->get_order_number();
-        $this->placeholders['{order_date}']   = wc_format_datetime( $this->object->get_date_created() );
+        $this->object                           = $order;
+        $this->transaction                      = nestpay_get_transaction( $order );
+        $this->recipient                        = $this->object->get_billing_email();
+        $this->placeholders['{order_number}']   = $this->object->get_order_number();
+        $this->placeholders['{order_date}']     = wc_format_datetime( $this->object->get_date_created() );
+        $this->placeholders['{payment_status}'] = $this->object->is_paid()
+            ? _x( 'successful', 'nestpay payment result', 'wc-serbian-nestpay' )
+            : _x( 'unsuccessful', 'nestpay payment result', 'wc-serbian-nestpay' );
 
-        if ( $this->is_enabled() && $this->get_recipient() ) {
-            $this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
-        }
+        $this->is_enabled() &&
+        $this->get_recipient() &&
+        $this->send(
+            $this->get_recipient(),
+            $this->get_subject(),
+            $this->get_content(),
+            $this->get_headers(),
+            $this->get_attachments()
+        );
 
         $this->restore_locale();
     }

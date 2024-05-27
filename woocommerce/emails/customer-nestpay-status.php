@@ -44,7 +44,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 /**
  * Transaction details
  *
- * @hooked Email_Manager::transaction_details() Shows the transaction details table.
+ * @hooked WooCommerce_Nestpay::email_transaction_details() Shows the transaction details table.
  * @since 2.0.0
  */
 // Documented in lib/WooCommerce/Emails.php.

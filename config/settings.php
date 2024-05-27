@@ -29,37 +29,33 @@ return array(
         'default'     => __( 'Pay with your credit-card using NestPay', 'wc-serbian-nestpay' ),
         'desc_tip'    => true,
     ),
-    'advanced'          => array(
-        'title'       => __( 'Advanced Settings', 'wc-serbian-nestpay' ),
-        'type'        => 'title',
-        'description' => '',
+    'banking'           => array(
+        'title' => __( 'Bank settings', 'wc-serbian-nestpay' ),
+        'type'  => 'title',
     ),
+    'bank'              => array(
+        'title'       => __( 'Bank', 'wc-serbian-nestpay' ),
+        'type'        => 'image_select',
+        'description' => __( 'Select the bank you want to use', 'wc-serbian-nestpay' ),
+        'options'     => array(
+            'intesa-rs'     => array(
+                'image' => 'images/intesa-rs.png',
+                'title' => __( 'Banca Intesa', 'wc-serbian-nestpay' ),
+            ),
+            'commercial-rs' => array(
+                'image'    => 'images/komercijalna-rs.png',
+                'title'    => __( 'Commercial Bank', 'wc-serbian-nestpay' ),
+                'disabled' => true,
+            ),
+		),
+        'default'     => 'intesa-rs',
+	),
     'testmode'          => array(
         'title'       => __( 'NestPay Sandbox', 'wc-serbian-nestpay' ),
         'label'       => __( 'Enable NestPay Sandbox', 'wc-serbian-nestpay' ),
         'type'        => 'checkbox',
         'description' => __( 'NestPay sandbox can be used to test payments', 'wc-serbian-nestpay' ),
         'default'     => 'no',
-    ),
-    'debug'             => array(
-        'title'       => __( 'Debug log', 'wc-serbian-nestpay' ),
-        'type'        => 'checkbox',
-        'label'       => __( 'Enable logging', 'wc-serbian-nestpay' ),
-        'default'     => 'no',
-        'description' => sprintf(
-            // translators: %s log file path.
-            __(
-                'Log NestPay events, inside %s Note: this may log personal information. We recommend using this for debugging purposes only and deleting the logs when finished.',
-                'wc-serbian-nestpay'
-            ),
-            '<code>' . WC_Log_Handler_File::get_log_file_path( 'nestpay' ) . '</code>'
-        ),
-    ),
-    'auto_redirect'     => array(
-        'title'   => __( 'Payment process', 'wc-serbian-nestpay' ),
-        'label'   => __( 'Enable automatic redirect to NestPay payment form', 'wc-serbian-nestpay' ),
-        'type'    => 'checkbox',
-        'default' => 'yes',
     ),
     // API CREDENTIALS.
     'api'               => array(
@@ -82,18 +78,6 @@ return array(
         'title'       => __( 'Password', 'wc-serbian-nestpay' ),
         'type'        => 'password',
         'description' => __( 'Please enter your Password. This is needed in order to process payments', 'wc-serbian-nestpay' ),
-    ),
-    'payment_url'       => array(
-        'title'       => __( 'Payment URL', 'wc-serbian-nestpay' ),
-        'type'        => 'text',
-        'description' => __( 'Please enter your Username. This is needed in order to process payments', 'wc-serbian-nestpay' ),
-        'desc_tip'    => true,
-    ),
-    'api_url'           => array(
-        'title'       => __( 'API URL', 'wc-serbian-nestpay' ),
-        'type'        => 'text',
-        'description' => __( 'Please enter your Username. This is needed in order to take payments', 'wc-serbian-nestpay' ),
-        'desc_tip'    => true,
     ),
     'store_key'         => array(
         'title'       => __( 'Store key', 'wc-serbian-nestpay' ),
@@ -128,26 +112,6 @@ return array(
         'type'        => 'password',
         'description' => __( 'Please enter your Password. This is needed in order to take payments', 'wc-serbian-nestpay' ),
     ),
-    'test_payment_url'  => array(
-        'title'       => sprintf(
-            '%s %s',
-            __( 'Sandbox', 'wc-serbian-nestpay' ),
-            __( 'Payment URL', 'wc-serbian-nestpay' )
-        ),
-        'type'        => 'text',
-        'description' => __( 'Please enter your Username. This is needed in order to take payments', 'wc-serbian-nestpay' ),
-        'desc_tip'    => true,
-    ),
-    'test_api_url'      => array(
-        'title'       => sprintf(
-            '%s %s',
-            __( 'Sandbox', 'wc-serbian-nestpay' ),
-            __( 'API URL', 'wc-serbian-nestpay' )
-        ),
-        'type'        => 'text',
-        'description' => __( 'Please enter your Username. This is needed in order to take payments', 'wc-serbian-nestpay' ),
-        'desc_tip'    => true,
-    ),
     'test_store_key'    => array(
         'title'       => __( 'Sandbox Store key', 'wc-serbian-nestpay' ),
         'type'        => 'password',
@@ -159,25 +123,19 @@ return array(
         'type'        => 'title',
         'description' => __( 'Store settings define how payments are handled', 'wc-serbian-nestpay' ),
     ),
+    'auto_redirect'     => array(
+        'title'   => __( 'Payment process', 'wc-serbian-nestpay' ),
+        'label'   => __( 'Enable automatic redirect to NestPay payment form', 'wc-serbian-nestpay' ),
+        'type'    => 'checkbox',
+        'default' => 'yes',
+    ),
     'store_currency'    => array(
         'title'       => __( 'Store Currency', 'wc-serbian-nestpay' ),
         'type'        => 'select',
-        'options'     => wcnpg_get_currencies(),
+        'options'     => get_nestpay_currency_options(),
         'default'     => 0,
         'description' => __( 'Select a currency to use - defaults to WooCommerce currency', 'wc-serbian-nestpay' ),
         'class'       => 'select2',
-    ),
-    'store_type'        => array(
-        'title'       => __( 'Store type', 'wc-serbian-nestpay' ),
-        'type'        => 'select',
-        'options'     => array(
-            '3d_pay_hosting' => __( 'Hosted page', 'wc-serbian-nestpay' ),
-        ),
-        'description' => __(
-            'Store page defines how the gateway works.
-            Hosted page will redirect to a bank portal, inline form will display the CC form on your website',
-            'wc-serbian-nestpay'
-        ),
     ),
     'store_transaction' => array(
         'title'       => __( 'Transaction type', 'wc-serbian-nestpay' ),
@@ -192,6 +150,26 @@ return array(
             '%s<br>%s',
             esc_html__( 'PreAuth reserves the funds on the cardholder\'s account, Auth debits the funds from the cardholder\'s account.', 'wc-serbian-nestpay' ),
             esc_html__( 'Setting this to automatic will use PreAuth for physical goods and Auth for digital goods', 'wc-serbian-nestpay' ),
+        ),
+    ),
+    // ADVANCED SETTINGS.
+    'advanced'          => array(
+        'title'       => __( 'Advanced Settings', 'wc-serbian-nestpay' ),
+        'type'        => 'title',
+        'description' => '',
+    ),
+    'debug'             => array(
+        'title'       => __( 'Debug log', 'wc-serbian-nestpay' ),
+        'type'        => 'checkbox',
+        'label'       => __( 'Enable logging', 'wc-serbian-nestpay' ),
+        'default'     => 'no',
+        'description' => sprintf(
+            // translators: %s log file path.
+            __(
+                'Log NestPay events, inside %s Note: this may log personal information. We recommend using this for debugging purposes only and deleting the logs when finished.',
+                'wc-serbian-nestpay'
+            ),
+            '<code>' . WC_Log_Handler_File::get_log_file_path( 'nestpay' ) . '</code><br>'
         ),
     ),
 );

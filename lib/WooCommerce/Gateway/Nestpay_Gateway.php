@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:disable Squiz.Commenting.FunctionComment.MissingParamTag
 /**
  * NestPayGateway class file
  *
@@ -8,7 +8,6 @@
 
 namespace Oblak\NPG\WooCommerce\Gateway;
 
-use Automattic\Jetpack\Constants;
 use Oblak\NPG\WooCommerce\Data\Nestpay_Transaction;
 use WC_Logger;
 use WC_Order;
@@ -93,13 +92,6 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
     private $store_currency;
 
     /**
-     * Store type
-     *
-     * @var string
-     */
-    private $store_type;
-
-    /**
      * Transaction type
      *
      * @var string
@@ -127,7 +119,7 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
         // Predefined Gateway fields.
         $this->id                 = 'nestpay';
         $this->icon               = apply_filters( 'woocommerce_nestpay_payment_icon', '' ); //phpcs:ignore
-        $this->has_fields         = true;
+        $this->has_fields         = false;
         $this->method_title       = __( 'NestPay', 'wc-serbian-nestpay' );
         $this->method_description = __( 'NestPay Payment Gateway handles card payments by redirecting users to the bank portal', 'wc-serbian-nestpay' );
         $this->supports           = array(
@@ -153,22 +145,24 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
         self::$log_enabled = $this->debug;
 
         // Merchant details.
-        $prefix            = ( $this->testmode ) ? 'test_' : '';
-        $this->merchant_id = $this->get_option( "{$prefix}merchant_id" );
-        $this->username    = $this->get_option( "{$prefix}username" );
-        $this->password    = $this->get_option( "{$prefix}password" );
-        $this->payment_url = $this->get_option( "{$prefix}payment_url" );
-        $this->api_url     = $this->get_option( "{$prefix}api_url" );
-        $this->store_key   = $this->get_option( "{$prefix}store_key" );
+        $mode     = $this->testmode ? 'test' : 'production';
+        $fields   = array( 'merchant_id', 'username', 'password', 'store_key' );
+        $prefix   = 'test' === $mode ? 'test_' : '';
+        $api_urls = nestpay_get_endpoints( $this->get_option( 'bank', 'intesa-rs' ), $mode );
+
+        foreach ( $fields as $field ) {
+            $this->{$field} = $this->get_option( "{$prefix}{$field}" );
+        }
+
+        $this->payment_url = $api_urls['bib'];
+        $this->api_url     = $api_urls['api'];
 
         // Store details.
-        $this->store_currency   = $this->get_option( 'store_currency' );
-        $this->store_type       = $this->get_option( 'store_type' );
+        $this->store_currency   = 0 === intval( $this->get_option( 'store_currency', 0 ) ) ? get_nestpay_currency_code( get_woocommerce_currency() ) : (int) $this->get_option( 'store_currency' );
         $this->transaction_type = $this->get_option( 'store_transaction' );
 
         // Admin actions and filters.
         add_action( "woocommerce_update_options_payment_gateways_{$this->id}", array( $this, 'process_admin_options' ) );
-        add_filter( 'woocommerce_locate_template', array( $this, 'override_form_template' ), 50, 2 );
 
         // Store filters and actions.
         add_action( "woocommerce_receipt_{$this->id}", array( $this, 'receipt_page' ) );
@@ -179,18 +173,13 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
             $this->merchant_id,
             $this->store_key,
         );
-    }
 
-    /**
-     * Return whether or not this gateway still requires setup to function.
-     *
-     * When this gateway is toggled on via AJAX, if this returns true a
-     * redirect will occur to the settings page instead.
-     *
-     * @return bool
-     */
-    public function needs_setup() {
-        return empty( $this->merchant_id ) || empty( $this->username ) || empty( $this->password ) || empty( $this->payment_url ) || ! in_array( get_woocommerce_currency_symbol(), array_keys( wcnpg_get_currencies() ), true );
+        WCNPG()->client = new Nestpay_Client(
+            $this->merchant_id,
+            $this->username,
+            $this->password,
+            $this->api_url,
+        );
     }
 
     /**
@@ -213,17 +202,27 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
     }
 
     /**
-     * Initializes Payment Gateway form fields
+     * {@inheritDoc}
+     */
+    public function needs_setup() {
+        return ! $this->merchant_id || ! $this->username || ! $this->password || ! $this->payment_url;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function is_available() {
+        return parent::is_available() && in_array( $this->store_currency, get_nestpay_supported_currencies(), true );
+    }
+    /**
+     * {@inheritDoc}
      */
     public function init_form_fields() {
         $this->form_fields = include WCNPG_ABSPATH . 'config/settings.php';
     }
 
     /**
-     * Processes and saves options.
-     * If there is an error thrown, will continue to save and validate fields, but will leave the erroring field out.
-     *
-     * @return bool was anything saved?
+     * {@inheritDoc}
      */
     public function process_admin_options() {
         $saved = parent::process_admin_options();
@@ -240,10 +239,7 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
     }
 
     /**
-     * Process the payment.
-     *
-     * @param  int $order_id Order ID.
-     * @return array         Redirect data.
+     * {@inheritDoc}
      */
     public function process_payment( $order_id ) {
         $order = new WC_Order( $order_id );
@@ -303,24 +299,14 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
     }
 
     /**
-     * Can the order be refunded by the gateway?
-     *
-     * NestPay system can only refund captured payments
-     *
-     * @param  WC_Order $order Order object.
-     * @return bool            True if the order can be refunded, false otherwise.
+     * {@inheritDoc}
      */
     public function can_refund_order( $order ): bool {
         return ! in_array( $order->get_meta( '_nestpay_status', true ), array( 'refunded', 'voided' ), true );
     }
 
     /**
-     * Processes a refund
-     *
-     * @param  int    $order_id Order ID.
-     * @param  float  $amount   Refund amount.
-     * @param  string $reason   Reason for refund.
-     * @return bool             True if refund successful, false if not.
+     * {@inheritDoc}
      */
     public function process_refund( $order_id, $amount = null, $reason = '' ) {
         $order = wc_get_order( $order_id );
@@ -354,21 +340,6 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
     }
 
     /**
-     * Overrides nestpay form template location
-     *
-     * @param  string $template      Template path.
-     * @param  string $template_name Template name.
-     * @return string                Modified template path.
-     */
-    public function override_form_template( $template, $template_name ) {
-        if ( 'checkout/form-nestpay.php' !== $template_name ) {
-            return $template;
-        }
-
-        return WCNPG_PLUGIN_PATH . 'woocommerce/' . $template_name;
-    }
-
-    /**
      * Show the gateway form on the checkout page.
      *
      * @param  int $order_id Order ID to process payment for.
@@ -388,15 +359,12 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
 
         // Round the order total to two decimals, and then replace the decimal without thousands separator.
         $order_total    = number_format( round( $order->get_total(), 2 ), 2, '.', '' );
-        $order_currency = ( 0 !== $this->store_currency ) ? $this->store_currency : wcnpg_get_currency_code( get_woocommerce_currency() );
+        $order_currency = $this->store_currency;
 
-        $random_string = bin2hex( random_bytes( 10 ) );
+        $random_string = wp_generate_password( 18, false );
         $trans_hash    = $this->generate_transaction_hash( $order->get_order_number(), $order_total, $random_string, $success_url, $failure_url, $transaction_type, $order_currency );
 
-        $customer_is_company =
-            'company' === $order->get_meta( '_billing_type', true )
-            ||
-            ( '' === $order->get_meta( '_billing_type', true ) && '' !== $order->get_billing_company() );
+        $customer_is_company = 'company' === $order->get_meta( '_billing_type', true ) || '' !== $order->get_billing_company();
 
         $params = array(
             // Default params needed to process payment.
@@ -408,7 +376,7 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
             'trantype'         => $transaction_type,
             'currency'         => $order_currency,
             'rnd'              => $random_string,
-            'storetype'        => $this->store_type,
+            'storetype'        => '3d_pay_hosting',
             'hashAlgorithm'    => 'ver2',
             'lang'             => 'sr',
             'oid'              => (string) $order->get_order_number(),
@@ -482,12 +450,8 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
             return;
         }
 
-        $suffix = Constants::is_true( 'SCRIPT_DEBUG' ) ? '' : '.min';
-
         wp_register_script( 'woocommerce-nestpay-hcaptcha', 'https://hcaptcha.com/1/api.js', array(), WCNPG()->version, true );
-        wp_register_script( 'woocommerce-nestpay-main', WCNPG()->plugin_url() . "/dist/scripts/main{$suffix}.js", array(), WCNPG()->version, true );
 
         wp_enqueue_script( 'woocommerce-nestpay-hcaptcha' );
-        wp_enqueue_script( 'woocommerce-nestpay-main' );
     }
 }

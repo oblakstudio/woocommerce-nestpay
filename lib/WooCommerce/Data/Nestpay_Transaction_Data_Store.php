@@ -1,4 +1,4 @@
-<?php //phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery
+<?php //phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery, Generic.Commenting.Todo.CommentFound
 /**
  * Nestpay_Transaction_Data_Store class file
  *
@@ -172,5 +172,17 @@ class Nestpay_Transaction_Data_Store extends WC_Data_Store_WP implements WC_Obje
                 $transaction_id
             )
         );
+    }
+
+    /**
+     * Get the transaction type for a transaction.
+     *
+     * @param  int $transaction_id Transaction ID.
+     * @return string|false
+     *
+     * @todo Actually implement this.
+     */
+    public function get_transaction_type( int $transaction_id ) {
+        return 'api';
     }
 }

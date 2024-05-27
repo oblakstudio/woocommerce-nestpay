@@ -11,11 +11,11 @@ module.exports = {
   */
   entry: {
     main: [
-      './scripts/main.ts',   // Frontend javascript
-      './styles/main.scss',  // Frontend css
+      './scripts/main.ts', // Frontend javascript
+      './styles/main.scss', // Frontend css
     ],
     admin: [
-      './scripts/admin.ts',  // Admin Javascript
+      './scripts/admin.ts', // Admin Javascript
       './styles/admin.scss', // Admin CSS
     ],
   },
@@ -48,13 +48,7 @@ module.exports = {
   /*
   Files to watch
   */
-  watch: [
-    'dist/**/**',
-    'templates/**/*.php',
-    'template-parts/**/*.php',
-    'woocommerce/**/*.php',
-    '*.php',
-  ],
+  watch: ['dist/**/**', 'templates/**/*.php', 'template-parts/**/*.php', 'woocommerce/**/*.php', '*.php'],
 
   /*
   Run linters during build process
@@ -73,4 +67,4 @@ module.exports = {
     translator: 'Sibin Grasic <sibin.grasic@oblak.studio>',
     team: 'Oblak Studio <info@oblak.studio>',
   },
-}
+};
