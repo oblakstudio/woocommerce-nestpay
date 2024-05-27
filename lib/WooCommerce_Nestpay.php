@@ -14,7 +14,7 @@ use Oblak\NPG\WooCommerce\Gateway\Nestpay_Client;
 use Oblak\WP\Admin_Notice_Manager;
 use Oblak\WP\Loader_Trait;
 use Oblak\WP\Traits\Hook_Processor_Trait;
-use Oblak\WP\Traits\Singleton_Trait;
+use Oblak\WP\Traits\Singleton;
 
 /**
  * Main WCNPG class
@@ -22,7 +22,7 @@ use Oblak\WP\Traits\Singleton_Trait;
 final class WooCommerce_Nestpay {
     use Hook_Processor_Trait;
     use Loader_Trait;
-    use Singleton_Trait;
+    use Singleton;
 
     /**
      * Plugin Version
@@ -125,10 +125,10 @@ final class WooCommerce_Nestpay {
      * @priority 1000
      */
     public function load_textdomain() {
-        load_plugin_textdomain(
+        \load_plugin_textdomain(
             'wc-serbian-nestpay',
             false,
-            dirname( WCNPG_PLUGIN_BASENAME ) . '/languages'
+            \dirname( WCNPG_PLUGIN_BASENAME ) . '/languages',
         );
     }
 
@@ -140,7 +140,11 @@ final class WooCommerce_Nestpay {
      * @priority 999
      */
     public function declare_hpos_compat() {
-        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WCNPG_PLUGIN_FILE, true );
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+            'custom_order_tables',
+            WCNPG_PLUGIN_FILE,
+            true,
+        );
     }
 
     /**
@@ -154,11 +158,11 @@ final class WooCommerce_Nestpay {
      * @priority 50
      */
     public function init_data_store( $data_stores ) {
-        return array_merge(
+        return \array_merge(
             $data_stores,
             array(
                 'nestpay-transaction' => WooCommerce\Data\Nestpay_Transaction_Data_Store::class,
-            )
+            ),
         );
     }
 
@@ -204,21 +208,20 @@ final class WooCommerce_Nestpay {
     public function email_transaction_details( $order, $transaction ) {
         $data = array();
 
-        foreach ( nestpay_get_transaction_fields() as $prop => $label ) {
-            if ( method_exists( $transaction, "get_{$prop}" ) ) {
-                $data[ $label ] = $transaction->{"get_{$prop}"}();
-            } else {
-                $data[ $label ] = apply_filters( 'woocommerce_nestpay_transaction_field_prop', '', $transaction, $order ); // phpcs:ignore
-            }
+        foreach ( \nestpay_get_transaction_fields() as $prop => $label ) {
+            $val = \method_exists( $transaction, "get_{$prop}" ) ? $transaction->{"get_{$prop}"}() : '';
+
+            // phpcs:ignore
+            $data[ $label ] = \apply_filters( 'woocommerce_nestpay_transaction_field_prop', $val, $transaction, $order );
         }
 
-        wc_get_template(
+        \wc_get_template(
             'emails/email-nestpay-transaction-details.php',
             array(
                 'fields'      => $data,
                 'order'       => $order,
                 'transaction' => $transaction,
-            )
+            ),
         );
     }
 
@@ -232,11 +235,11 @@ final class WooCommerce_Nestpay {
      * @type filter
      */
     public function maybe_dequeue_script( bool $enqueue ): bool {
-        if ( is_admin() ) {
+        if ( \is_admin() ) {
             return $enqueue;
         }
 
-        return is_checkout() && is_wc_endpoint_url( 'order-pay' );
+        return \is_checkout() && \is_wc_endpoint_url( 'order-pay' );
     }
 
     /**
@@ -245,7 +248,7 @@ final class WooCommerce_Nestpay {
      * @return string
      */
     public function plugin_url() {
-        return untrailingslashit( plugins_url( '/', WCNPG_PLUGIN_FILE ) );
+        return \untrailingslashit( \plugins_url( '/', WCNPG_PLUGIN_FILE ) );
     }
 
     /**
