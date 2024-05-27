@@ -268,12 +268,12 @@ class Nestpay_Response {
     /**
      * Displays the NestPay transaction message on the thank you page
      *
-     * @param  string   $text  The default text.
-     * @param  WC_Order $order The order object.
-     * @return string          The new text.
+     * @param  string         $text  The default text.
+     * @param  WC_Order|false $order The order object.
+     * @return string                The new text.
      */
     public function thankyou_text( string $text, WC_Order|false $order ) {
-        if ( !$order || $order->get_payment_method() !== 'nestpay' ) :
+        if ( ! $order || $order->get_payment_method() !== 'nestpay' ) :
             return $text;
         endif;
 
@@ -292,9 +292,9 @@ class Nestpay_Response {
      * @param int $order_id Order ID.
      */
     public function thankyou_nestpay_details( $order_id ) {
-        $transaction = nestpay_get_transaction( wc_get_order( $order_id ) );
+        $tx = nestpay_get_transaction( wc_get_order( $order_id ) );
 
-        if ( 0 === $transaction->get_id() ) {
+        if ( 0 === $tx->get_id() || $tx->get_ProcReturnCode() !== '00' ) {
             return;
         }
 
@@ -303,7 +303,7 @@ class Nestpay_Response {
             esc_html__( 'Transaction details', 'wc-serbian-nestpay' )
         );
 
-        add_filter( 'woocommerce_nestpay-transaction_get_EXTRA_TRXDATE', fn( $d ) => $d->date_i18n( wc_date_format() . ' ' . wc_time_format() ) );
+        add_filter( 'woocommerce_nestpay-transaction_get_EXTRA_TRXDATE', fn( $d ) => $d?->date_i18n( wc_date_format() . ' ' . wc_time_format() ) ?? 'N/a' );
 
         // Chunk the fields into groups of 5.
         foreach ( array_chunk( nestpay_get_transaction_fields(), 5, true ) as $row ) {
@@ -311,7 +311,7 @@ class Nestpay_Response {
             echo '<ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">';
 
             foreach ( $row as $field => $label ) {
-                $value = $transaction->{"get_$field"}();
+                $value = $tx->{"get_$field"}();
                 printf(
                     '<li>%s <strong>%s</strong></li>',
                     esc_html( $label ),
@@ -347,18 +347,17 @@ class Nestpay_Response {
     /**
      * Generates the order note for the transaction
      *
-     * @param  Nestpay_Transaction $transaction Transaction object.
+     * @param  Nestpay_Transaction $tx Transaction object.
      */
-    public static function generate_order_note( $transaction ) {
-        $success            = '00' === $transaction->get_ProcReturnCode();
-        $transaction_status = sprintf(
-            '%1$s %2$s',
-            $success ? __( 'Approved', 'wc-serbian-nestpay' ) : __( 'Declined', 'wc-serbian-nestpay' ),
-            $success && 'PreAuth' === $transaction->get_trantype()
+    public static function generate_order_note( $tx ) {
+        $tx_msg = __( 'Declined', 'wc-serbian-nestpay' );
+
+        if ( '00' === $tx->get_ProcReturnCode() ) {
+            $tx_msg  = __( 'Approved', 'wc-serbian-nestpay' ) . ' ';
+            $tx_msg .= 'PreAuth' === $tx->get_trantype()
                 ? __( 'Funds reserved', 'wc-serbian-nestpay' )
-                : __( 'Funds deposited', 'wc-serbian-nestpay' )
-        );
-        $transaction_status = __( 'Declined', 'wc-serbian-nestpay' );
+                : __( 'Funds deposited', 'wc-serbian-nestpay' );
+        }
 
         return sprintf(
             '<h4>%s</h4>
@@ -371,15 +370,15 @@ class Nestpay_Response {
             </p>',
             __( 'NestPay payment status', 'wc-serbian-nestpay' ),
             __( 'Transaction date', 'wc-serbian-nestpay' ),
-            gmdate( 'd. m. Y - H:i', strtotime( $transaction->get_EXTRA_TRXDATE() ) ),
+            gmdate( 'd. m. Y - H:i', strtotime( $tx->get_EXTRA_TRXDATE() ) ),
             __( 'Transaction status', 'wc-serbian-nestpay' ),
-            trim( $transaction_status ),
+            trim( $tx_msg ),
             __( 'Transaction amount', 'wc-serbian-nestpay' ),
-            $transaction->get_amount() . ' ' . get_woocommerce_currency(),
+            $tx->get_amount() . ' ' . get_woocommerce_currency(),
             __( 'Status code', 'wc-serbian-nestpay' ),
-            $transaction->get_ProcReturnCode(),
+            $tx->get_ProcReturnCode(),
             __( 'Authorization code', 'wc-serbian-nestpay' ),
-            $transaction->get_AuthCode(),
+            $tx->get_AuthCode(),
         );
     }
 }

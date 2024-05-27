@@ -205,7 +205,7 @@ class Nestpay_Gateway extends WC_Payment_Gateway {
      * {@inheritDoc}
      */
     public function needs_setup() {
-        return empty( $this->merchant_id ) || empty( $this->username ) || empty( $this->password ) || empty( $this->payment_url );
+        return ! $this->merchant_id || ! $this->username || ! $this->password || ! $this->payment_url;
     }
 
     /**
